@@ -7,7 +7,7 @@ class HorarioPage extends StatefulWidget {
 List<String> _dayNames=["Domingo","Lunes","Martes","Miercoels","Jueves","Viernes","Sabado"];
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
-   String day=_dayNames[DateTime.now().weekday-1];
+   String day=_dayNames[DateTime.now().weekday];
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _HorarioPageState extends State<HorarioPage> {
             child: PageView(              
               scrollDirection: Axis.horizontal,             
               controller: PageController(
-                initialPage: DateTime.now().weekday-2,
+                initialPage: DateTime.now().weekday-1,
               ),
               children: [
                 _day("lunes"),
@@ -43,7 +43,8 @@ class _HorarioPageState extends State<HorarioPage> {
                 _day("sabado"),                
               ],
               onPageChanged:(index){
-                  setState(() {
+                  setState(() { 
+
                     day=_dayNames[index+1];
                    // image=_images[index+1];
                   });
@@ -62,16 +63,17 @@ class _HorarioPageState extends State<HorarioPage> {
   return Container(
     width: double.infinity,
     height: double.infinity,
-    child: Image(
+    //color: Color.fromRGBO(170, 215, 221, 1.0),
+   child: Image(
       image:AssetImage("assets/scroll-1.png"),
       fit: BoxFit.cover,
-    ),
+   ),
     
   );
 }
 
 Widget _day(String day){    
-  List<String> nameday=["Domingo","Lunes","Martes","Miercoels","Jueves","Viernes","Sabado"]; 
+   
   return  Container(    
     child: ListView.builder(
       itemCount: 12,
@@ -95,21 +97,12 @@ Widget _day(String day){
 
 Widget _tarjetas(){
   return ClipRRect(
-    borderRadius: BorderRadius.circular(40.0),
+    borderRadius: BorderRadius.circular(20.0),
       child: Container(
-    decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: FractionalOffset(1.0,1.0) ,
-            end:   FractionalOffset(0.1,0.1), 
-           colors: [
-             Color.fromRGBO(227, 255, 251,0.7),
-             Color.fromRGBO(21, 10, 53,0.7),
-           ]
-          ),
-    ),      
+         
       child: Card(
                   elevation: 20.0,   
-                  color: Colors.transparent,                         
+                  color: Color.fromRGBO(48, 48, 48, 1.0),                         
                   child: Column(                
                     children: [
                       ListTile(                              
