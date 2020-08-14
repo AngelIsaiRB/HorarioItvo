@@ -18,8 +18,7 @@ class _HomePageState extends State<HomePage> {
     
   @override
   Widget build(BuildContext context) {        
-    return Scaffold(      
-     
+    return Scaffold(           
       body:_callPage(currentIndex), 
       bottomNavigationBar: _buttonnavigationBar(context),
     );
@@ -27,6 +26,7 @@ class _HomePageState extends State<HomePage> {
 ///////////////////////////////////////////////////////////////////////////
   Widget _buttonnavigationBar(BuildContext context){
   return  BottomNavigationBar(
+   
     currentIndex: currentIndex,
       onTap: (index){
           setState(() {
@@ -35,16 +35,16 @@ class _HomePageState extends State<HomePage> {
       },
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.sentiment_neutral),
-          title: Container(),
+          icon: Icon(Icons.calendar_today),
+          title: Text("Horario"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.sentiment_satisfied),
-          title: Container(),
+          icon: Icon(Icons.new_releases),
+          title: Text("Noticias"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.sentiment_very_dissatisfied),
-          title: Container(),
+          icon: Icon(Icons.info),
+          title: Text("Info"),
         ),
       ],
     );

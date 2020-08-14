@@ -8,6 +8,7 @@ List<String> _dayNames=["Domingo","Lunes","Martes","Miercoels","Jueves","Viernes
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday];
+   double _valorporciento=0;
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _HorarioPageState extends State<HorarioPage> {
             ),
           ),
         ],
-      ),
+      ),     
     );
 
 
@@ -77,12 +78,27 @@ Widget _day(String day){
   return  Container(    
     child: ListView.builder(
       itemCount: 12,
-      itemBuilder: (context,index){
+      controller: PageController(
+        initialPage: 8
+      ),    
+              
+      itemBuilder: (context,index){        
+        if(index == DateTime.now().hour-13){
+        _valorporciento=DateTime.now().minute/60;
+        }
+        else{
+          if(index < DateTime.now().hour-13)
+          _valorporciento=1.0;
+          else
+           _valorporciento=0.0;
+
+        }        
         return Container(
+          
           child: Column(
             children: [
-              _tarjetas(),
-              SizedBox(height: 5.0,)
+              _tarjetas(index, _valorporciento),
+              SizedBox(height: 1.0,)
             ],
           ),
         );
@@ -95,12 +111,58 @@ Widget _day(String day){
 }
 
 
-Widget _tarjetas(){
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(20.0),
-      child: Container(
-         
-      child: Card(
+Widget _tarjetas(int index, double vaslor){  
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(20.0),        
+        child: Container(        
+           color: Color.fromRGBO(48, 48, 48, 1.0),  
+        child: Column(          
+          children: [
+            SizedBox(height: 4.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.fiber_manual_record, color: Colors.blue,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("8:00-9:00 Hrs", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                    Text("nombre de la materia", style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+                 FlatButton(
+                   color: Colors.transparent,
+                   child: Column(
+                     children: [                                   
+                       Icon(Icons.arrow_drop_down,size: 50.0,color: Colors.pinkAccent,)
+                     ],
+                   ),
+                   onPressed: (){},
+                 ),
+              ],
+            ),
+            SizedBox(height: 15.0,),
+             LinearProgressIndicator(               
+              value:vaslor,
+              minHeight: 10.0,
+              backgroundColor: Colors.red[100],
+              valueColor:new AlwaysStoppedAnimation<Color>(Colors.green),                                
+            ),
+          ],
+        )
+      ),
+    ),
+  );
+}
+ 
+}
+
+
+
+
+/*Card(
                   elevation: 20.0,   
                   color: Color.fromRGBO(48, 48, 48, 1.0),                         
                   child: Column(                
@@ -134,9 +196,4 @@ Widget _tarjetas(){
                               ),
                     ],                  
                   ),
-      ),
-    ),
-  );
-}
- 
-}
+      ), */
