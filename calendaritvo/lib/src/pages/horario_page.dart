@@ -19,8 +19,10 @@ class _HorarioPageState extends State<HorarioPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon (Icons.playlist_add,size: 30.0,color: Colors.black,),
-            onPressed: (){},
+            icon: Icon (Icons.add_circle,size: 30.0,color: Colors.black,),
+            onPressed: (){
+              Navigator.pushNamed(context, "addMateria");
+            },
             )
         ],
         
@@ -83,18 +85,8 @@ Widget _day(String day){
       ),    
               
       itemBuilder: (context,index){        
-        if(index == DateTime.now().hour-13){
-        _valorporciento=DateTime.now().minute/60;
-        }
-        else{
-          if(index < DateTime.now().hour-13)
-          _valorporciento=1.0;
-          else
-           _valorporciento=0.0;
-
-        }        
-        return Container(
-          
+        barProgress(index);
+        return Container(          
           child: Column(
             children: [
               _tarjetas(index, _valorporciento),
@@ -109,7 +101,19 @@ Widget _day(String day){
   );
   
 }
+void barProgress(int index){
+if(index == DateTime.now().hour-13){
+        _valorporciento=DateTime.now().minute/60;
+        }
+        else{
+          if(index < DateTime.now().hour-13)
+          _valorporciento=1.0;
+          else
+           _valorporciento=0.0;
 
+        } 
+
+}
 
 Widget _tarjetas(int index, double vaslor){  
   return Container(
@@ -139,7 +143,9 @@ Widget _tarjetas(int index, double vaslor){
                        Icon(Icons.arrow_drop_down,size: 50.0,color: Colors.pinkAccent,)
                      ],
                    ),
-                   onPressed: (){},
+                   onPressed: (){
+                     ///
+                   },
                  ),
               ],
             ),
