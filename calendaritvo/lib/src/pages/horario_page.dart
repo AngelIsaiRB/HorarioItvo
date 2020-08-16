@@ -4,10 +4,10 @@ class HorarioPage extends StatefulWidget {
   @override
   _HorarioPageState createState() => _HorarioPageState();
 }
-List<String> _dayNames=["Domingo","Lunes","Martes","Miercoels","Jueves","Viernes","Sabado"];
+List<String> _dayNames=["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
-   String day=_dayNames[DateTime.now().weekday];
+   String day=_dayNames[DateTime.now().weekday-1];
    double _valorporciento=0;
   // String image=_images[DateTime.now().weekday-1];
   @override
@@ -38,6 +38,7 @@ class _HorarioPageState extends State<HorarioPage> {
                 initialPage: DateTime.now().weekday-1,
               ),
               children: [
+                Container(),
                 _day("lunes"),
                 _day("martes"),
                 _day("miercoels"),
@@ -48,7 +49,7 @@ class _HorarioPageState extends State<HorarioPage> {
               onPageChanged:(index){
                   setState(() { 
 
-                    day=_dayNames[index+1];
+                    day=_dayNames[index];
                    // image=_images[index+1];
                   });
               },              

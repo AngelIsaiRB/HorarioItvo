@@ -26,9 +26,10 @@ class _AddMateriState extends State<AddMateri> {
   Widget build(BuildContext context) {
    double c_width = MediaQuery.of(context).size.width*0.5;
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      backgroundColor: Color.fromRGBO(122, 236, 203, 1.0),
       appBar: AppBar(
-        title: Text("Agrega nueva materia"),        
+        backgroundColor: Colors.pink[50],
+        title: Text("Agrega nueva materia", style: TextStyle(color: Colors.black, fontSize: 25.0),),        
       ),
       body: ListView.builder(
         itemCount: _materias.length+1,
@@ -176,6 +177,7 @@ Widget _boton(){
     ),
   );
 }
+
 
 
 }
