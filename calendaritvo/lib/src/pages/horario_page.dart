@@ -67,7 +67,7 @@ class _HorarioPageState extends State<HorarioPage> {
   return Container(
     width: double.infinity,
     height: double.infinity,
-    //color: Color.fromRGBO(170, 215, 221, 1.0),
+    
    child: Image(
       image:AssetImage("assets/scroll-1.png"),
       fit: BoxFit.cover,

@@ -35,7 +35,10 @@ class _AddMateriState extends State<AddMateri> {
         itemCount: _materias.length+1,
         itemBuilder: (BuildContext context, int index) {
           if(index==0){
-            return _imput();
+            return Container(
+              padding: EdgeInsets.all(10.0),
+            child: _imput()
+            );
           }
           else{
               return Container(                
@@ -44,7 +47,7 @@ class _AddMateriState extends State<AddMateri> {
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [ 
                     
-                       Icon(Icons.add_alert, color: _materias[index-1]["color"],size: 40.0, ),
+                       Icon(Icons.fiber_manual_record, color: _materias[index-1]["color"],size: 40.0, ),
                        
                      Container(
                        width: c_width,

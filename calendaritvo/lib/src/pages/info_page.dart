@@ -9,8 +9,13 @@ class InfoPage extends StatefulWidget {
 class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Noticias", style: TextStyle(color: Colors.black, fontSize: 30.0 ), ),
+        backgroundColor: Colors.pink[50],
+        centerTitle: true,
+      ),
+
     );
   }
 }
