@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class HorarioPage extends StatefulWidget {
   @override
   _HorarioPageState createState() => _HorarioPageState();
+  
 }
-List<String> _dayNames=["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
+List<String> _dayNames=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
+
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
+   
    double _valorporciento=0;
   // String image=_images[DateTime.now().weekday-1];
   @override
@@ -37,16 +40,17 @@ class _HorarioPageState extends State<HorarioPage> {
               controller: PageController(
                 initialPage: DateTime.now().weekday-1,
               ),
-              children: [
-                Container(),
+              children: [                
                 _day("lunes"),
                 _day("martes"),
                 _day("miercoels"),
                 _day("jueves"),
                 _day("viernes"),
-                _day("sabado"),                
+                _day("sabado"), 
+                Container(),               
               ],
               onPageChanged:(index){
+                print (DateTime.now().weekday);
                   setState(() { 
 
                     day=_dayNames[index];
@@ -103,11 +107,12 @@ Widget _day(String day){
   
 }
 void barProgress(int index){
-if(index == DateTime.now().hour-13){
+if(index == DateTime.now().hour-7){
+  print (index);
         _valorporciento=DateTime.now().minute/60;
         }
         else{
-          if(index < DateTime.now().hour-13)
+          if(index < DateTime.now().hour-7)
           _valorporciento=1.0;
           else
            _valorporciento=0.0;
