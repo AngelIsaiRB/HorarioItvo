@@ -33,7 +33,7 @@ class DBProvider{
       onOpen: (db){},
       onCreate: (Database db, int version) async {
       await db.execute(
-          "Create table Materia (id INTEGER PRIMARY KEY, name TEXT)"
+          "Create table Materia (id INTEGER PRIMARY KEY, name TEXT, color TEXT)"
       ) ;      
       await db.execute(
           "Create table Lunes (id INTEGER PRIMARY KEY, materia INT)"
@@ -57,6 +57,12 @@ class DBProvider{
                               toList()
                               : [];
     return list;
+  }
+
+  Future<int> deleteMateria(int id)async {
+    final db = await database;
+    final res = await db.delete("Materia", where: "id=?", whereArgs: [id] );
+    return res;
   }
   
 
