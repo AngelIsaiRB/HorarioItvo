@@ -1,4 +1,8 @@
+import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/models/materia_model.dart';
+import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 
 class HorarioPage extends StatefulWidget {
   @override
@@ -12,9 +16,11 @@ class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
    
    double _valorporciento=0;
+   final materiasBloc = MateriasBlock();  
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
+    materiasBloc.obtenerMaterias();
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink[50],
@@ -50,7 +56,7 @@ class _HorarioPageState extends State<HorarioPage> {
                 Container(),               
               ],
               onPageChanged:(index){
-                print (DateTime.now().weekday);
+               
                   setState(() { 
 
                     day=_dayNames[index];
@@ -108,7 +114,7 @@ Widget _day(String day){
 }
 void barProgress(int index){
 if(index == DateTime.now().hour-7){
-  print (index);
+   
         _valorporciento=DateTime.now().minute/60;
         }
         else{
@@ -127,31 +133,25 @@ Widget _tarjetas(int index, double vaslor){
     child: ClipRRect(
       borderRadius: BorderRadius.circular(20.0),        
         child: Container(        
-           color: Color.fromRGBO(48, 48, 48, 1.0),  
+           color: Theme.of(context).backgroundColor,
         child: Column(          
           children: [
             SizedBox(height: 4.0,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Icon(Icons.fiber_manual_record, color: Colors.blue,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("8:00-9:00 Hrs", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                    Text("nombre de la materia", style: TextStyle(color: Colors.white)),
+                    Text("8:00-9:00 Hrs", style:Theme.of(context).textTheme.bodyText1),
+                    Text("nombre de la materia",style:Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
-                 FlatButton(
-                   color: Colors.transparent,
-                   child: Column(
-                     children: [                                   
-                       Icon(Icons.arrow_drop_down,size: 50.0,color: Colors.pinkAccent,)
-                     ],
-                   ),
-                   onPressed: (){
-                     ///
-                   },
+                 Column(
+                   children: [                     
+                     _crearDropdown(context)
+                   ],
                  ),
               ],
             ),
@@ -169,43 +169,80 @@ Widget _tarjetas(int index, double vaslor){
   );
 }
  
+ 
+ 
+ 
+  
+
+  Widget _crearDropdown(BuildContext context) {
+    return Container(
+            child: FlatButton(
+              onPressed: (){
+                _alertMaterias(context);
+              },
+              child: Icon(Icons.arrow_drop_down_circle,size: 40.0, color: Theme.of(context).primaryColor,),
+            )
+          );
+  }
+
+
+
+_alertMaterias(BuildContext context){
+  showDialog(
+    context: context,
+    barrierDismissible: true, 
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Escoje materia"),
+        content: Container(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: _listViewMaterias()
+                )
+            ],
+          )
+           ),
+        
+      );
+      
+    },
+    );
 }
 
+Widget _listViewMaterias() {
+  materiasBloc.obtenerMaterias();
+    return StreamBuilder(
+      stream: materiasBloc.materiasStream,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<MateriaModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final materia = snapshot.data;
+        if (materia.length == 0) {
+          return Center(
+            child: Text("No hay materias"),
+          );
+        }
+        return ListView.builder(
+          itemCount: materia.length,
+          itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
+            title: Text(materia[index].name),
+            onTap: (){
+              ///////////////////////////////////////////////////
 
-
-
-/*Card(
-                  elevation: 20.0,   
-                  color: Color.fromRGBO(48, 48, 48, 1.0),                         
-                  child: Column(                
-                    children: [
-                      ListTile(                              
-                        leading: Icon(Icons.fiber_manual_record, color: Colors.blue,),
-                        title:Text("8:00-9:00", style: TextStyle(color: Colors.white),),                          
-                        subtitle: 
-                            Text("nombre de la materia", style: TextStyle(color: Colors.white)),                                                       
-                        trailing: 
-                          Container(                           
-                                                   
-                              child: FlatButton(
-                                color: Colors.transparent,
-                                child: Column(
-                                  children: [                                   
-                                    Icon(Icons.arrow_drop_down,size: 50.0,color: Colors.pinkAccent,)
-                                  ],
-                                ),
-                                onPressed: (){},
-                              ),
-                            
-                          )
-                                                         
-                      ),       
-                     LinearProgressIndicator(
-                                value: 0.5,
-                                minHeight: 10.0,
-                                backgroundColor: Colors.red[100],
-                                valueColor:new AlwaysStoppedAnimation<Color>(Colors.green),                                
-                              ),
-                    ],                  
-                  ),
-      ), */
+            },
+          );
+         },
+        );
+      },
+    );
+  }
+}

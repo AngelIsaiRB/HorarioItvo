@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -37,10 +38,21 @@ class DBProvider{
       ) ;      
       await db.execute(
           "Create table Lunes (id INTEGER PRIMARY KEY, materia INT)"
-      ) ;       
+      );  
+      await db.execute(
+          "INSERT into Materia(name,color) values('Libre','white')"
+      );     
+      _rellenarDia(); 
 
       }
     );
+  }
+
+  _rellenarDia()async {
+    final db = await database;
+    for (var i = 0; i < 12; i++) {
+      await db.execute("INSERT into Lunes(materia) values('Libre')");
+    }
   }
 
   nuevaMateria(MateriaModel nuevaM) async{
@@ -63,6 +75,16 @@ class DBProvider{
     final db = await database;
     final res = await db.delete("Materia", where: "id=?", whereArgs: [id] );
     return res;
+  }
+
+  Future<List<DiaModel>> getLunes() async{
+    final db = await database;
+    final res = await db.query("Lunes");
+    List<DiaModel> list = res.isNotEmpty ? 
+                              res.map((item) => DiaModel.fromJson(item)).
+                              toList()
+                              : [];
+    return list;
   }
   
 

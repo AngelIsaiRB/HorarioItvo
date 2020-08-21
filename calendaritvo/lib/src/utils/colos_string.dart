@@ -30,6 +30,9 @@ String coloToString(Color color){
  if(color==Colors.indigo){
    return "indigo";
  }
+ if(color==Colors.white){
+   return "white";
+ }
  return "blue";
   
 }
@@ -62,6 +65,9 @@ Color stringToColor(String color){
  }
  if(color=="indigo"){
    return Colors.indigo;
+ }
+ if(color=="white"){
+   return Colors.white;
  }
  return Colors.blue;
   

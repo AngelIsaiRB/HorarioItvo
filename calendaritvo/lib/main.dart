@@ -21,6 +21,12 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         primaryColor: Colors.pink,
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: Colors.white,fontSize: 18.0),
+          bodyText2: TextStyle(color: Colors.white),
+          ),
+        backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
+
         
       )
     );

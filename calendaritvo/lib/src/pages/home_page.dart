@@ -1,4 +1,5 @@
 
+import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/pages/horario_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,10 @@ class _HomePageState extends State<HomePage> {
   
   String day=_dayNames[DateTime.now().weekday-1];
   int currentIndex=0;
-    
+  
   @override
-  Widget build(BuildContext context) {        
+  Widget build(BuildContext context) {   
+        
     return Scaffold(           
       body:_callPage(currentIndex), 
       bottomNavigationBar: _buttonnavigationBar(context),

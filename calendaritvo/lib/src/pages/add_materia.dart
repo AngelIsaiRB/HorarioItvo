@@ -54,7 +54,7 @@ class _AddMateriState extends State<AddMateri> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
     );
   }
@@ -81,18 +81,30 @@ class _AddMateriState extends State<AddMateri> {
                   key: UniqueKey(),
                   background: Container(
                     color: Colors.red,
-                    child: Text("Eliminar"),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.delete, size: 40.0,),
+                        Icon(Icons.delete, size: 40.0),
+                      ],
+                    ),
                   ),
                   onDismissed: (direcion) {
                     materiasBloc.deleteMateria(materia[index].id);
                   },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.fiber_manual_record,
-                      color: utils.stringToColor(materia[index].color),
+                  child: Card(
+                     child: Container(
+                      color: Theme.of(context).backgroundColor,//Colors.black12,
+                      child: ListTile(                    
+                        leading: Icon(
+                          Icons.fiber_manual_record,
+                          color: utils.stringToColor(materia[index].color),
+                        ),
+                        title: Text("${materia[index].name}",style:Theme.of(context).textTheme.bodyText1 ),
+                        subtitle: Text("Desliza para eliminar",style:Theme.of(context).textTheme.bodyText2,),
+                        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white,),
+                      ),
                     ),
-                    title: Text(materia[index].name),
-                    trailing: Icon(Icons.keyboard_arrow_right),
                   ),
                 ));
       },
@@ -104,7 +116,8 @@ class _AddMateriState extends State<AddMateri> {
       height: MediaQuery.of(context).size.width * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       child: Column(
-        children: [_crearInput(), _crearDropdown()],
+        children: [_crearInput(),
+         _crearDropdown()],
       ),
     );
   }
