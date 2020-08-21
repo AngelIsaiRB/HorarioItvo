@@ -1,3 +1,5 @@
+import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/material.dart';
 class AddMateri extends StatefulWidget {
   AddMateri({Key key}) : super(key: key);
@@ -10,107 +12,93 @@ class _AddMateriState extends State<AddMateri> {
 
 
   String _name="";
-  Color _opcionSeleccionada=Colors.blue;
+  Color _opcionSeleccionada=Colors.red;
   List<Color> _colores=[Colors.blue,Colors.red,Colors.yellow,
                         Colors.black,Colors.brown,Colors.purple,Colors.orange,Colors.green,
                         Colors.indigo];
-  final _materias=[{
-    "name":"matemticas",
-    "color":Colors.red,
-    },{
-    "name":"filosofia",
-    "color":Colors.blue,
-    }];
   
+  
+  final materiasBloc = MateriasBlock();
+
   @override
   Widget build(BuildContext context) {
-   double c_width = MediaQuery.of(context).size.width*0.5;
+    materiasBloc.obtenerMaterias();
+   double cwidth = MediaQuery.of(context).size.width*0.5;
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(122, 236, 203, 1.0),
       appBar: AppBar(
         backgroundColor: Colors.pink[50],
         title: Text("Agrega nueva materia", style: TextStyle(color: Colors.black, fontSize: 25.0),),        
       ),
-      body: ListView.builder(
-        itemCount: _materias.length+1,
-        itemBuilder: (BuildContext context, int index) {
-          if(index==0){
-            return Container(
-              padding: EdgeInsets.all(10.0),
-            child: _imput()
-            );
-          }
-          else{
-              return Container(                
-                child: Card(
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [ 
-                    
-                       Icon(Icons.fiber_manual_record, color: _materias[index-1]["color"],size: 40.0, ),
-                       
-                     Container(
-                       width: c_width,
-                       child: Text(_materias[index-1]["name"],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20.0, ),                          
-                             ),
-                     ),
-                        
-                       
-                      Container(
-                        color: Colors.red[200],
-                        child: FlatButton(
-                          child: Text("Eliminar"),
-                          onPressed: (){},
-                         
-                        ),
-                      )
-                   ],
-                 ), 
-                ),
-              );
-          }
-       },
+      body: 
+          _listViewMaterias(cwidth),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          _mostrarAlerta(context);
+        },
+        child: Icon(Icons.add, size: 40,),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
 
+Widget _listViewMaterias(double cwidth){
+
+  return StreamBuilder(
+    stream: materiasBloc.materiasStream ,    
+    builder: (BuildContext context, AsyncSnapshot<List<MateriaModel>> snapshot){
+      
+      if(!snapshot.hasData){
+        return Center(child: CircularProgressIndicator(),);
+      }
+      final materia=snapshot.data;
+      if(materia.length==0 ){
+        return Center(
+          child: Text("No hay materias"),
+        );
+      }
+      return ListView.builder(
+        itemCount: materia.length,
+        itemBuilder: (BuildContext context, int index)=>Dismissible(
+          key: UniqueKey(),
+          background: Container(
+            color: Colors.red,
+            child: Text("Eliminar"),
+          ),
+          onDismissed: (direcion){
+
+          },
+          child: ListTile(
+          leading: Icon(Icons.fiber_manual_record, color: Colors.pink,),
+          title: Text(materia[index].name),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        ),
+        )
+      );
+    },
+  );
+}
+
+
   Widget _imput(){
     return Container(
-    child: ClipRRect(
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        child: Column(        
-          children: [
-               _crearInput(),
-              _crearDropdown(),
-              _boton(),
-              
-          ],
-        ),
+      height: MediaQuery.of(context).size.width*0.5,
+      width: MediaQuery.of(context).size.width*0.9,
+      child: Column(
+        children: [
+          _crearInput(),
+          _crearDropdown()
+        ],
       ),
-      borderRadius: BorderRadius.circular(30.0),    
-    ),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(30.0),
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: Colors.black26,
-          blurRadius: 10.0,
-          spreadRadius: 2.0,
-          offset: Offset(2,10),
-        )
-      ]     
-    ),
-  );
+    );
+                          
+             
   }
-
 
   Widget _crearInput() {
     return TextField(
-      //autofocus: true,
+      
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -119,7 +107,7 @@ class _AddMateriState extends State<AddMateri> {
         hintText: "Materia",
         labelText: "Nombre",
         helperText: "",       
-        icon: Icon(Icons.add_box,size: 40.0,), 
+        icon: Icon(Icons.calendar_today,size: 40.0,), 
       ),
       onChanged: (valor){
           _name=valor;          
@@ -147,13 +135,12 @@ Widget _crearDropdown(){
        SizedBox(width: 30.0,),
        Expanded(
          child: Container(           
-           child: DropdownButton(            
+           child: DropdownButton(                        
             value: _opcionSeleccionada,
             items : getOpcionesDropDown(),            
-            onChanged: (opt){
-              setState(() {
-                _opcionSeleccionada=opt;
-              });
+            onChanged: (opt){              
+               _opcionSeleccionada=opt;   
+
       },
     ),
          ),
@@ -162,25 +149,37 @@ Widget _crearDropdown(){
     );
 }
 
-Widget _boton(){
-  return Container(         
-    margin: EdgeInsets.all(15.0),  
-    child: FlatButton(      
-      child: Container(
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(vertical: 15.0,horizontal: 30.0),
-        child: Text("Agregar", style: TextStyle(color: Colors.white, fontSize: 25.0),)
-        ),
-      onPressed: (){
-        setState(() {
-          _materias.add({"name":_name,
-                        "color":_opcionSeleccionada});
-        });
-      },
-    ),
-  );
-}
 
+
+_mostrarAlerta(BuildContext context){
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context){
+        return   AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text("Agregar materia"),          
+          content:   _imput(),
+          actions: [
+            FlatButton(
+              child: Text("Cancelar",style: TextStyle(color: Colors.red),),
+              onPressed: (){},
+            ),
+            FlatButton(
+              child: Text("Agregar",style: TextStyle(fontSize: 25.0),),
+              onPressed: (){
+                final materia = MateriaModel(name: _name);
+                materiasBloc.agregarMateria(materia);
+                _name="";
+              },
+            )
+          ],
+        );        
+      },    
+      
+      
+      );
+}
 
 
 }
