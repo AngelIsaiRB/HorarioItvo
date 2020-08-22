@@ -2,6 +2,7 @@
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/pages/horario_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
+import 'package:calendaritvo/src/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),
-          title: Text("Info"),
+          title: Text("Ajustes"),
         ),
       ],
     );
@@ -62,6 +63,9 @@ class _HomePageState extends State<HomePage> {
         break;
       case 1:
         return InfoPage();
+        break;
+      case 2:
+        return SettingsPage();
         break;
       default:
         return HorarioPage();
