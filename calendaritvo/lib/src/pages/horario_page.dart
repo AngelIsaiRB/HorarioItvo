@@ -20,10 +20,12 @@ class _HorarioPageState extends State<HorarioPage> {
    double _valorporciento=0;
    final materiasBloc = MateriasBlock();  
    final diabloc = DiaBloc();
+   double mitadDePantalla;
+   
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
-    
+   mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   
    // materiasBloc.obtenerMaterias();
     //diabloc.obtenerDia("Lunes");
@@ -170,8 +172,10 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle1),
-                    Text(dia.materia,style:Theme.of(context).textTheme.bodyText1),
+                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),
+                    Container(
+                      width: mitadDePantalla,
+                      child: Text(dia.materia,style:Theme.of(context).textTheme.bodyText1,maxLines: 1 ,)),
                   ],
                 ),
                  Column(
@@ -260,7 +264,11 @@ Widget _listViewMaterias(DiaModel dia,String day) {
           itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
-            title: Text(materia[index].name),
+            title: Text(materia[index].name, style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+              backgroundColor: Colors.transparent
+                 ),),
             onTap: (){              
               DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
               Navigator.pop(context);

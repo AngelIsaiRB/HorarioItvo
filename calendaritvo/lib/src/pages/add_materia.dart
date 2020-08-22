@@ -118,7 +118,8 @@ class _AddMateriState extends State<AddMateri> {
       height: MediaQuery.of(context).size.width * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       child: Column(
-        children: [_crearInput(),
+        children: [
+          _crearInput(),
          _crearDropdown()],
       ),
     );
