@@ -78,20 +78,33 @@ class DBProvider{
     return list;
   }
 
-  Future<int> deleteMateria(int id)async {
+  Future<int> deleteMateria(MateriaModel materia)async {
     final db = await database;
-    final res = await db.delete("Materia", where: "id=?", whereArgs: [id] );
+    final res = await db.delete("Materia", where: "id=?", whereArgs: [materia.id] );  
+    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","D"]; 
+    for (var i = 0; i < 6; i++) {
+     await db.rawUpdate("Update ${_nombredias[i]} SET materia='Libre' WHERE materia='${materia.name}'");
+      
+    }
     return res;
   }
 
+
+
   Future<List<DiaModel>> getDia(String dia) async{
     final db = await database;
-    final res = await db.query(dia);
+    final res = await db.rawQuery("SELECT $dia.id , $dia.materia , Materia.color from $dia , Materia WHERE $dia.materia=Materia.name ");
     List<DiaModel> list = res.isNotEmpty ? 
                               res.map((item) => DiaModel.fromJson(item)).
                               toList()
                               : [];
     return list;
+  }
+  
+  actualizarHora(int id,String materia,String day)async {
+    final db = await database;
+    final res = await db.rawUpdate("Update $day SET materia='$materia' WHERE id=$id");
+    return res;
   }
   
 

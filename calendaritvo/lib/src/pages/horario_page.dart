@@ -57,7 +57,12 @@ class _HorarioPageState extends State<HorarioPage> {
                 _day("Jueves"),
                 _day("Viernes"),
                 _day("Sabado"), 
-                Container(),               
+                Container(
+                  color: Colors.black26,
+                  child: Center(
+                    child: Text("¡Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
+                  ),
+                ),               
               ],
               onPageChanged:(index){
                
@@ -83,7 +88,7 @@ class _HorarioPageState extends State<HorarioPage> {
     height: double.infinity,
     
    child: Image(
-      image:AssetImage("assets/scroll-1.png"),
+      image:AssetImage("assets/fondo6.jpg"),
       fit: BoxFit.cover,
    ),
     
@@ -91,10 +96,10 @@ class _HorarioPageState extends State<HorarioPage> {
 }
 
 Widget _day(String day){    
-   diabloc.obtenerDia(day);
+   
   return  Container(    
-    child: StreamBuilder(
-      stream: diabloc.diaStream ,
+    child: FutureBuilder(
+      future: DBProvider.db.getDia(day) ,
       //initialData: initialData ,
       builder: (BuildContext context, AsyncSnapshot<List<DiaModel>> snapshot){
         if (!snapshot.hasData) {
@@ -110,7 +115,7 @@ Widget _day(String day){
           return Container(          
           child: Column(
             children: [
-              _tarjetas(index, _valorporciento,dia[index].materia),
+              _tarjetas(index, _valorporciento,dia[index],day),
               SizedBox(height: 1.0,)
             ],
           ),
@@ -123,33 +128,7 @@ Widget _day(String day){
   );
   
 }
-/*
-Widget _day(String day){    
-   diabloc.obtenerDia(day);
-  return  Container(    
-    child: ListView.builder(
-      itemCount: 12,
-      controller: PageController(
-        initialPage: 8
-      ),    
-              
-      itemBuilder: (context,index){        
-        barProgress(index);
-        return Container(          
-          child: Column(
-            children: [
-              _tarjetas(index, _valorporciento),
-              SizedBox(height: 1.0,)
-            ],
-          ),
-        );
-      }
-      
-      ),
-   
-  );
-  
-}*/
+
 void barProgress(int index){
 if(index == DateTime.now().hour-7){
    
@@ -165,7 +144,8 @@ if(index == DateTime.now().hour-7){
 
 }
 
-Widget _tarjetas(int index, double vaslor,String materia){  
+Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
+  index+=7;
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
     child: ClipRRect(
@@ -178,17 +158,17 @@ Widget _tarjetas(int index, double vaslor,String materia){
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(Icons.fiber_manual_record, color: Colors.blue,),
+                Icon(Icons.fiber_manual_record,size: 35.0, color: utils.stringToColor(dia.color),),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("8:00-9:00 Hrs", style:Theme.of(context).textTheme.bodyText1),
-                    Text(materia,style:Theme.of(context).textTheme.bodyText2),
+                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.bodyText2),
+                    Text(dia.materia,style:Theme.of(context).textTheme.bodyText1),
                   ],
                 ),
                  Column(
                    children: [                     
-                     _crearDropdown(context)
+                     _crearDropdown(context,dia,day)
                    ],
                  ),
               ],
@@ -212,11 +192,11 @@ Widget _tarjetas(int index, double vaslor,String materia){
  
   
 
-  Widget _crearDropdown(BuildContext context) {
+  Widget _crearDropdown(BuildContext context, DiaModel dia,String day) {
     return Container(
             child: FlatButton(
               onPressed: (){
-                _alertMaterias(context);
+                _alertMaterias(context,dia,day);
               },
               child: Icon(Icons.arrow_drop_down_circle,size: 40.0, color: Theme.of(context).primaryColor,),
             )
@@ -225,7 +205,7 @@ Widget _tarjetas(int index, double vaslor,String materia){
 
 
 
-_alertMaterias(BuildContext context){
+_alertMaterias(BuildContext context,DiaModel dia,String day){
   showDialog(
     context: context,
     barrierDismissible: true, 
@@ -238,7 +218,7 @@ _alertMaterias(BuildContext context){
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: _listViewMaterias()
+                child: _listViewMaterias(dia,day)
                 )
             ],
           )
@@ -250,7 +230,7 @@ _alertMaterias(BuildContext context){
     );
 }
 
-Widget _listViewMaterias() {
+Widget _listViewMaterias(DiaModel dia,String day) {
   materiasBloc.obtenerMaterias();
     return StreamBuilder(
       stream: materiasBloc.materiasStream,
@@ -273,9 +253,12 @@ Widget _listViewMaterias() {
           return ListTile(
             leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
             title: Text(materia[index].name),
-            onTap: (){
-              ///////////////////////////////////////////////////
-
+            onTap: (){              
+              DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
+              Navigator.pop(context);
+              setState(() {
+                
+              });
             },
           );
          },

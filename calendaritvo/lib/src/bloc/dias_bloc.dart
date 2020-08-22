@@ -28,6 +28,10 @@ class DiaBloc{
     _diaController.sink.add(await DBProvider.db.getDia(dia));
   }
 
+  actualizarHora(int id,String materia,String day)async{
+    await DBProvider.db.actualizarHora(id, materia, day);
+    obtenerDia(day);
+  }
   
 
  

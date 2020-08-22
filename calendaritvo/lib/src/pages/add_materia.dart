@@ -90,7 +90,9 @@ class _AddMateriState extends State<AddMateri> {
                     ),
                   ),
                   onDismissed: (direcion) {
-                    materiasBloc.deleteMateria(materia[index].id);
+                   if (materia[index].name != "Libre"){
+                       materiasBloc.deleteMateria(materia[index]);
+                   }
                   },
                   child: Card(
                      child: Container(

@@ -34,10 +34,12 @@ class MateriasBlock{
     obtenerMaterias();
   }
 
-  deleteMateria(int id) async{
-    await DBProvider.db.deleteMateria(id);
+  deleteMateria(MateriaModel materia) async{
+    await DBProvider.db.deleteMateria(materia);
     obtenerMaterias();
   }
+
+  
 
   
 }
