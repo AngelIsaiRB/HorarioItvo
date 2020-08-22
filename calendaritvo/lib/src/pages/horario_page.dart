@@ -1,4 +1,6 @@
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/bloc/dias_bloc.dart';
+import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +19,12 @@ class _HorarioPageState extends State<HorarioPage> {
    
    double _valorporciento=0;
    final materiasBloc = MateriasBlock();  
+   final diabloc = DiaBloc();
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
-    materiasBloc.obtenerMaterias();
+   // materiasBloc.obtenerMaterias();
+    //diabloc.obtenerDia("Lunes");
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink[50],
@@ -47,12 +51,12 @@ class _HorarioPageState extends State<HorarioPage> {
                 initialPage: DateTime.now().weekday-1,
               ),
               children: [                
-                _day("lunes"),
-                _day("martes"),
-                _day("miercoels"),
-                _day("jueves"),
-                _day("viernes"),
-                _day("sabado"), 
+                _day("Lunes",),
+                _day("Martes"),
+                _day("Miercoles"),
+                _day("Jueves"),
+                _day("Viernes"),
+                _day("Sabado"), 
                 Container(),               
               ],
               onPageChanged:(index){
@@ -87,7 +91,41 @@ class _HorarioPageState extends State<HorarioPage> {
 }
 
 Widget _day(String day){    
+   diabloc.obtenerDia(day);
+  return  Container(    
+    child: StreamBuilder(
+      stream: diabloc.diaStream ,
+      //initialData: initialData ,
+      builder: (BuildContext context, AsyncSnapshot<List<DiaModel>> snapshot){
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final dia = snapshot.data;
+        
+        return ListView.builder(
+          itemCount: dia.length,
+          itemBuilder: (BuildContext context, int index) {
+          return Container(          
+          child: Column(
+            children: [
+              _tarjetas(index, _valorporciento,dia[index].materia),
+              SizedBox(height: 1.0,)
+            ],
+          ),
+        );
+         },
+        );
+      },
+    ),
    
+  );
+  
+}
+/*
+Widget _day(String day){    
+   diabloc.obtenerDia(day);
   return  Container(    
     child: ListView.builder(
       itemCount: 12,
@@ -111,7 +149,7 @@ Widget _day(String day){
    
   );
   
-}
+}*/
 void barProgress(int index){
 if(index == DateTime.now().hour-7){
    
@@ -127,7 +165,7 @@ if(index == DateTime.now().hour-7){
 
 }
 
-Widget _tarjetas(int index, double vaslor){  
+Widget _tarjetas(int index, double vaslor,String materia){  
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
     child: ClipRRect(
@@ -145,7 +183,7 @@ Widget _tarjetas(int index, double vaslor){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("8:00-9:00 Hrs", style:Theme.of(context).textTheme.bodyText1),
-                    Text("nombre de la materia",style:Theme.of(context).textTheme.bodyText2),
+                    Text(materia,style:Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
                  Column(

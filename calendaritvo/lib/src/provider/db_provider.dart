@@ -27,33 +27,40 @@ class DBProvider{
 
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join( documentsDirectory.path,"HorarioDB.db" );
-
+    
     return await openDatabase(
       path,
       version: 1,
       onOpen: (db){},
       onCreate: (Database db, int version) async {
-      await db.execute(
-          "Create table Materia (id INTEGER PRIMARY KEY, name TEXT, color TEXT)"
-      ) ;      
-      await db.execute(
-          "Create table Lunes (id INTEGER PRIMARY KEY, materia INT)"
-      );  
+      await db.execute("Create table Materia (id INTEGER PRIMARY KEY, name TEXT, color TEXT)") ;      
+      await db.execute("Create table Lunes     (id INTEGER PRIMARY KEY, materia TEXT)");  
+      await db.execute("Create table Martes    (id INTEGER PRIMARY KEY, materia TEXT)");
+      await db.execute("Create table Miercoles (id INTEGER PRIMARY KEY, materia TEXT)");
+      await db.execute("Create table Jueves    (id INTEGER PRIMARY KEY, materia TEXT)");
+      await db.execute("Create table Viernes   (id INTEGER PRIMARY KEY, materia TEXT)");
+      await db.execute("Create table Sabado    (id INTEGER PRIMARY KEY, materia TEXT)");    
+      
       await db.execute(
           "INSERT into Materia(name,color) values('Libre','white')"
       );     
-      _rellenarDia(); 
-
+       
+      await _rellenarDia(db); 
+      print ("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
       }
     );
   }
 
-  _rellenarDia()async {
-    final db = await database;
-    for (var i = 0; i < 12; i++) {
-      await db.execute("INSERT into Lunes(materia) values('Libre')");
+  _rellenarDia(db)async {
+    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","D"];    
+    for (var j = 0; j < 6; j++) {
+      for (var i = 0; i < 12; i++) {
+      await db.execute("INSERT into ${_nombredias[j]} (materia) values('Libre')");
+
+    }
     }
   }
+  
 
   nuevaMateria(MateriaModel nuevaM) async{
     final db = await database;
@@ -77,9 +84,9 @@ class DBProvider{
     return res;
   }
 
-  Future<List<DiaModel>> getLunes() async{
+  Future<List<DiaModel>> getDia(String dia) async{
     final db = await database;
-    final res = await db.query("Lunes");
+    final res = await db.query(dia);
     List<DiaModel> list = res.isNotEmpty ? 
                               res.map((item) => DiaModel.fromJson(item)).
                               toList()
