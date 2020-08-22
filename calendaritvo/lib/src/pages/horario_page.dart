@@ -16,13 +16,15 @@ List<String> _dayNames=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
-   
+   Color thema;
    double _valorporciento=0;
    final materiasBloc = MateriasBlock();  
    final diabloc = DiaBloc();
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
+    
+  
    // materiasBloc.obtenerMaterias();
     //diabloc.obtenerDia("Lunes");
     return  Scaffold(
@@ -146,23 +148,29 @@ if(index == DateTime.now().hour-7){
 
 Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
   index+=7;
+  if (1==1){
+     thema=utils.stringToColor(dia.color);
+  }
+  else{
+     thema = Theme.of(context).backgroundColor;
+  }
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(20.0),        
         child: Container(        
-           color: Theme.of(context).backgroundColor,
+           color: thema,
         child: Column(          
           children: [
             SizedBox(height: 4.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(Icons.fiber_manual_record,size: 35.0, color: utils.stringToColor(dia.color),),
+                Icon(Icons.fiber_manual_record,size: 35.0, color: utils.stringToColor(dia.color),),                
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.bodyText2),
+                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle1),
                     Text(dia.materia,style:Theme.of(context).textTheme.bodyText1),
                   ],
                 ),
