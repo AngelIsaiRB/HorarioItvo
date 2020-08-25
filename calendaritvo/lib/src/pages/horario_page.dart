@@ -103,8 +103,7 @@ Widget _day(String day){
   
   return  Container(    
     child: FutureBuilder(
-      future: DBProvider.db.getDia(day) ,
-      //initialData: initialData ,
+      future: DBProvider.db.getDia(day) ,            
       builder: (BuildContext context, AsyncSnapshot<List<DiaModel>> snapshot){
         if (!snapshot.hasData) {
           return Center(
@@ -121,7 +120,7 @@ Widget _day(String day){
           child: Column(
             children: [
               _tarjetas(index,barProgress(index),dia[index],day),
-              
+
               SizedBox(height: 1.0,)
             ],
           ),
@@ -172,8 +171,11 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(Icons.fiber_manual_record,size: 35.0, color: utils.stringToColor(dia.color),),                
-                Column(
+                Container(
+                  color: utils.stringToColor(dia.color),
+                  child: SizedBox(width: 45.0,height: 45.0,),
+                ),                
+                Column(                  
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),
@@ -190,9 +192,10 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
               ],
             ),
             SizedBox(height: 15.0,),
-             LinearProgressIndicator(               
+             LinearProgressIndicator(   
+
               value:vaslor,
-              minHeight: 10.0,
+              minHeight: 12.0,
               backgroundColor: Colors.red[100],
               valueColor:new AlwaysStoppedAnimation<Color>(Colors.greenAccent),                                
             ),

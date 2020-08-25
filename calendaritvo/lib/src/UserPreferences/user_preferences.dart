@@ -40,6 +40,13 @@ class PreferenciasUsuario{
     _prefs.setString("imageFond", value);
   }
 
+   get menu{
+    return _prefs.getBool("menu") ?? false;
+  }
+
+  set menu(bool value){
+    _prefs.setBool("menu", value);
+  }
   
 
 

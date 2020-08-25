@@ -1,5 +1,5 @@
 
-import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/pages/horario_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
@@ -17,9 +17,35 @@ class _HomePageState extends State<HomePage> {
   
   String day=_dayNames[DateTime.now().weekday-1];
   int currentIndex=0;
+  List<BottomNavigationBarItem> _menu;
+  final pref =PreferenciasUsuario();
   
   @override
   Widget build(BuildContext context) {   
+    if( ! pref.menu){
+      _menu=[BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today),
+          title: Text("Horario"),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.new_releases),
+          title: Text("Noticias"),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.info),
+          title: Text("Ajustes"),
+        )];
+    }
+    else{
+        _menu=[BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today),
+          title: Text("Horario"),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.info),
+          title: Text("Ajustes"),
+        )];
+    }
         
     return Scaffold(           
       body:_callPage(currentIndex), 
@@ -36,20 +62,7 @@ class _HomePageState extends State<HomePage> {
           currentIndex =index;            
           });
       },
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
-          title: Text("Horario"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.new_releases),
-          title: Text("Noticias"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.info),
-          title: Text("Ajustes"),
-        ),
-      ],
+      items: _menu,
     );
   
 
@@ -62,7 +75,10 @@ class _HomePageState extends State<HomePage> {
         return HorarioPage();
         break;
       case 1:
+      if(! pref.menu)
         return InfoPage();
+        else
+        return SettingsPage();
         break;
       case 2:
         return SettingsPage();

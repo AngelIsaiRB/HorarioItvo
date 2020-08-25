@@ -1,4 +1,4 @@
-import 'package:calendaritvo/main.dart';
+
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -13,6 +13,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   int _tema;
   bool _colorSecundario;
+  bool _menu;
   final pref = PreferenciasUsuario();
 
   @override
@@ -20,6 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
     _tema=pref.tema;
     _colorSecundario=pref.secundaryColor;
+    _menu=pref.menu;
   }
 
   _selectedTema(int value){
@@ -102,6 +104,9 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             },
           ),
+          Divider(color: Theme.of(context).primaryColor,),          
+          Text("Menu",style: TextStyle(color: Colors.black, fontSize: 40.0)),
+          _deleteMenu(),
           
 
          ],
@@ -109,9 +114,27 @@ class _SettingsPageState extends State<SettingsPage> {
     ),
     ); 
   }
+
+  Widget _deleteMenu(){
+    return SwitchListTile(            
+            value: _menu, 
+            title: Text("Quitar Noticias"),
+            subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
+            onChanged: (value){
+              setState(() {
+                  _menu=value;
+                  pref.menu=value;           
+              });
+              Navigator.pushNamed(context, "homepage");
+            },
+          );
+  }
+
+
  Widget _imageF(BuildContext context){
     List<String> images=["assets/fondo1.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
-                          "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg"];
+                          "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo7.jpg"
+                          ,"assets/fondo8.jpg"];
     final _screenSize= MediaQuery.of(context).size;
       return Column(
         children: [
