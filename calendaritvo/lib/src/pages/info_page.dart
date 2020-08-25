@@ -15,6 +15,12 @@ class _InfoPageState extends State<InfoPage> {
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: true,
       ),
+      body: Container(        
+        child: Center(        
+          child: Text("En construccion noticias, clendario e informacion importante del ITVO",
+                      style: TextStyle(color: Colors.black, fontSize: 25.0),),
+        ),
+      ),
 
     );
   }

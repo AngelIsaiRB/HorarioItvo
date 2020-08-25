@@ -100,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onChanged: (value){
               setState(() {
               _colorSecundario=value;
-              pref.secundaryColor=value;                  
+              pref.secundaryColor=value;                        
               });
             },
           ),

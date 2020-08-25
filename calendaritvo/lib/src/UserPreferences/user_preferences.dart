@@ -17,7 +17,7 @@ class PreferenciasUsuario{
   //get set genero
 
   get tema{
-    return _prefs.getInt("tema") ?? 1;
+    return _prefs.getInt("tema") ?? 2;
   }
 
   set tema(int value){
