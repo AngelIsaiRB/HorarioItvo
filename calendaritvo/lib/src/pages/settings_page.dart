@@ -1,6 +1,7 @@
 import 'package:calendaritvo/main.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key}) : super(key: key);
@@ -34,7 +35,9 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Container(        
        child: ListView(
-         children: [      
+         children: [ 
+           _imageF(context),
+            Divider(color: Theme.of(context).primaryColor,),     
            Container(
             child: Text("Tema",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
           ),               
@@ -83,30 +86,85 @@ class _SettingsPageState extends State<SettingsPage> {
             )
           ),
            Divider(color: Theme.of(context).primaryColor,),
+           
           Container(
             child: Text("Color",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
           ),
           SwitchListTile(
-            inactiveTrackColor: Theme.of(context).primaryColor,
+            inactiveTrackColor: Colors.pink,
             activeColor: Colors.teal,
-            value: _colorSecundario,
+            value: _colorSecundario, 
             title: Text("Color secundario"),
             onChanged: (value){
               setState(() {
               _colorSecundario=value;
-              pref.secundaryColor=value;    
-              ThemeData.dark();
+              pref.secundaryColor=value;                  
               });
             },
           ),
+          
 
-                                   
-              
-            
-         
          ],
        )
     ),
-    );
+    ); 
   }
+ Widget _imageF(BuildContext context){
+    List<String> images=["assets/fondo1.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
+                          "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg"];
+    final _screenSize= MediaQuery.of(context).size;
+      return Column(
+        children: [
+          Container(
+            alignment: AlignmentDirectional.topStart,
+            child: Text("Fondo",style: TextStyle(color: Colors.black, fontSize: 40.0))),
+          Container(        
+            child: Swiper(
+              itemCount: images.length,
+              itemWidth: _screenSize.width *0.5,
+              itemHeight: _screenSize.height * 0.5,
+              layout: SwiperLayout.STACK,
+              itemBuilder: (BuildContext context, int index){
+                return Container(
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  child: image(index,images));
+              },
+            ),
+          ),
+        ],
+      );      
+    }
+
+    Widget image(int index, List<String> images ){
+      return GestureDetector(
+        child: Image(image: AssetImage(images[index])),
+        onTap: (){
+          showDialog(
+           context: context,
+           barrierDismissible: true,
+           builder: (context){
+               return  AlertDialog(
+                 title: Text("¿Establecer como fondo?"),
+                 actions: [
+                   FlatButton(
+                     child: Text("Si"),
+                     onPressed: (){
+                     pref.imageFond=images[index];
+                     Navigator.pushNamed(context, "homepage");
+                     },
+                   ),
+                   FlatButton(
+                     child: Text("No"),
+                     onPressed: (){
+                       Navigator.pop(context);
+                     },
+                   ),
+                 ],
+               );
+           });
+        },
+      );
+    }
+
 }

@@ -17,8 +17,7 @@ List<String> _dayNames=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
-   Color thema;
-   double _valorporciento=0;
+   Color thema;   
    final materiasBloc = MateriasBlock();  
    final diabloc = DiaBloc();
    double mitadDePantalla;
@@ -93,7 +92,7 @@ class _HorarioPageState extends State<HorarioPage> {
     height: double.infinity,
     
    child: Image(
-      image:AssetImage("assets/fondo6.jpg"),
+      image:AssetImage(pref.imageFond),
       fit: BoxFit.cover,
    ),
     
@@ -101,7 +100,7 @@ class _HorarioPageState extends State<HorarioPage> {
 }
 
 Widget _day(String day){    
-   
+  
   return  Container(    
     child: FutureBuilder(
       future: DBProvider.db.getDia(day) ,
@@ -117,10 +116,11 @@ Widget _day(String day){
         return ListView.builder(
           itemCount: dia.length,
           itemBuilder: (BuildContext context, int index) {
+            
           return Container(          
           child: Column(
             children: [
-              _tarjetas(index, _valorporciento,dia[index],day),
+              _tarjetas(index,barProgress(index),dia[index],day),
               SizedBox(height: 1.0,)
             ],
           ),
@@ -134,28 +134,30 @@ Widget _day(String day){
   
 }
 
-void barProgress(int index){
+double barProgress(int index){
+ 
 if(index == DateTime.now().hour-7){
    
-        _valorporciento=DateTime.now().minute/60;
+        return DateTime.now().minute/60;
         }
         else{
           if(index < DateTime.now().hour-7)
-          _valorporciento=1.0;
+          return .99;
           else
-           _valorporciento=0.0;
+           return 0.0;
 
         } 
 
 }
 
 Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
+  
   index+=7;
   if (pref.tema==1){
      thema=utils.stringToColor(dia.color);
   }
   else{
-     thema = Theme.of(context).backgroundColor;
+     thema =Theme.of(context).backgroundColor;
   }
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
@@ -191,7 +193,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
               value:vaslor,
               minHeight: 10.0,
               backgroundColor: Colors.red[100],
-              valueColor:new AlwaysStoppedAnimation<Color>(Colors.green),                                
+              valueColor:new AlwaysStoppedAnimation<Color>(Colors.greenAccent),                                
             ),
           ],
         )

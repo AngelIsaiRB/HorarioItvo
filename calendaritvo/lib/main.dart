@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(color: Colors.white),
          subtitle1: TextStyle(color: Colors.black),
          subtitle2: TextStyle(color: Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),
-          ),
+          ),        
         backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
 
         

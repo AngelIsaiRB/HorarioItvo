@@ -32,6 +32,14 @@ class PreferenciasUsuario{
     _prefs.setBool("secundaryColor", value);
   }
 
+   get imageFond{
+    return _prefs.getString("imageFond") ?? "assets/fondo6.jpg";
+  }
+
+  set imageFond(String value){
+    _prefs.setString("imageFond", value);
+  }
+
   
 
 
