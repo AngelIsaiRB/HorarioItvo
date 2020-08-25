@@ -121,6 +121,7 @@ Widget _day(String day){
           child: Column(
             children: [
               _tarjetas(index,barProgress(index),dia[index],day),
+              
               SizedBox(height: 1.0,)
             ],
           ),
