@@ -1,14 +1,33 @@
+import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/pages/add_materia.dart';
 import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
 import 'package:flutter/material.dart';
  
-void main() => runApp(MyApp());
+void main() async{ 
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs =  PreferenciasUsuario();
+  await prefs.initprefs();
+  runApp(MyApp());
+
+}
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pref=PreferenciasUsuario();
+    Color primary;
+    Color secundary;
+    if(pref.secundaryColor){
+       
+        primary=Colors.teal;
+        secundary=Colors.teal[50];
+    }
+    else{
+        primary=Colors.pink;
+        secundary=Colors.pink[50];
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Horario Escolar',
@@ -22,7 +41,8 @@ class MyApp extends StatelessWidget {
         "settings"  : (BuildContext context)=>SettingsPage(),
       },
       theme: ThemeData(
-        primaryColor: Colors.pink,
+        primaryColor: primary,
+        primaryColorLight: secundary,
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.white,fontSize: 18.0),
           bodyText2: TextStyle(color: Colors.white),

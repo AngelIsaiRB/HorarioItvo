@@ -1,0 +1,43 @@
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+class PreferenciasUsuario{
+
+  static PreferenciasUsuario _instancia = new PreferenciasUsuario._internal();
+  factory PreferenciasUsuario(){
+    return _instancia;
+  }
+  PreferenciasUsuario._internal();
+  SharedPreferences _prefs ;
+
+  initprefs()async {
+    this._prefs = await SharedPreferences.getInstance();
+  }
+
+  //get set genero
+
+  get tema{
+    return _prefs.getInt("tema") ?? 1;
+  }
+
+  set tema(int value){
+    _prefs.setInt("tema", value);
+  }
+
+  get secundaryColor{
+    return _prefs.getBool("secundaryColor") ?? false;
+  }
+
+  set secundaryColor(bool value){
+    _prefs.setBool("secundaryColor", value);
+  }
+
+  
+
+
+
+
+
+
+
+}

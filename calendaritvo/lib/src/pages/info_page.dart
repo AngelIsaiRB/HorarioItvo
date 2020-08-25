@@ -12,7 +12,7 @@ class _InfoPageState extends State<InfoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Noticias", style: TextStyle(color: Colors.black, fontSize: 30.0 ), ),
-        backgroundColor: Colors.pink[50],
+        backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: true,
       ),
 

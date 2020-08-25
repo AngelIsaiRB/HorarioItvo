@@ -1,3 +1,4 @@
+import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/dias_bloc.dart';
 import 'package:calendaritvo/src/models/dias_model.dart';
@@ -21,17 +22,17 @@ class _HorarioPageState extends State<HorarioPage> {
    final materiasBloc = MateriasBlock();  
    final diabloc = DiaBloc();
    double mitadDePantalla;
-   
+   final pref= PreferenciasUsuario();
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
-  
+    
    // materiasBloc.obtenerMaterias();
     //diabloc.obtenerDia("Lunes");
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink[50],
+        backgroundColor: Theme.of(context).primaryColorLight,
         title: Text(day,style: TextStyle(color:Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),),
         centerTitle: true,
         actions: [
@@ -150,7 +151,7 @@ if(index == DateTime.now().hour-7){
 
 Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
   index+=7;
-  if (1==1){
+  if (pref.tema==1){
      thema=utils.stringToColor(dia.color);
   }
   else{
@@ -235,6 +236,14 @@ _alertMaterias(BuildContext context,DiaModel dia,String day){
             ],
           )
            ),
+        actions: [
+          FlatButton(
+            onPressed: (){
+               Navigator.pushNamed(context, "addMateria");
+            },
+            child: Text("Agregar materia"),
+          )
+        ],
         
       );
       
