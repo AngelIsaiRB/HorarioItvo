@@ -46,7 +46,7 @@ class DBProvider{
       );     
        
       await _rellenarDia(db); 
-      print ("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+      
       }
     );
   }

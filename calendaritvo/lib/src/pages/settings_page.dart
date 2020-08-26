@@ -35,7 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text("Ajustes", style: TextStyle(fontSize: 50.0, color: Colors.black),),
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
-      body: Container(        
+      body: Container(   
+       
        child: ListView(
          children: [ 
            _imageF(context),
