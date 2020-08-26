@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
 ///////////////////////////////////////////////////////////////////////////
   Widget _buttonnavigationBar(BuildContext context){
   return  BottomNavigationBar(
-   
+    backgroundColor: Theme.of(context).primaryColorLight,
     currentIndex: currentIndex,
       onTap: (index){
           setState(() {
