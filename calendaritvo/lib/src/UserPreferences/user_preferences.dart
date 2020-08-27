@@ -47,7 +47,22 @@ class PreferenciasUsuario{
   set menu(bool value){
     _prefs.setBool("menu", value);
   }
-  
+
+  get formIcon{
+    return _prefs.getInt("formIcon") ?? 1;
+  }
+
+  set formIcon(int value){
+    _prefs.setInt("formIcon", value);
+  }
+
+   get progressBar{
+    return _prefs.getBool("progressBar") ?? true;
+  }
+
+  set progressBar(bool value){
+    _prefs.setBool("progressBar", value);
+  }
 
 
 

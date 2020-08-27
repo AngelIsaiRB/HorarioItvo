@@ -17,16 +17,21 @@ List<String> _dayNames=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
-   Color thema;   
+   Color thema;      
    final materiasBloc = MateriasBlock();  
    final diabloc = DiaBloc();
    double mitadDePantalla;
    final pref= PreferenciasUsuario();
+   int _colorThema;
+   int _formIcon;
+   bool _selectorProgress;
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
-    
+  _colorThema = pref.tema;
+  _formIcon=pref.formIcon;
+  _selectorProgress=pref.progressBar;
    // materiasBloc.obtenerMaterias();
     //diabloc.obtenerDia("Lunes");
     return  Scaffold(
@@ -149,15 +154,30 @@ if(index == DateTime.now().hour-7){
         } 
 
 }
-
+Widget _selectForm(int valor, Color color){
+  if   (valor ==1){
+    return  Container(
+                  color: color,//utils.stringToColor(dia.color),
+                  child: SizedBox(width: 45.0,height: 45.0,),
+                );
+  }
+  else{
+    return Container(
+      child: Icon(Icons.fiber_manual_record, color: color,size: 45.0, ),
+    );
+  }
+}
 Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
   
   index+=7;
-  if (pref.tema==1){
+  if (_colorThema==1){
      thema=utils.stringToColor(dia.color);
   }
-  else{
+  else if(_colorThema==2){
      thema =Theme.of(context).backgroundColor;
+  }
+  else{
+    thema=Colors.black38;
   }
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
@@ -171,10 +191,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  color: utils.stringToColor(dia.color),
-                  child: SizedBox(width: 45.0,height: 45.0,),
-                ),                
+                _selectForm(_formIcon,utils.stringToColor(dia.color)),
                 Column(                  
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -192,13 +209,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
               ],
             ),
             SizedBox(height: 15.0,),
-             LinearProgressIndicator(   
-
-              value:vaslor,
-              minHeight: 12.0,
-              backgroundColor: Colors.red[100],
-              valueColor:new AlwaysStoppedAnimation<Color>(Colors.greenAccent),                                
-            ),
+            linearProgressSelector(vaslor,_selectorProgress),
           ],
         )
       ),
@@ -208,7 +219,17 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
  
  
  
- 
+ Widget linearProgressSelector(double vaslor,bool valible){
+   if (valible){
+     return LinearProgressIndicator(   
+              value:vaslor,
+              minHeight: 12.0,
+              backgroundColor: Colors.red[100],
+              valueColor:new AlwaysStoppedAnimation<Color>(Colors.greenAccent),                                
+            );
+   }
+   return Container();
+ }
   
 
   Widget _crearDropdown(BuildContext context, DiaModel dia,String day) {
