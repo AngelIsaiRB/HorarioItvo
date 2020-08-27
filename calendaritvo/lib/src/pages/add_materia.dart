@@ -17,12 +17,13 @@ class _AddMateriState extends State<AddMateri> {
     Colors.blue,
     Colors.red,
     Colors.yellow,
-    Colors.black,
+    Colors.black,    
     Colors.brown,
     Colors.purple,
     Colors.orange,
     Colors.green,
-    Colors.indigo
+    Colors.indigo,
+    Colors.blueGrey,
   ];
 
   final materiasBloc = MateriasBlock();

@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         primaryColor: primary,
         primaryColorLight: secundary,
         textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.white,fontSize: 18.0),
+          bodyText1: TextStyle(color: Colors.white,fontSize: 20.0),
           bodyText2: TextStyle(color: Colors.white),
          subtitle1: TextStyle(color: Colors.black),
          subtitle2: TextStyle(color: Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),

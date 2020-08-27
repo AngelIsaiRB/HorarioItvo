@@ -111,7 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Column(
             children: [
               Container(
-                  color: Colors.green,//utils.stringToColor(dia.color),
+                  color: Colors.pink,//utils.stringToColor(dia.color),
                   child: SizedBox(width: 45.0,height: 45.0,),
                 ),
                 Container(                 
@@ -131,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               Container(
                   //utils.stringToColor(dia.color),
-                  child: Icon(Icons.fiber_manual_record, color: Colors.green,size: 45.0, ),
+                  child: Icon(Icons.fiber_manual_record, color: Colors.pink,size: 45.0, ),
                 ),
                 Container(                 
                  width: MediaQuery.of(context).size.width *0.5,

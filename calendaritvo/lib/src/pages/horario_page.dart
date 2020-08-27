@@ -124,8 +124,12 @@ Widget _day(String day){
           return Container(          
           child: Column(
             children: [
-              _tarjetas(index,barProgress(index),dia[index],day),
-
+              GestureDetector(
+                onTap: (){
+                  _alertMaterias(context,dia[index],day);
+                },
+                child: _tarjetas(index,barProgress(index),dia[index],day)),
+                
               SizedBox(height: 1.0,)
             ],
           ),
@@ -203,7 +207,9 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                 ),
                  Column(
                    children: [                     
-                     _crearDropdown(context,dia,day)
+                     Container(
+                      
+                       child: Icon(Icons.keyboard_arrow_down,size: 40.0, color: Theme.of(context).primaryColor,)),
                    ],
                  ),
               ],
@@ -221,7 +227,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
  
  Widget linearProgressSelector(double vaslor,bool valible){
    if (valible){
-     return LinearProgressIndicator(   
+     return LinearProgressIndicator(                 
               value:vaslor,
               minHeight: 12.0,
               backgroundColor: Colors.red[100],
@@ -231,19 +237,6 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
    return Container();
  }
   
-
-  Widget _crearDropdown(BuildContext context, DiaModel dia,String day) {
-    return Container(
-            child: FlatButton(
-              onPressed: (){
-                _alertMaterias(context,dia,day);
-              },
-              child: Icon(Icons.arrow_drop_down_circle,size: 40.0, color: Theme.of(context).primaryColor,),
-            )
-          );
-  }
-
-
 
 _alertMaterias(BuildContext context,DiaModel dia,String day){
   showDialog(

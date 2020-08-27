@@ -27,11 +27,14 @@ String coloToString(Color color){
  else if(color==Colors.green){
    return "green";
  }
- if(color==Colors.indigo){
+ else if(color==Colors.indigo){
    return "indigo";
  }
- if(color==Colors.white){
+ else if(color==Colors.white){
    return "white";
+ }
+ if(color==Colors.blueGrey){
+   return "blueGrey";
  }
  return "blue";
   
@@ -63,11 +66,14 @@ Color stringToColor(String color){
  else if(color=="green"){
    return Colors.green;
  }
- if(color=="indigo"){
+ else if(color=="indigo"){
    return Colors.indigo;
  }
- if(color=="white"){
+  else if(color=="white"){
    return Colors.white;
+ }
+  if(color=="blueGrey"){
+   return Colors.blueGrey;
  }
  return Colors.blue;
   
