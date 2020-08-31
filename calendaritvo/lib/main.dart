@@ -1,5 +1,6 @@
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/pages/add_materia.dart';
+import 'package:calendaritvo/src/pages/calendario_page.dart';
 import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
@@ -35,10 +36,11 @@ class MyApp extends StatelessWidget {
       ),      
       initialRoute: "homepage",
       routes: {
-        "homepage"  : (BuildContext context)=>HomePage(),
-        "info"      : (BuildContext context)=>InfoPage(),
-        "addMateria": (BuildContext context)=>AddMateri(),
-        "settings"  : (BuildContext context)=>SettingsPage(),
+        "homepage"   : (BuildContext context)=>HomePage(),
+        "info"       : (BuildContext context)=>InfoPage(),
+        "addMateria" : (BuildContext context)=>AddMateri(),
+        "settings"   : (BuildContext context)=>SettingsPage(),
+        "calendario" : (BuildContext context)=>CalendarioPage(),
       },
       theme: ThemeData(
         primaryColor: primary,

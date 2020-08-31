@@ -86,7 +86,12 @@ class _SettingsPageState extends State<SettingsPage> {
           Divider(color: Theme.of(context).primaryColor,),          
           Text("Menu",style: TextStyle(color: Colors.black, fontSize: 40.0)),
           _deleteMenu(),
-          
+          Divider(color: Theme.of(context).primaryColor,), 
+          Divider(color: Theme.of(context).primaryColor,), 
+          Container(
+            child: Text("Desarrollador: Angel Isai Ramirez Bazan "
+                          "-- qwerasdffdeswa@live.com",style: TextStyle(color: Colors.black, fontSize: 12.0), ),
+          ),
 
          ],
        )
@@ -161,7 +166,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   _menu=value;
                   pref.menu=value;           
               });
-              Navigator.pushNamed(context, "homepage");
+              Navigator.pushReplacementNamed(context, "homepage");
             },
           );
   }
@@ -208,7 +213,7 @@ Widget _temaSelector(BuildContext context){
                     ),
                     onTap: (){
                       _selectedTema(index+1);
-                      Navigator.pushNamed(context, "homepage");
+                     Navigator.pushReplacementNamed(context, "homepage");
                     },
                   )
             );
@@ -261,7 +266,7 @@ Widget _temaSelector(BuildContext context){
                      child: Text("Si"),
                      onPressed: (){
                      pref.imageFond=images[index];
-                     Navigator.pushNamed(context, "homepage");
+                    Navigator.pushReplacementNamed(context, "homepage");
                      },
                    ),
                    FlatButton(

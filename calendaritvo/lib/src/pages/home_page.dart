@@ -28,11 +28,11 @@ class _HomePageState extends State<HomePage> {
           title: Text("Horario"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.new_releases),
-          title: Text("Noticias"),
+          icon: Icon(Icons.local_library),
+          title: Text("ITVO"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.info),
+          icon: Icon(Icons.settings),
           title: Text("Ajustes"),
         )];
     }
