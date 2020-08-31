@@ -224,8 +224,8 @@ Widget _temaSelector(BuildContext context){
 
 
  Widget _imageF(BuildContext context){
-    List<String> images=["assets/fondo1.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
-                          "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo7.jpg"
+    List<String> images=["assets/fondo7.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
+                          "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo1.jpg"
                           ,"assets/fondo8.jpg"];
     final _screenSize= MediaQuery.of(context).size;
       return Column(

@@ -1,4 +1,7 @@
+import 'package:calendaritvo/src/models/noticias_model.dart';
+import 'package:calendaritvo/src/provider/noticias_firebase_provider.dart';
 import 'package:calendaritvo/src/widgets/menu_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 class InfoPage extends StatefulWidget {
   InfoPage({Key key}) : super(key: key);
@@ -8,6 +11,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+  final noticiasProvider = NoticiasFirebaseProvider();
 
   final int pagina=0;
   @override
@@ -31,22 +35,49 @@ class _InfoPageState extends State<InfoPage> {
       ),
       drawer: MenuWidget(),
       
-      body: PageView(        
-        children: [
-          _paginas("1"),
-          _paginas("2"),
-          _paginas("3")
-        ],
-      )
+      body: _noticias(),
 
     );
   }
 
-  Widget _paginas(String pg) {
-    return Container(
-      child: Center(
-       
-      ),
+  Widget _noticias() {
+    return FutureBuilder(
+      future: noticiasProvider.cargarNoticias(),      
+      builder: (BuildContext context, AsyncSnapshot<List<Noticia>> snapshot) {
+        if(snapshot.hasData){
+
+          final noticias=snapshot.data;
+          return ListView.builder(
+            itemCount: noticias.length,
+            itemBuilder: (BuildContext context, i){
+              return _crearTarjeta(noticias[i]);
+            }
+            );
+
+        } 
+        else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } 
+      },
     );
+  }
+  Widget _crearTarjeta(Noticia noti){
+    return ListTile(
+      title: Text("${noti.texto}"),
+      subtitle: Text("${noti.link}"),
+      onTap: (){
+        abrirLink(noti.link);
+      },
+    );
+  }
+
+  abrirLink(String link)async{
+    if (await canLaunch(link)) {
+    await launch(link);
+  } else {
+    throw 'Could not launch $link';
+  }
   }
 }
