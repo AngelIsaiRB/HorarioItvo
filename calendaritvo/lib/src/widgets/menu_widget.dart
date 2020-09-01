@@ -1,11 +1,9 @@
-import 'package:calendaritvo/src/pages/calendario_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      
+    return Drawer(      
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -26,15 +24,23 @@ class MenuWidget extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: Icon(Icons.pages, color: Colors.blue,),
+          leading: Icon(Icons.new_releases, color: Colors.blue,),
           title: Text("Noticias", style: TextStyle(color: Colors.black),),
           onTap: (){
               Navigator.pushNamed(context, "info");
           },
         ),
         ListTile(
-          leading: Icon(Icons.party_mode, color: Colors.blue,),
+          leading: Icon(Icons.calendar_today, color: Colors.blue,),
           title: Text("Calendario", style: TextStyle(color: Colors.black),),
+          onTap: (){
+            Navigator.pushNamed(context, "calendario");
+            
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.map, color: Colors.blue,),
+          title: Text("Mapa", style: TextStyle(color: Colors.black),),
           onTap: (){
             Navigator.pushNamed(context, "calendario");
             

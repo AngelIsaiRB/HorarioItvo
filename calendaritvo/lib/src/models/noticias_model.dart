@@ -12,6 +12,7 @@ class Noticia {
         this.importancia,
         this.link,
         this.texto,
+        this.fecha,
     });
 
     String id;
@@ -19,20 +20,23 @@ class Noticia {
     int importancia;
     String link;
     String texto;
+    String fecha;
 
     factory Noticia.fromJson(Map<String, dynamic> json) => Noticia(
-        id: json["id"],
-        imagen: json["imagen"],
-        importancia: json["importancia"],
-        link: json["link"],
-        texto: json["texto"],
+        id            : json["id"],
+        imagen        : json["imagen"],
+        importancia   : json["importancia"],
+        link          : json["link"],
+        texto         : json["texto"],
+        fecha         : json["fecha"],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "imagen": imagen,
-        "importancia": importancia,
-        "link": link,
-        "texto": texto,
+        "id"           : id,
+        "imagen"       : imagen,
+        "importancia"  : importancia,
+        "link"         : link,
+        "texto"        : texto,
+        "fecha"        : fecha,
     };
 }
