@@ -11,8 +11,10 @@ class CalendarioPage extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorLight,
         title: Text("Calendario", style: TextStyle(color: Colors.black, fontSize: 25.0),),
       ),
-      body: Center(
-        
+      body: FadeInImage(
+        image: NetworkImage("https://www.calendario-365.es/jpg/calendario-2020-v2.0.jpg"),
+        placeholder: AssetImage("assets/1.gif"),
+         fit: BoxFit.fitWidth,
       ),
       drawer: MenuWidget(),
     );
