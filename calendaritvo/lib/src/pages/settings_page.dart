@@ -89,9 +89,13 @@ class _SettingsPageState extends State<SettingsPage> {
           Divider(color: Theme.of(context).primaryColor,), 
           Divider(color: Theme.of(context).primaryColor,), 
           Container(
+            color: Colors.green[50],
             child: Text("Desarrollador: Angel Isai Ramirez Bazan "
                           "-- qwerasdffdeswa@live.com",style: TextStyle(color: Colors.black, fontSize: 12.0), ),
           ),
+          SizedBox(
+            height: 20.0,
+          )
 
          ],
        )

@@ -17,29 +17,29 @@ class _InfoPageState extends State<InfoPage> {
   
  
   final int pagina=0;
+  int vista=0;
   @override
   Widget build(BuildContext context) {
    
     return Scaffold(      
-      appBar: AppBar(
+      appBar: AppBar(                       
         title: Container(
-          padding: EdgeInsets.only(top: 10.0),
+          padding: EdgeInsets.only(top: 10.0),          
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [              
-              Text("Noticias", style: TextStyle(color: Colors.black, fontSize: 25.0 ), ),
-              
+              Text("Noticias", style: TextStyle(color: Colors.black, fontSize: 25.0 ), ),                            
             ],
+
           ),
-        ),
-        
+        ),        
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: false,
       ),
-      drawer: MenuWidget(),
-      
+      drawer: MenuWidget(),            
       body: _noticias(),
-
+      floatingActionButton: _floatingB(),
+      
     );
   }
 
@@ -54,7 +54,13 @@ class _InfoPageState extends State<InfoPage> {
             scrollDirection: Axis.vertical,            
             itemCount: noticias.length,
             itemBuilder: (BuildContext context, i){
+              if(vista==1 && noticias[i].importancia==1){
               return _crearTarjeta(noticias[i]);
+              }
+              if(vista==0)
+              return _crearTarjeta(noticias[i]);
+              else
+              return Container();
             }
             );
 
@@ -83,7 +89,9 @@ class _InfoPageState extends State<InfoPage> {
             Container(            
               child: Column(
                 children: [
-                  Text(noti.texto, style:Theme.of(context).textTheme.subtitle1),
+                  Container(
+                    margin: EdgeInsets.all(3.0),
+                    child: Text(noti.texto, style:Theme.of(context).textTheme.subtitle1)),
                   SizedBox(height: 20.0,),
                   Container(                
                     child: Row(
@@ -162,5 +170,19 @@ class _InfoPageState extends State<InfoPage> {
   } else {
     throw 'Could not launch $link';
   }
+  }
+  
+  Widget _floatingB() {
+    Color estado;
+    vista==0?estado=Colors.red:estado=Colors.green;
+    return FloatingActionButton(      
+      child:  Icon(Icons.cached, size: 30.0,),
+      backgroundColor: estado,
+      onPressed: (){  
+        setState(() {
+        vista==0?vista=1:vista=0;          
+        });
+      },
+    );
   }
 }

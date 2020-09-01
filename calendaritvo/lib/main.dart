@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
         primaryColorLight: secundary,
+        primaryIconTheme: IconThemeData(color: Colors.black), 
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.white,fontSize: 20.0),
           bodyText2: TextStyle(color: Colors.white),
