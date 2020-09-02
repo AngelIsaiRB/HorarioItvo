@@ -34,6 +34,7 @@ dependencies:
   shared_preferences: ^0.5.10
   http:
   url_launcher: ^3.0.3
+  flutter_speed_dial: ^1.2.5
 
 dev_dependencies:
   flutter_test:

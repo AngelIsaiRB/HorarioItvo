@@ -21,7 +21,7 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
    
-    return Scaffold(      
+    return Scaffold(        
       appBar: AppBar(                       
         title: Container(
           padding: EdgeInsets.only(top: 10.0),          
