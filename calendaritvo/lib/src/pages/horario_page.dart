@@ -171,6 +171,16 @@ Widget _selectForm(int valor, Color color){
     );
   }
 }
+BorderRadius _selecFormCard(int valor){
+   if(valor==1){
+   return   BorderRadius.circular(0.0);
+   }
+   else{
+     return BorderRadius.circular(20.0);
+   }
+   
+ }
+
 Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){  
   
   index+=7;
@@ -186,7 +196,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
   return Container(
     margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),        
+      borderRadius: _selecFormCard(_formIcon),    //////    
         child: Container(        
            color: thema,
         child: Column(          

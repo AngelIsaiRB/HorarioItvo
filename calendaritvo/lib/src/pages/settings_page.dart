@@ -74,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
            Divider(color: Theme.of(context).primaryColor,),
 
            Container(
-            child: Text("Forma de icono",style: Theme.of(context).textTheme.headline2, ),
+            child: Text("icono/tarjeta",style: Theme.of(context).textTheme.headline2, ),
           ), 
             _iconForm(),
            Divider(color: Theme.of(context).primaryColor,),
