@@ -36,10 +36,10 @@ class _AddMateriState extends State<AddMateri> {
     return Scaffold(
       backgroundColor: Colors.white, // Color.fromRGBO(122, 236, 203, 1.0),
       appBar: AppBar(
-        backgroundColor: Colors.pink[50],
+        backgroundColor: Theme.of(context).primaryColorLight,
         title: Text(
-          "Agrega nueva materia",
-          style: TextStyle(color: Colors.black, fontSize: 25.0),
+          "Nueva materia",
+          style: Theme.of(context).textTheme.headline3,
         ),
       ),
 

@@ -19,21 +19,21 @@ class MenuWidget extends StatelessWidget {
           ),
         ListTile(
           leading: Icon(Icons.home, color: Colors.blue,),
-          title: Text("Horario", style: TextStyle(color: Colors.black),),
+          title: Text("Horario", style: Theme.of(context).textTheme.bodyText1,),
           onTap: (){
               Navigator.pushReplacementNamed(context, "homepage");
           },
         ),
         ListTile(
           leading: Icon(Icons.new_releases, color: Colors.blue,),
-          title: Text("Noticias", style: TextStyle(color: Colors.black),),
+          title: Text("Noticias",  style: Theme.of(context).textTheme.bodyText1,),
           onTap: (){
               Navigator.pushNamed(context, "info");
           },
         ),
         ListTile(
           leading: Icon(Icons.calendar_today, color: Colors.blue,),
-          title: Text("Calendario", style: TextStyle(color: Colors.black),),
+          title: Text("Calendario", style: Theme.of(context).textTheme.bodyText1,),
           onTap: (){
             Navigator.pushNamed(context, "calendario");
             
@@ -41,7 +41,7 @@ class MenuWidget extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.map, color: Colors.blue,),
-          title: Text("Mapa", style: TextStyle(color: Colors.black),),
+          title: Text("Mapa",  style: Theme.of(context).textTheme.bodyText1,),
           onTap: (){
             Navigator.pushNamed(context, "calendario");
             
@@ -49,7 +49,7 @@ class MenuWidget extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.subject, color: Colors.blue,),
-          title: Text("SII", style: TextStyle(color: Colors.black),),
+          title: Text("SII", style: Theme.of(context).textTheme.bodyText1,),
           onTap: (){
             abrirLink("https://www.voaxaca.tecnm.mx/sistema-integral-de-informacion/");
             

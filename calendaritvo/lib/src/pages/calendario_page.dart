@@ -15,7 +15,7 @@ class CalendarioPage extends StatelessWidget {
     return Scaffold(      
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorLight,
-        title: Text("Calendario", style: TextStyle(color: Colors.black, fontSize: 25.0),),
+        title: Text("Calendario",  style: Theme.of(context).textTheme.headline3,),
       ),
       body: _calendario(pantalla),
       drawer: MenuWidget(),
@@ -33,9 +33,10 @@ class CalendarioPage extends StatelessWidget {
               itemCount: calendar.length,
               scrollDirection: Axis.horizontal,              
               itemBuilder: (BuildContext context, i){
-              return Container(
+              return Container(                
                 width: pantalla.width*0.87,                
                 child: Card(
+                  color: Colors.white,
                   elevation: 20.0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                   child: Column(

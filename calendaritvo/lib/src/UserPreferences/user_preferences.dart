@@ -23,13 +23,13 @@ class PreferenciasUsuario{
   set tema(int value){
     _prefs.setInt("tema", value);
   }
-
-  get secundaryColor{
-    return _prefs.getBool("secundaryColor") ?? false;
+  
+  get colorApp{
+    return _prefs.getInt("colorApp") ?? 0;
   }
 
-  set secundaryColor(bool value){
-    _prefs.setBool("secundaryColor", value);
+  set colorApp(int value){
+    _prefs.setInt("colorApp", value);
   }
 
    get imageFond{

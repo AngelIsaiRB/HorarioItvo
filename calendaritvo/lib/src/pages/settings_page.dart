@@ -12,7 +12,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
  
-  bool _colorSecundario;
+  
   bool _menu;
   final pref = PreferenciasUsuario();
   int _formIcon;
@@ -22,7 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() { 
     super.initState();
     
-    _colorSecundario=pref.secundaryColor;
+    
     _menu=pref.menu;
     _formIcon=pref.formIcon;
     _progressBar = pref.progressBar;
@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajustes", style: TextStyle(fontSize: 50.0, color: Colors.black),),
+        title: Text("Ajustes", style: Theme.of(context).textTheme.headline2,),
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
       body: Container(   
@@ -62,29 +62,29 @@ class _SettingsPageState extends State<SettingsPage> {
             Divider(color: Theme.of(context).primaryColor,), 
 
            Container(
-            child: Text("Tema",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
+            child: Text("Tema",style: Theme.of(context).textTheme.headline2, ),
           ),                          
           _temaSelector(context),
            Divider(color: Theme.of(context).primaryColor,),
-
-           Container(
-            child: Text("Forma de icono",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
-          ), 
-            _iconForm(),
+            Container(
+            child: Text("Colores",style: Theme.of(context).textTheme.headline2, ),
+          ),
+          switchColor(),
+           
            Divider(color: Theme.of(context).primaryColor,),
 
            Container(
-            child: Text("Medidor de tiempo",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
+            child: Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2, ),
           ), 
             _progressBarSelector(),
            Divider(color: Theme.of(context).primaryColor,),
-
           Container(
-            child: Text("Ambient Color",style: TextStyle(color: Colors.black, fontSize: 40.0), ),
-          ),
-          switchColor(),
+            child: Text("Forma de icono",style: Theme.of(context).textTheme.headline2, ),
+          ), 
+            _iconForm(),
+          
           Divider(color: Theme.of(context).primaryColor,),          
-          Text("Menu",style: TextStyle(color: Colors.black, fontSize: 40.0)),
+          Text("Menu",style: Theme.of(context).textTheme.headline2,),
           _deleteMenu(),
           Divider(color: Theme.of(context).primaryColor,), 
           Divider(color: Theme.of(context).primaryColor,), 
@@ -176,19 +176,22 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 Widget switchColor(){
-  return SwitchListTile(
-            inactiveTrackColor: Colors.pink,
-            activeColor: Colors.teal,
-            value: _colorSecundario, 
-            title: Text("Color secundario"),
-            subtitle: Text("Reinicia para ver cambios"),
-            onChanged: (value){
-              setState(() {
-              _colorSecundario=value;
-              pref.secundaryColor=value;                        
-              });
-            },
-          );
+  return Container(
+    child: Column(
+      children: [
+        Text("Colores de la Aplicación"),    
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _colorSelect(888, Colors.black, Colors.white),
+          _colorSelect(0,Colors.pink,Colors.pink[50]),
+          _colorSelect(1,  Colors.teal, Colors.teal[50]),
+          _colorSelect(2, Colors.pink[200], Color.fromRGBO(47, 58, 86, 1))
+        ],
+        )        
+      ],
+    ),
+  );
 }
 
 Widget _temaSelector(BuildContext context){
@@ -236,7 +239,7 @@ Widget _temaSelector(BuildContext context){
         children: [
           Container(
             alignment: AlignmentDirectional.topStart,
-            child: Text("Fondo",style: TextStyle(color: Colors.black, fontSize: 40.0))),
+            child: Text("Fondo",style: Theme.of(context).textTheme.headline2,)),
           Container(        
             child: Swiper(
               itemCount: images.length,
@@ -284,6 +287,33 @@ Widget _temaSelector(BuildContext context){
            });
         },
       );
+    }
+
+    Widget _colorSelect(int value, Color color1, Color color2){
+      return GestureDetector(
+            onTap: (){
+              
+              pref.colorApp=value; 
+              Navigator.pushReplacementNamed(context, "restart"); 
+            },
+            child: Container(  
+              height: 50.0,
+              width: 50.0,          
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100.0),
+              gradient:  LinearGradient(
+                 begin: FractionalOffset(0.6,0.0) ,
+                 end:   FractionalOffset(0.0,0.2), 
+                 colors: [
+                  color1,
+                  color2,
+                ]
+                ),
+
+              ),
+              
+            ),
+          );
     }
 
 }

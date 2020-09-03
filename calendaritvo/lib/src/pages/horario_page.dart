@@ -37,11 +37,11 @@ class _HorarioPageState extends State<HorarioPage> {
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorLight,
-        title: Text(day,style: TextStyle(color:Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),),
+        title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon (Icons.add_circle,size: 30.0,color: Colors.black,),
+            icon: Icon (Icons.add_circle,size: 30.0,color: Theme.of(context).primaryColor,),
             onPressed: (){
               Navigator.pushNamed(context, "addMateria");
             },
@@ -202,7 +202,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                     Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),
                     Container(
                       width: mitadDePantalla,
-                      child: Text(dia.materia,style:Theme.of(context).textTheme.bodyText1,maxLines: 1 ,)),
+                      child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
                   ],
                 ),
                  Column(
