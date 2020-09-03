@@ -114,14 +114,14 @@ class _AddMateriState extends State<AddMateri> {
     );
   }
 
-  Widget _imput() {
+  Widget _imput(BuildContext context, setState) {
     return Container(
       height: MediaQuery.of(context).size.width * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       child: Column(
         children: [
           _crearInput(),
-         _crearDropdown()],
+         _crearDropdown(context, setState)],
       ),
     );
   }
@@ -130,7 +130,7 @@ class _AddMateriState extends State<AddMateri> {
     return TextField(
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+        //border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintText: "Materia",
         labelText: "Nombre",
         helperText: "",
@@ -160,7 +160,7 @@ class _AddMateriState extends State<AddMateri> {
     return lista;
   }
 
-  Widget _crearDropdown() {
+  Widget _crearDropdown(BuildContext context, setState) {
     return Row(
       children: [
         Icon(
@@ -176,7 +176,9 @@ class _AddMateriState extends State<AddMateri> {
               value: _opcionSeleccionada,
               items: getOpcionesDropDown(),
               onChanged: (opt) {
-                _opcionSeleccionada = opt;
+                setState(() {
+                  _opcionSeleccionada = opt;
+                });
               },
             ),
           ),
@@ -188,13 +190,14 @@ class _AddMateriState extends State<AddMateri> {
   _mostrarAlerta(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: true,      
       builder: (context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        return StatefulBuilder(
+          builder: (context, setState){
+            return AlertDialog(
+          
           title: Text("Agregar materia"),
-          content: _imput(),
+          content: _imput( context, setState),          
           actions: [
             FlatButton(
               child: Text(
@@ -218,6 +221,8 @@ class _AddMateriState extends State<AddMateri> {
               },
             )
           ],
+        );
+          },
         );
       },
     );
