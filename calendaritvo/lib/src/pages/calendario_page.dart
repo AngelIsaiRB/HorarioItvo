@@ -12,8 +12,7 @@ class CalendarioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pantalla =MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorLight,
+    return Scaffold(      
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorLight,
         title: Text("Calendario", style: TextStyle(color: Colors.black, fontSize: 25.0),),
@@ -98,7 +97,7 @@ class CalendarioPage extends StatelessWidget {
             speddeal('Inscripciones',      Colors.teal,   Icon(Icons.playlist_add)),
             speddeal('Actividades intersemestrales', Colors.yellow,    Icon(Icons.stop, color: Colors.yellow,)),
             speddeal('Segunda oportunidad',          Colors.pink[100], Icon(Icons.stop, color: Colors.pink[100],)),
-            speddeal('Entrga Calificaciones',        Colors.cyan[600], Icon(Icons.stop, color: Colors.cyan[600],)),
+            speddeal('Entrega de calificaciones',        Colors.cyan[600], Icon(Icons.stop, color: Colors.cyan[600],)),
           ],
         );
   }

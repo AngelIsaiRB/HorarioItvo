@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
     else{
         primary=Colors.pink;
         secundary=Colors.pink[50];
+        //Color.fromRGBO(47, 58, 86, 1);
     }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
