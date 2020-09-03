@@ -58,12 +58,12 @@ class _SettingsPageState extends State<SettingsPage> {
        
        child: ListView(
          children: [ 
-           _imageF(context),
+           _imageF(context),           
             Divider(color: Theme.of(context).primaryColor,), 
 
            Container(
             child: Text("Tema",style: Theme.of(context).textTheme.headline2, ),
-          ),                          
+          ),
           _temaSelector(context),
            Divider(color: Theme.of(context).primaryColor,),
             Container(
@@ -74,14 +74,15 @@ class _SettingsPageState extends State<SettingsPage> {
            Divider(color: Theme.of(context).primaryColor,),
 
            Container(
-            child: Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2, ),
-          ), 
-            _progressBarSelector(),
-           Divider(color: Theme.of(context).primaryColor,),
-          Container(
             child: Text("Forma de icono",style: Theme.of(context).textTheme.headline2, ),
           ), 
             _iconForm(),
+           Divider(color: Theme.of(context).primaryColor,),
+            Container(
+            child: Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2, ),
+          ), 
+            _progressBarSelector(),
+          
           
           Divider(color: Theme.of(context).primaryColor,),          
           Text("Menu",style: Theme.of(context).textTheme.headline2,),
@@ -104,7 +105,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _progressBarSelector(){
-    return SwitchListTile(            
+    return SwitchListTile(     
+            activeColor: Theme.of(context).primaryColor,       
             value: _progressBar, 
             title: Text("Activar medidor"),            
             onChanged: (value){
@@ -125,7 +127,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 Container(                 
                  width: MediaQuery.of(context).size.width *0.5,
-                 child: RadioListTile(                         
+                 child: RadioListTile(  
+                   activeColor: Theme.of(context).primaryColor,                         
                         value: 1,
                         title: Text("Cuadrado"),
                         groupValue: _formIcon,
@@ -144,7 +147,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 Container(                 
                  width: MediaQuery.of(context).size.width *0.5,
-                 child: RadioListTile(                         
+                 child: RadioListTile(    
+                        activeColor: Theme.of(context).primaryColor,  
                         value: 2,
                         title: Text("Circular"),
                         groupValue: _formIcon,
@@ -179,16 +183,28 @@ Widget switchColor(){
   return Container(
     child: Column(
       children: [
-        Text("Colores de la Aplicación"),    
+        Text("Colores de la Aplicación", style: Theme.of(context).textTheme.bodyText1),   
+        SizedBox(height: 10.0,), 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _colorSelect(888, Colors.black, Colors.white),
           _colorSelect(0,Colors.pink,Colors.pink[50]),
           _colorSelect(1,  Colors.teal, Colors.teal[50]),
-          _colorSelect(2, Colors.pink[200], Color.fromRGBO(47, 58, 86, 1))
+          _colorSelect(2, Colors.pink[200], Color.fromRGBO(47, 58, 86, 1)),
+          _colorSelect(3, Color.fromRGBO(255, 218, 125, 1), Colors.purple)
         ],
-        )        
+        ),
+         SizedBox(height: 8.0,), 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _colorSelect(4, Colors.purple[50], Colors.redAccent),
+          _colorSelect(5, Color.fromRGBO( 234, 95, 64, 1), Color.fromRGBO( 31, 78, 90, 1)),
+          _colorSelect(6, Color.fromRGBO( 230, 242, 238, 1), Color.fromRGBO( 20, 102, 75, 1)),
+           _colorSelect(7, Color.fromRGBO( 118, 96, 146, 1), Color.fromRGBO( 231, 211, 238, 1))
+        ],
+        )       
       ],
     ),
   );
@@ -198,7 +214,7 @@ Widget _temaSelector(BuildContext context){
   List<String> temas=["assets/tema1.jpg","assets/tema2.jpg","assets/tema3.jpg"];
   List<String> temanames=["Rigel","Betelgeuse","Antares"];
   final _screenSize= MediaQuery.of(context).size;
-  return Container(
+  return Container(    
     child: Swiper(
       itemCount: temas.length,
       itemWidth: _screenSize.width *0.6,
@@ -206,16 +222,12 @@ Widget _temaSelector(BuildContext context){
       layout: SwiperLayout.STACK,
       itemBuilder: (BuildContext context, int index){
                 return Container(
-                  color: Theme.of(context).canvasColor, 
-                  height: double.maxFinite,
-                  width: double.maxFinite,
+                  color: Theme.of(context).canvasColor,                   
                   child: GestureDetector(
                     child: Column(                      
-                      children: [
-                        Container(                                        
-                          child: Image(image: AssetImage(temas[index]), )
-                          ),
-                          Text(temanames[index],style: TextStyle(color: Colors.black, fontSize: 30.0),)
+                      children: [                                                             
+                          Image(image: AssetImage(temas[index]), ),                         
+                          Text(temanames[index],style: Theme.of(context).textTheme.headline3,)
                       ],
                     ),
                     onTap: (){
@@ -231,13 +243,13 @@ Widget _temaSelector(BuildContext context){
 
 
  Widget _imageF(BuildContext context){
-    List<String> images=["assets/fondo7.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
+    List<String> images=["assets/fondo7.jpg","assets/fondo9.jpg","assets/fondo10.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
                           "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo1.jpg"
                           ,"assets/fondo8.jpg"];
     final _screenSize= MediaQuery.of(context).size;
       return Column(
         children: [
-          Container(
+          Container(            
             alignment: AlignmentDirectional.topStart,
             child: Text("Fondo",style: Theme.of(context).textTheme.headline2,)),
           Container(        
@@ -259,33 +271,36 @@ Widget _temaSelector(BuildContext context){
     }
 
     Widget image(int index, List<String> images ){
-      return GestureDetector(
-        child: Image(image: AssetImage(images[index])),
-        onTap: (){
-          showDialog(
-           context: context,
-           barrierDismissible: true,
-           builder: (context){
-               return  AlertDialog(
-                 title: Text("¿Establecer como fondo?"),
-                 actions: [
-                   FlatButton(
-                     child: Text("Si"),
-                     onPressed: (){
-                     pref.imageFond=images[index];
-                    Navigator.pushReplacementNamed(context, "homepage");
-                     },
-                   ),
-                   FlatButton(
-                     child: Text("No"),
-                     onPressed: (){
-                       Navigator.pop(context);
-                     },
-                   ),
-                 ],
-               );
-           });
-        },
+      return Container(
+        color: Colors.black45,
+        child: GestureDetector(
+          child: Image(image: AssetImage(images[index])),
+          onTap: (){
+            showDialog(
+             context: context,
+             barrierDismissible: true,
+             builder: (context){
+                 return  AlertDialog(
+                   title: Text("¿Establecer como fondo?"),
+                   actions: [
+                     FlatButton(
+                       child: Text("Si"),
+                       onPressed: (){
+                       pref.imageFond=images[index];
+                      Navigator.pushReplacementNamed(context, "restart");
+                       },
+                     ),
+                     FlatButton(
+                       child: Text("No"),
+                       onPressed: (){
+                         Navigator.pop(context);
+                       },
+                     ),
+                   ],
+                 );
+             });
+          },
+        ),
       );
     }
 

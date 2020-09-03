@@ -64,7 +64,7 @@ Color stringToColor(String color){
    return Colors.orange;
  }
  else if(color=="green"){
-   return Colors.green;
+   return Colors.greenAccent;
  }
  else if(color=="indigo"){
    return Colors.indigo;

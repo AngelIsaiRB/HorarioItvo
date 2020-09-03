@@ -32,6 +32,29 @@ ThemeData thema(int value){
     colores.add(Colors.pink[200]);
     colores.add(Color.fromRGBO(68, 78, 105, 1));
   }
+  else if(value==3){
+    colores.add(Colors.purple);
+    colores.add(Color.fromRGBO(255, 218, 125, 1));
+  }
+   else if(value==4){
+   colores.add(Colors.redAccent);
+    colores.add(Colors.purple[50]);
+  }
+  else if (value==5){        
+    
+    colores.add(Color.fromRGBO( 234, 95, 64, 1));
+     colores.add(Color.fromRGBO( 31, 78, 90, 1));
+  }
+  else if (value==6){        
+     colores.add(Color.fromRGBO( 230, 242, 238, 1));
+    colores.add(Color.fromRGBO( 20, 102, 75, 1));  
+       
+  }
+  else if (value==7){        
+     colores.add(Color.fromRGBO( 231, 211, 238, 1));
+    colores.add(Color.fromRGBO( 118, 96, 146, 1));  
+       
+  }
     return ThemeData(
         primaryColor: colores[0],
         primaryColorLight: colores[1],

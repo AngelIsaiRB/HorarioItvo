@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/models/noticias_model.dart';
 import 'package:calendaritvo/src/provider/noticias_firebase_provider.dart';
 import 'package:calendaritvo/src/widgets/menu_widget.dart';
@@ -14,7 +15,7 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   final noticiasProvider = NoticiasFirebaseProvider();
-  
+  final pref= PreferenciasUsuario();
  
   final int pagina=0;
   int vista=0;
@@ -37,7 +38,12 @@ class _InfoPageState extends State<InfoPage> {
         centerTitle: false,
       ),
       drawer: MenuWidget(),            
-      body: _noticias(),
+      body: Stack(
+        children: [
+          _imagenFondo(),
+          _noticias(),
+        ],
+      ),
       floatingActionButton: _floatingB(),
       
     );
@@ -183,5 +189,17 @@ class _InfoPageState extends State<InfoPage> {
         });
       },
     );
+  }
+
+  Widget _imagenFondo() {
+   return  Container(
+    width: double.infinity,
+    height: double.infinity,    
+   child: Image(
+      image:AssetImage(pref.imageFond),
+      fit: BoxFit.cover,
+   ),
+    
+  );
   }
 }
