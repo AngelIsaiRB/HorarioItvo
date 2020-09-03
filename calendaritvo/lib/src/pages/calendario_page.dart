@@ -82,9 +82,7 @@ class CalendarioPage extends StatelessWidget {
           closeManually: false,
           curve: Curves.bounceIn,
           overlayColor: Colors.black,
-          overlayOpacity: 0.3,
-          onOpen: () => print('OPENING DIAL'),
-          onClose: () => print('DIAL CLOSED'),
+          overlayOpacity: 0.3,          
           tooltip: 'Speed Dial',
           heroTag: 'speed-dial-hero-tag',
           backgroundColor: Theme.of(context).primaryColor,
@@ -92,15 +90,15 @@ class CalendarioPage extends StatelessWidget {
           elevation: 9.0,
           shape: CircleBorder(),
           children: [            
-            speddeal('Dias inhabiles',     Colors.black, Icon(Icons.warning)),
-            speddeal('Inicio de clases',   Colors.blue,  Icon(Icons.chevron_right)),           
-            speddeal('Fin de clases',      Colors.blue,  Icon(Icons.chevron_left)),
-            speddeal('Periodo vacacional', Colors.orange,  Icon(Icons.sentiment_very_satisfied)),
+            speddeal('Dias inhabiles',     Colors.black,  Icon(Icons.warning)),
+            speddeal('Inicio de clases',   Colors.white,  Icon(Icons.arrow_forward_ios, color: Colors.blue,)),           
+            speddeal('Fin de clases',      Colors.white,  Icon(Icons.arrow_back_ios,    color: Colors.blue,)),
+            speddeal('Periodo vacacional', Colors.orange, Icon(Icons.sentiment_very_satisfied)),
             speddeal('Reinscripciones',    Colors.green,  Icon(Icons.add_alert)),
-            speddeal('Inscripciones',      Colors.teal,  Icon(Icons.playlist_add)),
-            speddeal('Actividades intersemestrales', Colors.yellow,  Icon(Icons.stop, color: Colors.yellow,)),
-            speddeal('Segunda oportunidad', Colors.pink[100],  Icon(Icons.stop, color: Colors.pink[100],)),
-            speddeal('Entrga Calificaciones', Colors.cyan[600],  Icon(Icons.stop, color: Colors.cyan[600],)),
+            speddeal('Inscripciones',      Colors.teal,   Icon(Icons.playlist_add)),
+            speddeal('Actividades intersemestrales', Colors.yellow,    Icon(Icons.stop, color: Colors.yellow,)),
+            speddeal('Segunda oportunidad',          Colors.pink[100], Icon(Icons.stop, color: Colors.pink[100],)),
+            speddeal('Entrga Calificaciones',        Colors.cyan[600], Icon(Icons.stop, color: Colors.cyan[600],)),
           ],
         );
   }
@@ -110,8 +108,7 @@ class CalendarioPage extends StatelessWidget {
               child: ico,
               backgroundColor: c,
               label: t,
-              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
-              onTap: () => print('THIRD CHILD'),
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),            
             );
   }
 }

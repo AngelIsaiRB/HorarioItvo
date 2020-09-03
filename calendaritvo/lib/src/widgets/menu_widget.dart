@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuWidget extends StatelessWidget {
   @override
@@ -45,9 +46,25 @@ class MenuWidget extends StatelessWidget {
             Navigator.pushNamed(context, "calendario");
             
           },
-        ),        
+        ),
+        ListTile(
+          leading: Icon(Icons.subject, color: Colors.blue,),
+          title: Text("SII", style: TextStyle(color: Colors.black),),
+          onTap: (){
+            abrirLink("https://www.voaxaca.tecnm.mx/sistema-integral-de-informacion/");
+            
+          },
+        ),         
         ],
       ),
     );
   }
 }
+
+abrirLink(String link)async{
+    if (await canLaunch(link)) {
+    await launch(link);
+  } else {
+    throw 'Could not launch $link';
+  }
+  }

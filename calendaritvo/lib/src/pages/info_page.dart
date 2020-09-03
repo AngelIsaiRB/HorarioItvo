@@ -48,8 +48,7 @@ class _InfoPageState extends State<InfoPage> {
       future: noticiasProvider.cargarNoticias(),      
       builder: (BuildContext context, AsyncSnapshot<List<Noticia>> snapshot) {
         if(snapshot.hasData){
-
-          final noticias=snapshot.data;
+          final noticias=snapshot.data;          
           return ListView.builder(
             scrollDirection: Axis.vertical,            
             itemCount: noticias.length,
