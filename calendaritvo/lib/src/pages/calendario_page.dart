@@ -33,8 +33,7 @@ class CalendarioPage extends StatelessWidget {
               itemCount: calendar.length,
               scrollDirection: Axis.horizontal,              
               itemBuilder: (BuildContext context, i){
-              return Container(                
-                width: pantalla.width*0.87,                
+              return Container(                                          
                 child: Card(
                   color: Colors.white,
                   elevation: 20.0,
@@ -44,13 +43,14 @@ class CalendarioPage extends StatelessWidget {
                       SizedBox(height: 10.0,),
                       Text("${calendar[i].mes}-${calendar[i].year}",style: TextStyle(color: Colors.black,fontSize: 30.0),),
                       Container(
+                        width: pantalla.width*0.87,
+                       height: pantalla.height*0.8,
                         child: FadeInImage(
                             image: NetworkImage("${calendar[i].link}"),                            
                             placeholder: AssetImage("assets/1.gif"),
-                            fadeInDuration: Duration( milliseconds: 200 ),                            
-                            fit: BoxFit.fill,
-                             width: pantalla.width*0.87,
-                             height: pantalla.height*0.8,                            
+                            fadeInDuration: Duration( milliseconds: 100 ),                            
+                           
+                                                     
                         ),
                       ),
 

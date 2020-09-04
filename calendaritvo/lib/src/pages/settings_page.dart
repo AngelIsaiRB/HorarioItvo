@@ -85,7 +85,15 @@ class _SettingsPageState extends State<SettingsPage> {
           
           
           Divider(color: Theme.of(context).primaryColor,),          
-          Text("Menu",style: Theme.of(context).textTheme.headline2,),
+          Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left:15.0 ),
+                color: Color.fromRGBO(48, 48, 48, 1.0),
+                child: Icon(Icons.warning,size: 50.0, color: Colors.yellow,)),
+              Text("Menu",style: Theme.of(context).textTheme.headline2,),
+            ],
+          ),
           _deleteMenu(),
           Divider(color: Theme.of(context).primaryColor,), 
           Divider(color: Theme.of(context).primaryColor,), 
@@ -165,18 +173,21 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _deleteMenu(){
-    return SwitchListTile(            
-            value: _menu, 
-            title: Text("Quitar Noticias"),
-            subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
-            onChanged: (value){
-              setState(() {
-                  _menu=value;
-                  pref.menu=value;           
-              });
-              Navigator.pushReplacementNamed(context, "homepage");
-            },
-          );
+    return Container(
+     
+      child: SwitchListTile(            
+              value: _menu, 
+              title: Text("Quitar Noticias"),
+              subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
+              onChanged: (value){
+                setState(() {
+                    _menu=value;
+                    pref.menu=value;           
+                });
+                Navigator.pushReplacementNamed(context, "homepage");
+              },
+            ),
+    );
   }
 
 Widget switchColor(){
@@ -191,15 +202,17 @@ Widget switchColor(){
           _colorSelect(888, Colors.black, Colors.white),
           _colorSelect(0,Colors.pink,Colors.pink[50]),
           _colorSelect(1,  Colors.teal, Colors.teal[50]),
-          _colorSelect(2, Colors.pink[200], Color.fromRGBO(47, 58, 86, 1)),
-          _colorSelect(3, Color.fromRGBO(255, 218, 125, 1), Colors.purple)
+         _colorSelect(8,Colors.blue, Colors.blue[50]),
+          _colorSelect(4, Colors.purple[50], Colors.redAccent),
+          
         ],
         ),
          SizedBox(height: 8.0,), 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _colorSelect(4, Colors.purple[50], Colors.redAccent),
+         _colorSelect(3, Color.fromRGBO(255, 218, 125, 1), Colors.purple),
+           _colorSelect(2, Colors.pink[200], Color.fromRGBO(47, 58, 86, 1)),
           _colorSelect(5, Color.fromRGBO( 234, 95, 64, 1), Color.fromRGBO( 31, 78, 90, 1)),
           _colorSelect(6, Color.fromRGBO( 230, 242, 238, 1), Color.fromRGBO( 20, 102, 75, 1)),
            _colorSelect(7, Color.fromRGBO( 118, 96, 146, 1), Color.fromRGBO( 231, 211, 238, 1))

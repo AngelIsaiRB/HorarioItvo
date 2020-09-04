@@ -40,12 +40,15 @@ class _HorarioPageState extends State<HorarioPage> {
         title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon (Icons.add_circle,size: 30.0,color: Theme.of(context).primaryColor,),
-            onPressed: (){
-              Navigator.pushNamed(context, "addMateria");
-            },
-            )
+          Container(
+            margin: EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
+              onPressed: (){
+                Navigator.pushNamed(context, "addMateria");
+              },
+              ),
+          )
         ],
         
       ), 

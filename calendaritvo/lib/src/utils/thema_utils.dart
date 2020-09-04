@@ -37,8 +37,8 @@ ThemeData thema(int value){
     colores.add(Color.fromRGBO(255, 218, 125, 1));
   }
    else if(value==4){
-   colores.add(Colors.redAccent);
-    colores.add(Colors.purple[50]);
+   colores.add(Colors.red);
+    colores.add(Colors.red[50]);
   }
   else if (value==5){        
     
@@ -54,6 +54,9 @@ ThemeData thema(int value){
      colores.add(Color.fromRGBO( 231, 211, 238, 1));
     colores.add(Color.fromRGBO( 118, 96, 146, 1));  
        
+  }else if (value==8){        
+     colores.add(Colors.blue);  
+     colores.add(Colors.blue[50]);          
   }
     return ThemeData(
         primaryColor: colores[0],
