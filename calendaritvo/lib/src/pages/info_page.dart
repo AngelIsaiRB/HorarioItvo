@@ -16,9 +16,12 @@ class InfoPage extends StatefulWidget {
 class _InfoPageState extends State<InfoPage> {
   final noticiasProvider = NoticiasFirebaseProvider();
   final pref= PreferenciasUsuario();
- 
-  final int pagina=0;
   int vista=0;
+  bool _modoVista;
+  void initState() { 
+    super.initState();
+    _modoVista=pref.formaNoticias;
+  }
   @override
   Widget build(BuildContext context) {
    
@@ -36,6 +39,17 @@ class _InfoPageState extends State<InfoPage> {
         ),        
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: false,
+        actions: [
+          FlatButton(
+            child:  _modoVista?Icon(Icons.view_list):Icon(Icons.call_to_action),
+            onPressed: (){
+              setState(() {
+                _modoVista==true? _modoVista=false:_modoVista=true;
+                pref.formaNoticias=_modoVista;
+              });
+            },
+          )
+        ],
       ),
       drawer: MenuWidget(),            
       body: Stack(
@@ -60,10 +74,11 @@ class _InfoPageState extends State<InfoPage> {
             itemCount: noticias.length,
             itemBuilder: (BuildContext context, i){
               if(vista==1 && noticias[i].importancia==1){
-              return _crearTarjeta(noticias[i]);
+              //return _crearTarjeta2(noticias[i]);
+              return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
               }
               if(vista==0)
-              return _crearTarjeta(noticias[i]);
+              return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
               else
               return Container();
             }
@@ -104,7 +119,8 @@ class _InfoPageState extends State<InfoPage> {
                      children: [   
                         Container(
                           width: 200,
-                          child: Text(noti.link,style:TextStyle(color: Colors.black, fontSize: 12.0), overflow: TextOverflow.ellipsis,)),                                    
+                          child: Text(noti.link,style:TextStyle(color: Colors.black, fontSize: 12.0), overflow: TextOverflow.ellipsis,)
+                          ),                                    
                         Text(noti.fecha, style:Theme.of(context).textTheme.subtitle1),
                      ], 
                     ),
@@ -201,5 +217,59 @@ class _InfoPageState extends State<InfoPage> {
    ),
     
   );
+  }
+
+  Widget _crearTarjeta2(Noticia noti){
+    Color colorImp = Colors.green;
+    if(noti.importancia==1)colorImp=Colors.red;
+    final size=MediaQuery.of(context).size;
+      final tarjeta= Container(
+        child: Stack(
+          children: [
+            Card(
+              elevation: 20.0,
+              child: Row(
+                children: [
+                 FadeInImage(                
+                  image: NetworkImage("${noti.imagen}"),
+                  placeholder: AssetImage("assets/1.gif"),
+                  fadeInDuration: Duration(milliseconds: 200),
+                  height: 100,
+                  width: size.width *0.2,
+                  fit: BoxFit.contain,
+                ),
+                Container(
+                  width: size.width*0.7,
+                  child: ListTile(
+                    title: Text(noti.texto, style:Theme.of(context).textTheme.bodyText2),
+                    subtitle: Column(
+                      children: [
+                        SizedBox(height: 5.0,),                      
+                        Text(noti.link,style:TextStyle(color: Colors.black, fontSize: 12.0), overflow: TextOverflow.ellipsis,)
+                      ],
+                    ),
+                  ),
+                ),                
+                ],
+              ),
+            ),
+            //_etiqueta(noti.importancia)
+            Container(
+              height: 10.0,
+              width: size.width*0.2,
+              margin: EdgeInsets.only(left: 10.0),
+              color: colorImp,
+            )
+          ],
+        ),
+      );
+
+      return GestureDetector(
+      child: tarjeta,
+      onTap: (){
+        abrirLink(noti.link);
+      },
+    );
+
   }
 }

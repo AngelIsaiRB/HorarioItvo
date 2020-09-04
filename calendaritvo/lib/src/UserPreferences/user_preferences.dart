@@ -64,6 +64,14 @@ class PreferenciasUsuario{
     _prefs.setBool("progressBar", value);
   }
 
+   get formaNoticias{
+    return _prefs.getBool("formaNoticias") ?? true;
+  }
+
+  set formaNoticias(bool value){
+    _prefs.setBool("formaNoticias", value);
+  }
+
 
 
 
