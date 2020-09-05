@@ -9,12 +9,13 @@ ThemeData thema(int value){
           primaryColorLight:Color.fromRGBO(38, 38, 38,1),         
           brightness: Brightness.dark,
           primarySwatch: Colors.orange, 
+          primaryColorDark: Colors.white,
           backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),           
           textTheme: TextTheme(
           headline3: TextStyle(color:Colors.white,fontSize:35.0, fontStyle: FontStyle.italic  ),
           headline2: TextStyle(color: Colors.white, fontSize: 40.0),
           bodyText1: TextStyle(color: Colors.white,fontSize: 20.0),
-          bodyText2: TextStyle(color: Colors.black,fontSize: 17.0),//texto tarjeta
+          bodyText2: TextStyle(color: Colors.white,fontSize: 17.0),//texto tarjeta
          subtitle1: TextStyle(color: Colors.white),// opciones en ajjstes
          subtitle2: TextStyle(color: Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),//texto hora horari
           ),
@@ -64,12 +65,12 @@ ThemeData thema(int value){
         
         primaryIconTheme: IconThemeData(color: Colors.black), //menu noticias
         textTheme: TextTheme(
-          headline3: TextStyle(color:Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),
-          headline2: TextStyle(color: Colors.black, fontSize: 40.0),
-          bodyText1: TextStyle(color: Colors.black,fontSize: 20.0),
-          bodyText2: TextStyle(color: Colors.black,fontSize: 17.0),
-         subtitle1: TextStyle(color: Colors.black),
-         subtitle2: TextStyle(color: Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),
+          headline3: TextStyle(color : Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),
+          headline2: TextStyle(color : Colors.black, fontSize: 40.0),
+          bodyText1: TextStyle(color : Colors.black,fontSize: 20.0),
+          bodyText2: TextStyle(color : Colors.black,fontSize: 17.0),
+         subtitle1: TextStyle (color : Colors.black),
+         subtitle2: TextStyle (color : Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),
           ),        
         backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
 

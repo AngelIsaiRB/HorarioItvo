@@ -161,6 +161,7 @@ if(index == DateTime.now().hour-7){
         } 
 
 }
+
 Widget _selectForm(int valor, Color color){
   if   (valor ==1){
     return  Container(
@@ -174,6 +175,7 @@ Widget _selectForm(int valor, Color color){
     );
   }
 }
+
 BorderRadius _selecFormCard(int valor){
    if(valor==1){
    return   BorderRadius.circular(0.0);
@@ -236,8 +238,6 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
   );
 }
  
- 
- 
  Widget linearProgressSelector(double vaslor,bool valible){
    if (valible){
      return LinearProgressIndicator(                 
@@ -250,7 +250,6 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
    return Container();
  }
   
-
 _alertMaterias(BuildContext context,DiaModel dia,String day){
   showDialog(
     context: context,
@@ -306,11 +305,7 @@ Widget _listViewMaterias(DiaModel dia,String day) {
           itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
-            title: Text(materia[index].name, style: TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
-              backgroundColor: Colors.transparent
-                 ),),
+            title: Text(materia[index].name, style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){              
               DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
               Navigator.pop(context);
@@ -324,4 +319,5 @@ Widget _listViewMaterias(DiaModel dia,String day) {
       },
     );
   }
+
 }

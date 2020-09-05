@@ -55,7 +55,11 @@ class _InfoPageState extends State<InfoPage> {
       body: Stack(
         children: [
           _imagenFondo(),
-          _noticias(),
+          AnimatedContainer(
+            child: _noticias(),
+           duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOutBack,
+            ),
         ],
       ),
       floatingActionButton: _floatingB(),
@@ -69,20 +73,27 @@ class _InfoPageState extends State<InfoPage> {
       builder: (BuildContext context, AsyncSnapshot<List<Noticia>> snapshot) {
         if(snapshot.hasData){
           final noticias=snapshot.data;          
-          return ListView.builder(
-            scrollDirection: Axis.vertical,            
-            itemCount: noticias.length,
-            itemBuilder: (BuildContext context, i){
-              if(vista==1 && noticias[i].importancia==1){
-              //return _crearTarjeta2(noticias[i]);
-              return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
+          return  RefreshIndicator(
+            onRefresh: (){            
+            setState(() {
+            });
+            return  noticiasProvider.cargarNoticias();
+            },
+              child: ListView.builder(
+              scrollDirection: Axis.vertical,            
+              itemCount: noticias.length,
+              itemBuilder: (BuildContext context, i){
+                if(vista==1 && noticias[i].importancia==1){
+                //return _crearTarjeta2(noticias[i]);
+                return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
+                }
+                if(vista==0)
+                return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
+                else
+                return Container();
               }
-              if(vista==0)
-              return _modoVista?_crearTarjeta(noticias[i]):_crearTarjeta2(noticias[i]);
-              else
-              return Container();
-            }
-            );
+              ),
+          );
 
         } 
         else{
@@ -93,10 +104,12 @@ class _InfoPageState extends State<InfoPage> {
       },
     );
   }
+
   Widget _crearTarjeta(Noticia noti){
     final crad=Stack(
           children: [
-            Container(                            
+            Container(  
+              color: Theme.of(context).canvasColor,                          
             child: Column(
             children: [                
                 FadeInImage(
@@ -119,7 +132,7 @@ class _InfoPageState extends State<InfoPage> {
                      children: [   
                         Container(
                           width: 200,
-                          child: Text(noti.link,style:TextStyle(color: Colors.black, fontSize: 12.0), overflow: TextOverflow.ellipsis,)
+                          child: Text(noti.link, style:Theme.of(context).textTheme.subtitle1, overflow: TextOverflow.ellipsis,)
                           ),                                    
                         Text(noti.fecha, style:Theme.of(context).textTheme.subtitle1),
                      ], 
@@ -223,10 +236,12 @@ class _InfoPageState extends State<InfoPage> {
     Color colorImp = Colors.green;
     if(noti.importancia==1)colorImp=Colors.red;
     final size=MediaQuery.of(context).size;
-      final tarjeta= Container(
+      final tarjeta= Container(         
+        margin: EdgeInsets.only(bottom:10.0 ),
         child: Stack(
           children: [
             Card(
+              color:Theme.of(context).canvasColor,
               elevation: 20.0,
               child: Row(
                 children: [
@@ -245,7 +260,7 @@ class _InfoPageState extends State<InfoPage> {
                     subtitle: Column(
                       children: [
                         SizedBox(height: 5.0,),                      
-                        Text(noti.link,style:TextStyle(color: Colors.black, fontSize: 12.0), overflow: TextOverflow.ellipsis,)
+                        Text(noti.link,style:TextStyle(color:Theme.of(context).primaryColorDark, fontSize: 12.0), overflow: TextOverflow.ellipsis,)
                       ],
                     ),
                   ),
