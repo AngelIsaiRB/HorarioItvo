@@ -59,32 +59,32 @@ class _SettingsPageState extends State<SettingsPage> {
        child: ListView(
          children: [ 
            _imageF(context),           
-            Divider(color: Theme.of(context).primaryColor,), 
+            SizedBox(height: 20.0,), 
 
            Container(
             child: Text("Tema",style: Theme.of(context).textTheme.headline2, ),
           ),
           _temaSelector(context),
-           Divider(color: Theme.of(context).primaryColor,),
+           SizedBox(height: 20.0,),
             Container(
             child: Text("Colores",style: Theme.of(context).textTheme.headline2, ),
           ),
           switchColor(),
            
-           Divider(color: Theme.of(context).primaryColor,),
+           SizedBox(height: 20.0,),
 
            Container(
             child: Text("icono/tarjeta",style: Theme.of(context).textTheme.headline2, ),
           ), 
             _iconForm(),
-           Divider(color: Theme.of(context).primaryColor,),
+           SizedBox(height: 20.0,),
             Container(
             child: Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2, ),
           ), 
             _progressBarSelector(),
           
           
-          Divider(color: Theme.of(context).primaryColor,),          
+          SizedBox(height: 20.0,),          
           Row(
             children: [
               Container(
@@ -95,8 +95,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           _deleteMenu(),
-          Divider(color: Theme.of(context).primaryColor,), 
-          Divider(color: Theme.of(context).primaryColor,), 
+          SizedBox(height: 20.0,), 
+          SizedBox(height: 20.0,), 
           Container(
             color: Colors.green[50],
             child: Text("Desarrollador: Angel Isai Ramirez Bazan "
@@ -285,7 +285,7 @@ Widget _temaSelector(BuildContext context){
 
     Widget image(int index, List<String> images ){
       return Container(
-        color: Colors.black45,
+        
         child: GestureDetector(
           child: Image(image: AssetImage(images[index])),
           onTap: (){

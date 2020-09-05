@@ -40,6 +40,7 @@ class MenuWidget extends StatelessWidget {
               
             },
           ),
+          /*
           ListTile(
             leading: Icon(Icons.map, color: Theme.of(context).primaryColor,),
             title: Text("Mapa",  style: Theme.of(context).textTheme.bodyText1,),
@@ -47,6 +48,7 @@ class MenuWidget extends StatelessWidget {
               Navigator.pushNamed(context, "calendario");            
             },
           ),
+          */
           ListTile(
             leading: Icon(Icons.subject, color: Theme.of(context).primaryColor,),
             title: Text("SII", style: Theme.of(context).textTheme.bodyText1,),

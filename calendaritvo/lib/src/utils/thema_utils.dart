@@ -13,7 +13,7 @@ ThemeData thema(int value){
           backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),           
           textTheme: TextTheme(
           headline3: TextStyle(color:Colors.white,fontSize:35.0, fontStyle: FontStyle.italic  ),
-          headline2: TextStyle(color: Colors.white, fontSize: 40.0),
+          headline2: TextStyle(color: Colors.white, fontSize: 30.0),
           bodyText1: TextStyle(color: Colors.white,fontSize: 20.0),
           bodyText2: TextStyle(color: Colors.white,fontSize: 17.0),//texto tarjeta
          subtitle1: TextStyle(color: Colors.white),// opciones en ajjstes
@@ -62,11 +62,11 @@ ThemeData thema(int value){
     return ThemeData(
         primaryColor: colores[0],
         primaryColorLight: colores[1],
-        
+        cardColor: Colors.grey[200],
         primaryIconTheme: IconThemeData(color: Colors.black), //menu noticias
         textTheme: TextTheme(
           headline3: TextStyle(color : Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),
-          headline2: TextStyle(color : Colors.black, fontSize: 40.0),
+          headline2: TextStyle(color : Colors.black, fontSize: 30.0),
           bodyText1: TextStyle(color : Colors.black,fontSize: 20.0),
           bodyText2: TextStyle(color : Colors.black,fontSize: 17.0),
          subtitle1: TextStyle (color : Colors.black),

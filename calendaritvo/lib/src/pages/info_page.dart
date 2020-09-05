@@ -108,17 +108,19 @@ class _InfoPageState extends State<InfoPage> {
   Widget _crearTarjeta(Noticia noti){
     final crad=Stack(
           children: [
-            Container(  
-              color: Theme.of(context).canvasColor,                          
+            Container(              
+              color: Theme.of(context).cardColor,                          
             child: Column(
             children: [                
-                FadeInImage(
-                image: NetworkImage("${noti.imagen}"),
-                placeholder: AssetImage("assets/1.gif"),
-                fadeInDuration: Duration(milliseconds: 200),
-                height: 300,
-                fit: BoxFit.cover,
-              ),           
+                Container(                                   
+                  child: FadeInImage(
+                  image: NetworkImage("${noti.imagen}"),
+                  placeholder: AssetImage("assets/1.gif"),
+                  fadeInDuration: Duration(milliseconds: 200),
+                  height: 300,
+                  fit: BoxFit.cover,
+              ),
+                ),           
             Container(            
               child: Column(
                 children: [
