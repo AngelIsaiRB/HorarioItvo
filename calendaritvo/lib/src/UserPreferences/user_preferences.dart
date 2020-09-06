@@ -72,6 +72,14 @@ class PreferenciasUsuario{
     _prefs.setBool("formaNoticias", value);
   }
 
+   get welcomePage{
+    return _prefs.getBool("welcomePage") ?? true;
+  }
+
+  set welcomePage(bool value){
+    _prefs.setBool("welcomePage", value);
+  }
+
 
 
 

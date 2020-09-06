@@ -203,10 +203,9 @@ Widget switchColor(){
           _colorSelect(0,Colors.pink,Colors.pink[50]),
           _colorSelect(1,  Colors.teal, Colors.teal[50]),
          _colorSelect(8,Colors.blue, Colors.blue[50]),
-          _colorSelect(4, Colors.purple[50], Colors.redAccent),
-          
+          _colorSelect(4, Colors.purple[50], Colors.redAccent),          
         ],
-        ),
+        ),        
          SizedBox(height: 8.0,), 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

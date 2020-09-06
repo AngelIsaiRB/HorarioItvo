@@ -4,6 +4,7 @@ import 'package:calendaritvo/src/pages/calendario_page.dart';
 import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
+import 'package:calendaritvo/src/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/thema_utils.dart' as utils;
  
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Horario Escolar',
       home: Scaffold(                
       ),      
-      initialRoute: "homepage",
+      initialRoute: pref.welcomePage==true?"welcomePage":"homepage",
       routes: {
         "homepage"   : (BuildContext context)=>HomePage(),
         "info"       : (BuildContext context)=>InfoPage(),
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         "settings"   : (BuildContext context)=>SettingsPage(),
         "calendario" : (BuildContext context)=>CalendarioPage(),
         "restart"    : (BuildContext context)=>MyApp(),
+        "welcomePage": (BuildContext context)=>WelcomePage(),
       },
       
        theme: them,
