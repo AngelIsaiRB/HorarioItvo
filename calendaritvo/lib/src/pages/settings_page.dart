@@ -94,17 +94,22 @@ class _SettingsPageState extends State<SettingsPage> {
               Text("Menu",style: Theme.of(context).textTheme.headline2,),
             ],
           ),
-          _deleteMenu(),
-          SizedBox(height: 20.0,), 
+          _deleteMenu(),          
+          SizedBox(
+            height: 20.0,
+          ),
+          Text("Version 1.4.0    "
+               "Esta version no guarda tu horario en la nube "
+               "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
+               ),
+        
           SizedBox(height: 20.0,), 
           Container(
             color: Colors.green[50],
             child: Text("Desarrollador: Angel Isai Ramirez Bazan "
                           "-- qwerasdffdeswa@live.com",style: TextStyle(color: Colors.black, fontSize: 12.0), ),
           ),
-          SizedBox(
-            height: 20.0,
-          )
+
 
          ],
        )
@@ -203,7 +208,7 @@ Widget switchColor(){
           _colorSelect(0,Colors.pink,Colors.pink[50]),
           _colorSelect(1,  Colors.teal, Colors.teal[50]),
          _colorSelect(8,Colors.blue, Colors.blue[50]),
-          _colorSelect(4, Colors.purple[50], Colors.redAccent),          
+          _colorSelect(4, Colors.purple[50], Colors.yellow),          
         ],
         ),        
          SizedBox(height: 8.0,), 
@@ -257,7 +262,9 @@ Widget _temaSelector(BuildContext context){
  Widget _imageF(BuildContext context){
     List<String> images=["assets/fondo7.jpg","assets/fondo9.jpg","assets/fondo10.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
                           "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo1.jpg"
-                          ,"assets/fondo8.jpg"];
+                          ,"assets/fondo8.jpg","assets/fondo11.jpg","assets/fondo12.jpg","assets/fondo13.jpg"
+                          ,"assets/fondo14.jpg","assets/fondo15.jpg","assets/fondo16.jpg","assets/fondo17.jpg"
+                          ,"assets/fondo18.jpg","assets/fondo19.jpg"];
     final _screenSize= MediaQuery.of(context).size;
       return Column(
         children: [

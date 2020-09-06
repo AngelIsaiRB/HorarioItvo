@@ -256,8 +256,9 @@ _alertMaterias(BuildContext context,DiaModel dia,String day){
     barrierDismissible: true, 
     builder: (context) {
       return AlertDialog(
-        title: Text("Escoje materia"),
-        content: Container(
+        backgroundColor: Theme.of(context).canvasColor,
+        title: Text("Selecciona materia"),
+        content: Container(          
           width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -273,7 +274,7 @@ _alertMaterias(BuildContext context,DiaModel dia,String day){
             onPressed: (){
                Navigator.pushNamed(context, "addMateria");
             },
-            child: Text("Agregar materia"),
+            child: Text("Agregar materia", style: TextStyle(fontSize: 20.0),),
           )
         ],
         
@@ -295,7 +296,7 @@ Widget _listViewMaterias(DiaModel dia,String day) {
           );
         }
         final materia = snapshot.data;
-        if (materia.length == 0) {
+        if (materia.length == 1) {
           return Center(
             child: Text("No hay materias"),
           );

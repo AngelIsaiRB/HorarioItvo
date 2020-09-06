@@ -39,7 +39,7 @@ ThemeData thema(int value){
   }
    else if(value==4){
    colores.add(Colors.red);
-    colores.add(Colors.red[50]);
+    colores.add(Colors.yellow[50]);
   }
   else if (value==5){        
     
@@ -73,6 +73,7 @@ ThemeData thema(int value){
          subtitle2: TextStyle (color : Colors.white, backgroundColor: Colors.black26, fontSize: 17.0),
           ),        
         backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
+        
 
         
       );
