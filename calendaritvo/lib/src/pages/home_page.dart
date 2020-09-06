@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     if( ! pref.menu){
       _menu=[BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today),
-          title: Text("Horario"),
+          title: Text("Horario "),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.local_library),
