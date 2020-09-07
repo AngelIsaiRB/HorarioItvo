@@ -122,8 +122,8 @@ Widget _day(String day){
         
         return ListView.builder(
           itemCount: dia.length,
-          itemBuilder: (BuildContext context, int index) {
-            
+          controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
+          itemBuilder: (BuildContext context, int index) {            
           return Container(          
           child: Column(
             children: [
