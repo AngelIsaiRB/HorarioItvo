@@ -98,10 +98,13 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(
             height: 20.0,
           ),
-          Text("Version 1.4.0    "
-               "Esta version no guarda tu horario en la nube "
-               "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
-               ),
+          Container(
+            margin: EdgeInsets.all(10.0),
+            child: Text("Version 1.4.1   ⛔"
+                 "Esta version no guarda tu horario en la nube "
+                 "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
+                 ),
+          ),
         
           SizedBox(height: 20.0,), 
           Container(
