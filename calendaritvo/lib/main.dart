@@ -36,7 +36,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final pref=PreferenciasUsuario();    
-    final them=utils.thema(pref.colorApp);    
+    final them=utils.thema(pref.colorApp);     
+
+    //end notificatrions 
   
     return MaterialApp(
       debugShowCheckedModeBanner: false,
