@@ -5,6 +5,7 @@ import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
 import 'package:calendaritvo/src/pages/welcome_page.dart';
+import 'package:calendaritvo/src/provider/firebase_messagin.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/thema_utils.dart' as utils;
  
@@ -16,7 +17,22 @@ void main() async{
 
 }
  
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+
+
+
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    final ProviderMessages messagesFirebase = new ProviderMessages();
+    messagesFirebase.initNotifications();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final pref=PreferenciasUsuario();    

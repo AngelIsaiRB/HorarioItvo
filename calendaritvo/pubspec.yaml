@@ -35,6 +35,7 @@ dependencies:
   http:
   url_launcher: ^3.0.3
   flutter_speed_dial: ^1.2.5
+  firebase_messaging: 
 
 dev_dependencies:
   flutter_test:

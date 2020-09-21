@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "760196524551",
+    "firebase_url": "https://itvo-6103d.firebaseio.com",
+    "project_id": "itvo-6103d",
+    "storage_bucket": "itvo-6103d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760196524551:android:13e216cb0fa3cafde718a2",
+        "android_client_info": {
+          "package_name": "com.angelisairb.Horario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760196524551-grde4gn4btrrfm8uirqis6bb9rk6ftj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.angelisairb.Horario",
+            "certificate_hash": "54aa2d527dad9f466caeb26c7ee23f123e8fcd06"
+          }
+        },
+        {
+          "client_id": "760196524551-4nr6bdfrggo6hbv9hl2594b05g8vo8ii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq4QEajmOaXsjegAsv0iwllpOWbSg7x7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760196524551-4nr6bdfrggo6hbv9hl2594b05g8vo8ii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

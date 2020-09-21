@@ -72,7 +72,7 @@ class _HorarioPageState extends State<HorarioPage> {
                 Container(
                   color: Colors.black26,
                   child: Center(
-                    child: Text("¡Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
+                    child: Text("¡  Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
                   ),
                 ),               
               ],
@@ -154,7 +154,7 @@ if(index == DateTime.now().hour-7){
         }
         else{
           if(index < DateTime.now().hour-7)
-          return .99;
+          return 1.0;
           else
            return 0.0;
 
