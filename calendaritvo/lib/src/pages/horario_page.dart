@@ -118,7 +118,7 @@ class _HorarioPageState extends State<HorarioPage> {
 
 Widget _day(String day, int horas){    
   //DBProvider.db.getHorasDias();
-  return  Container(    
+  return Container(    
     child: FutureBuilder(
       future: DBProvider.db.getDia(day) ,            
       builder: (BuildContext context, AsyncSnapshot<List<DiaModel>> snapshot){
@@ -130,7 +130,7 @@ Widget _day(String day, int horas){
         final dia = snapshot.data;
         
         return ListView.builder(
-          itemCount: horas,
+          itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) {            
           return Container(          
@@ -140,7 +140,9 @@ Widget _day(String day, int horas){
                 onTap: (){
                   _alertMaterias(context,dia[index],day);
                 },
-                child: _tarjetas(index,barProgress(index),dia[index],day)),
+                child: (index!=horas)?_tarjetas(index,barProgress(index),dia[index],day):addButtonHora(day,horas)
+                ),                
+                
                 
               SizedBox(height: 1.0,)
             ],
@@ -152,6 +154,47 @@ Widget _day(String day, int horas){
     ),
    
   );
+  
+}
+
+Widget addButtonHora(String day, int horas){
+ 
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+        
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(50)
+        ),
+        child: FlatButton(
+          onPressed: (){
+              setState(() {
+              DBProvider.db.restarNumeroDeHoras(day, horas);            
+              });
+          },
+          child: Text("Eliminar"),
+        ),
+       ),
+        (horas!=12)?Container(        
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.circular(50)
+        ),
+        child: FlatButton(
+          onPressed: (){
+              setState(() {
+              DBProvider.db.agregarNumeroDeHoras(day, horas);            
+              });
+          },
+          child: Text("Agregar"),
+        ),
+       ):Container(),
+       
+      ],
+    );
+  
   
 }
 

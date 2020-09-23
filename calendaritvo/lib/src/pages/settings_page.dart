@@ -234,11 +234,12 @@ Widget _temaSelector(BuildContext context){
   List<String> temas=["assets/tema1.jpg","assets/tema2.jpg","assets/tema3.jpg"];
   List<String> temanames=["Rigel","Betelgeuse","Antares"];
   final _screenSize= MediaQuery.of(context).size;
-  return Container(    
+  return Container( 
+   
     child: Swiper(
       itemCount: temas.length,
       itemWidth: _screenSize.width *0.6,
-      itemHeight: _screenSize.height * 0.6,
+      itemHeight: _screenSize.height * 0.63,
       layout: SwiperLayout.STACK,
       itemBuilder: (BuildContext context, int index){
                 return Container(

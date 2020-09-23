@@ -131,7 +131,18 @@ class DBProvider{
     final res = await db.rawUpdate("Update $day SET materia='$materia' WHERE id=$id");
     return res;
   }
-  
+  agregarNumeroDeHoras(String day, int number)async {
+    final db = await database;
+    number++;
+    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
+    print(res);
+  }
+  restarNumeroDeHoras(String day, int number)async {
+    final db = await database;
+    number--;
+    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
+    print(res);
+  }
 
 
 
