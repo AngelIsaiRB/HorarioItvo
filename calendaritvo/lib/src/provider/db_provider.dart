@@ -91,7 +91,7 @@ class DBProvider{
       final res= await db.query("DiasHoras");
       List<int> horas=[];
       res.forEach((element) => horas.add(element["horas"]));
-      print(horas);
+      //print(horas);
       return horas;
 
   }
@@ -157,7 +157,12 @@ class DBProvider{
     await db.execute("update ${dia} set range='${hora}' where id=$id");
   }
 
-
+  eliminarDB()async{
+    final db= await database;    
+    
+    await deleteDatabase(db.path);
+    _dataBase=await initDB();
+  }
 
 
 }

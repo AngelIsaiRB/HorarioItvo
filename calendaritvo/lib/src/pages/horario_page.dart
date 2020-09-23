@@ -256,7 +256,7 @@ DateTime b=DateTime(horaActual.year,horaActual.month,horaActual.day,hfianl,mfina
  */
 if((a.compareTo(horaActual)==-1)&&(b.compareTo(horaActual)==1)){
  int x=horaActual.difference(a).inMinutes;
- print(x/b.difference(a).inMinutes);
+ //print(x/b.difference(a).inMinutes);
  return x/b.difference(a).inMinutes;
 }
   return (a.compareTo(horaActual)<0)?1.0:0.0;
