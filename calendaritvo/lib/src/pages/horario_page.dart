@@ -246,22 +246,22 @@ double barProgress(int index, DiaModel dia){
  int minicial=int.parse(lista[1]);
  int hfianl=  int.parse(lista[2]);
  int mfinal=  int.parse(lista[3]);
- print("----------------------------------------------------------------");
-print("$hinicial:$minicial----- $hfianl:$mfinal");
- 
- print("-------------------------DateTime.now().hour---------------------------------------");
- 
-if(DateTime.now().hour==hinicial){
- int intervalo=hfianl-hinicial;
- int minutos=((hfianl*60+mfinal)-(hinicial*60+minicial));
- return (DateTime.now().minute/((minutos==0)?60:minutos))/((intervalo==0)?1:intervalo);
+DateTime horaActual=DateTime.now();
+DateTime a=DateTime(horaActual.year,horaActual.month,horaActual.day,hinicial,minicial);
+DateTime b=DateTime(horaActual.year,horaActual.month,horaActual.day,hfianl,mfinal);
+/*
+   valor  "a" . compare ("fecha") 
+  si a es antes que la "fecha" devulve -1                     R:-1 -----------(compare(X)------------- R:1)
+  si a es despues de "fecha" regresa un 0 
+ */
+if((a.compareTo(horaActual)==-1)&&(b.compareTo(horaActual)==1)){
+ int x=horaActual.difference(a).inMinutes;
+ print(x/b.difference(a).inMinutes);
+ return x/b.difference(a).inMinutes;
 }
-else if(DateTime.now().hour>hinicial){
-  return 1.0;
-}
-else{
-  return 0.0;
-}
+  return (a.compareTo(horaActual)<0)?1.0:0.0;
+
+  
 
 }
 
