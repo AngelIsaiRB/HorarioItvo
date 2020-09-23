@@ -140,6 +140,9 @@ Widget _day(String day, int horas){
                 onTap: (){
                   _alertMaterias(context,dia[index],day);
                 },
+                onLongPress: (){
+                  seleccionarHora(context);
+                },
                 child: (index!=horas)?_tarjetas(index,barProgress(index),dia[index],day):addButtonHora(day,horas)
                 ),                
                 
@@ -155,6 +158,38 @@ Widget _day(String day, int horas){
    
   );
   
+} 
+
+seleccionarHora(context)async {
+  final time = await showTimePicker(
+     helpText: "Escoje la hora inicial",
+     confirmText: "OK",
+     cancelText: "Cancelar",
+    context: context,
+    initialTime: TimeOfDay(hour: 00, minute: 00),
+  builder: (BuildContext context, Widget child) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+      child: child,
+    );
+  },
+  );
+ 
+  final time2 = await showTimePicker(
+    helpText: "Escoje la hora final",
+    confirmText: "OK",
+     cancelText: "Cancelar",
+    context: context,
+    initialTime: TimeOfDay(hour: time!=null?time.hour:00, minute:time!=null?time.hour:00),    
+  builder: (BuildContext context, Widget child) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+      child: child,
+    );
+  },
+  );
+  if(time!=null && time2!=null)
+  print("${time.hour}:${time.minute}-${time2.hour}:${time2.minute}");
 }
 
 Widget addButtonHora(String day, int horas){
@@ -262,11 +297,11 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _selectForm(_formIcon,utils.stringToColor(dia.color)),
+                 _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
                 Column(                  
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),
+                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),                      
                     Container(
                       width: mitadDePantalla,
                       child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
@@ -274,8 +309,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                 ),
                  Column(
                    children: [                     
-                     Container(
-                      
+                     Container(                      
                        child: Icon(Icons.keyboard_arrow_down,size: 40.0, color: Theme.of(context).primaryColor,)),
                    ],
                  ),
