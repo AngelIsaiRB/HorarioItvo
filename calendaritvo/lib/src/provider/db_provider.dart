@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 export 'package:calendaritvo/src/models/materia_model.dart';
-
+//Aisai56-
 class DBProvider{
 
   static Database _dataBase;
@@ -37,22 +37,30 @@ class DBProvider{
       onOpen: (db){},
       onCreate: (Database db, int version) async {       
       await db.execute("Create table Materia   (id INTEGER PRIMARY KEY, name TEXT, color TEXT)") ;        
-      await db.execute("Create table Lunes     (id INTEGER PRIMARY KEY, materia TEXT, horas int)");  
-      await db.execute("Create table Martes    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
-      await db.execute("Create table Miercoles (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
-      await db.execute("Create table Jueves    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
-      await db.execute("Create table Viernes   (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
-      await db.execute("Create table Sabado    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");          
+      await db.execute("Create table Lunes     (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");  
+      await db.execute("Create table Martes    (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");
+      await db.execute("Create table Miercoles (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");
+      await db.execute("Create table Jueves    (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");
+      await db.execute("Create table Viernes   (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");
+      await db.execute("Create table Sabado    (id INTEGER PRIMARY KEY, materia TEXT, horas int,range varchar(15))");          
       await db.execute("INSERT into Materia(name,color) values('Libre','white')");   
 
-     // await db.execute("Create table DiasHoras (id INTEGER PRIMARY KEY, name TEXT, horas int)"); 
-      //await _rellenarDiasHoras(db);      
+     await db.execute("Create table DiasHoras (id INTEGER PRIMARY KEY, name TEXT, horas int)"); 
+     await _rellenarDiasHoras(db);      
 
       await _rellenarDia(db);     
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         print ("---------------Actualizo DB : $newVersion ---------");
          await db.execute("Create table DiasHoras (id INTEGER PRIMARY KEY, name TEXT, horas int)"); 
+          List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
+         for(int i=0;i<_nombredias.length;i++){
+           await db.execute("ALTER tABLE ${_nombredias[i]} ADD  range varchar(15)");
+           for(int y=0;y<12;y++){
+            await db.execute("update ${_nombredias[i]} set range='${7+y}:00-${8+y}:00' where id=$y");
+           }
+           print("actualizar tabla ${_nombredias[i]}");
+         }
          await _rellenarDiasHoras(db);
           print ("---------------Fin de Actualizacion DB : $newVersion ---------");
       },
@@ -62,17 +70,17 @@ class DBProvider{
 
   _rellenarDiasHoras(db) async{    
     print("Crea Tabla DiasHoras-*****************");
-    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","D"];    
+    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];    
     for (var i = 0; i < _nombredias.length; i++) {
       await db.execute("insert into DiasHoras (name,horas) values('${_nombredias[i]}',1)");
     }
   }
 
   _rellenarDia(db)async {
-    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","D"];    
+    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];    
     for (var j = 0; j < 6; j++) {
       for (var i = 0; i < 12; i++) {
-      await db.execute("INSERT into ${_nombredias[j]} (materia) values('Libre')");
+      await db.execute("INSERT into ${_nombredias[j]} (materia,range) values('Libre','${7+i}:00-${8+i}:00')");
 
     }
     }
@@ -118,7 +126,7 @@ class DBProvider{
 
   Future<List<DiaModel>> getDia(String dia) async{
     final db = await database;
-    final res = await db.rawQuery("SELECT $dia.id , $dia.materia , Materia.color from $dia , Materia WHERE $dia.materia=Materia.name ");
+    final res = await db.rawQuery("SELECT $dia.id , $dia.materia,$dia.range , Materia.color from $dia , Materia WHERE $dia.materia=Materia.name ");
     List<DiaModel> list = res.isNotEmpty ? 
                               res.map((item) => DiaModel.fromJson(item)).
                               toList()
@@ -143,6 +151,12 @@ class DBProvider{
     final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
     print(res);
   }
+
+  actualizarRangedeHoras(String dia,String hora,int id)async{
+    final db =await database;
+    await db.execute("update ${dia} set range='${hora}' where id=$id");
+  }
+
 
 
 

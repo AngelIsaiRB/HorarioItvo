@@ -141,7 +141,7 @@ Widget _day(String day, int horas){
                   _alertMaterias(context,dia[index],day);
                 },
                 onLongPress: (){
-                  seleccionarHora(context);
+                  seleccionarHora(context,day, dia[index]);
                 },
                 child: (index!=horas)?_tarjetas(index,barProgress(index),dia[index],day):addButtonHora(day,horas)
                 ),                
@@ -160,13 +160,13 @@ Widget _day(String day, int horas){
   
 } 
 
-seleccionarHora(context)async {
+seleccionarHora(context,String day, DiaModel dia)async {
   final time = await showTimePicker(
      helpText: "Escoje la hora inicial",
      confirmText: "OK",
-     cancelText: "Cancelar",
+     cancelText: "Cancelar",  
     context: context,
-    initialTime: TimeOfDay(hour: 00, minute: 00),
+    initialTime: TimeOfDay(hour: (int.parse(dia.range.substring(0,dia.range.indexOf(":")))), minute: 00),
   builder: (BuildContext context, Widget child) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
@@ -177,19 +177,24 @@ seleccionarHora(context)async {
  
   final time2 = await showTimePicker(
     helpText: "Escoje la hora final",
-    confirmText: "OK",
-     cancelText: "Cancelar",
+    confirmText: "OK",    
+    cancelText: "Cancelar",    
     context: context,
-    initialTime: TimeOfDay(hour: time!=null?time.hour:00, minute:time!=null?time.hour:00),    
-  builder: (BuildContext context, Widget child) {
+    initialTime: TimeOfDay(hour: time!=null?time.hour:00, minute:time!=null?time.minute:00),    
+    builder: (BuildContext context, Widget child) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
       child: child,
     );
   },
   );
-  if(time!=null && time2!=null)
-  print("${time.hour}:${time.minute}-${time2.hour}:${time2.minute}");
+  if(time!=null && time2!=null){
+    //"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}"
+    setState(() {
+    DBProvider.db.actualizarRangedeHoras(day,"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}",dia.id);      
+    });
+  }
+  
 }
 
 Widget addButtonHora(String day, int horas){
@@ -301,7 +306,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                 Column(                  
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("$index:00-${index+1}:00 Hrs", style:Theme.of(context).textTheme.subtitle2),                      
+                    Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
                     Container(
                       width: mitadDePantalla,
                       child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
