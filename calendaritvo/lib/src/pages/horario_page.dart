@@ -143,7 +143,7 @@ Widget _day(String day, int horas){
                 onLongPress: (){
                   seleccionarHora(context,day, dia[index]);
                 },
-                child: (index!=horas)?_tarjetas(index,barProgress(index),dia[index],day):addButtonHora(day,horas)
+                child: (index!=horas)?_tarjetas(index,barProgress(index,dia[index]),dia[index],day):addButtonHora(day,horas)
                 ),                
                 
                 
@@ -238,19 +238,30 @@ Widget addButtonHora(String day, int horas){
   
 }
 
-double barProgress(int index){
+double barProgress(int index, DiaModel dia){
+ String z=dia.range;
+ z= z.replaceAll("-", ":");
+ List<String> lista=z.split(":");
+ int hinicial=int.parse(lista[0]);
+ int minicial=int.parse(lista[1]);
+ int hfianl=  int.parse(lista[2]);
+ int mfinal=  int.parse(lista[3]);
+ print("----------------------------------------------------------------");
+print("$hinicial:$minicial----- $hfianl:$mfinal");
  
-if(index == DateTime.now().hour-7){
-   
-        return DateTime.now().minute/60;
-        }
-        else{
-          if(index < DateTime.now().hour-7)
-          return 1.0;
-          else
-           return 0.0;
-
-        } 
+ print("-------------------------DateTime.now().hour---------------------------------------");
+ 
+if(DateTime.now().hour==hinicial){
+ int intervalo=hfianl-hinicial;
+ int minutos=((hfianl*60+mfinal)-(hinicial*60+minicial));
+ return (DateTime.now().minute/((minutos==0)?60:minutos))/((intervalo==0)?1:intervalo);
+}
+else if(DateTime.now().hour>hinicial){
+  return 1.0;
+}
+else{
+  return 0.0;
+}
 
 }
 
