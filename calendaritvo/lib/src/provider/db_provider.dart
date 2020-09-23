@@ -17,38 +17,55 @@ class DBProvider{
   DBProvider._();
 
   Future<Database> get database async {
-    if(_dataBase!=null)
+    
+    if(_dataBase!=null){    
+     
     return _dataBase;
+    }
     
     _dataBase= await initDB();
     return _dataBase;  
   }
   initDB() async{
-
+ 
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join( documentsDirectory.path,"HorarioDB.db" );
     
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onOpen: (db){},
-      onCreate: (Database db, int version) async {
-      await db.execute("Create table Materia (id INTEGER PRIMARY KEY, name TEXT, color TEXT)") ;      
-      await db.execute("Create table Lunes     (id INTEGER PRIMARY KEY, materia TEXT)");  
-      await db.execute("Create table Martes    (id INTEGER PRIMARY KEY, materia TEXT)");
-      await db.execute("Create table Miercoles (id INTEGER PRIMARY KEY, materia TEXT)");
-      await db.execute("Create table Jueves    (id INTEGER PRIMARY KEY, materia TEXT)");
-      await db.execute("Create table Viernes   (id INTEGER PRIMARY KEY, materia TEXT)");
-      await db.execute("Create table Sabado    (id INTEGER PRIMARY KEY, materia TEXT)");    
+      onCreate: (Database db, int version) async {       
+      await db.execute("Create table Materia   (id INTEGER PRIMARY KEY, name TEXT, color TEXT)") ;        
+      await db.execute("Create table Lunes     (id INTEGER PRIMARY KEY, materia TEXT, horas int)");  
+      await db.execute("Create table Martes    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
+      await db.execute("Create table Miercoles (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
+      await db.execute("Create table Jueves    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
+      await db.execute("Create table Viernes   (id INTEGER PRIMARY KEY, materia TEXT, horas int)");
+      await db.execute("Create table Sabado    (id INTEGER PRIMARY KEY, materia TEXT, horas int)");          
+      await db.execute("INSERT into Materia(name,color) values('Libre','white')");   
+
+     // await db.execute("Create table DiasHoras (id INTEGER PRIMARY KEY, name TEXT, horas int)"); 
+      //await _rellenarDiasHoras(db);      
+
+      await _rellenarDia(db);     
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        print ("---------------Actualizo DB : $newVersion ---------");
+         await db.execute("Create table DiasHoras (id INTEGER PRIMARY KEY, name TEXT, horas int)"); 
+         await _rellenarDiasHoras(db);
+          print ("---------------Fin de Actualizacion DB : $newVersion ---------");
+      },
       
-      await db.execute(
-          "INSERT into Materia(name,color) values('Libre','white')"
-      );     
-       
-      await _rellenarDia(db); 
-      
-      }
     );
+  }
+
+  _rellenarDiasHoras(db) async{    
+    print("Crea Tabla DiasHoras-*****************");
+    List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","D"];    
+    for (var i = 0; i < _nombredias.length; i++) {
+      await db.execute("insert into DiasHoras (name,horas) values('${_nombredias[i]}',1)");
+    }
   }
 
   _rellenarDia(db)async {
@@ -61,7 +78,15 @@ class DBProvider{
     }
   }
   
+  Future<List<int>> getHorasDias()async{
+      final db= await database;
+      final res= await db.query("DiasHoras");
+      List<int> horas=[];
+      res.forEach((element) => horas.add(element["horas"]));
+      print(horas);
+      return horas;
 
+  }
   nuevaMateria(MateriaModel nuevaM) async{
     final db = await database;
     final res = await db.insert("Materia", nuevaM.toJson());

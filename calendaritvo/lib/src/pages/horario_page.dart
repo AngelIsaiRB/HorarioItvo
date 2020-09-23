@@ -19,7 +19,7 @@ class _HorarioPageState extends State<HorarioPage> {
    String day=_dayNames[DateTime.now().weekday-1];
    Color thema;      
    final materiasBloc = MateriasBlock();  
-   final diabloc = DiaBloc();
+   //final diabloc = DiaBloc();
    double mitadDePantalla;
    final pref= PreferenciasUsuario();
    int _colorThema;
@@ -57,24 +57,28 @@ class _HorarioPageState extends State<HorarioPage> {
           _imagenFondo(),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-            child: PageView(              
+            child: FutureBuilder(
+                  future: DBProvider.db.getHorasDias(),                  
+                  builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
+                    if(snapshot.hasData){
+                       return  PageView(              
               scrollDirection: Axis.horizontal,             
               controller: PageController(
                 initialPage: DateTime.now().weekday-1,
               ),
-              children: [                
-                _day("Lunes",),
-                _day("Martes"),
-                _day("Miercoles"),
-                _day("Jueves"),
-                _day("Viernes"),
-                _day("Sabado"), 
-                Container(
+              children: [    
+                _day("Lunes", snapshot.data[0]),
+                _day("Martes", snapshot.data[1]),
+                _day("Miercoles", snapshot.data[2]),
+                _day("Jueves", snapshot.data[3]),
+                _day("Viernes", snapshot.data[4]),
+                _day("Sabado", snapshot.data[5]),
+                 Container(
                   color: Colors.black26,
                   child: Center(
                     child: Text("¡  Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
                   ),
-                ),               
+                ),              
               ],
               onPageChanged:(index){
                
@@ -84,7 +88,12 @@ class _HorarioPageState extends State<HorarioPage> {
                    // image=_images[index+1];
                   });
               },              
-            ),
+            );
+                    }
+                    return Container();
+                  },
+                ),
+                
           ),
         ],
       ),     
@@ -107,8 +116,8 @@ class _HorarioPageState extends State<HorarioPage> {
   );
 }
 
-Widget _day(String day){    
-  
+Widget _day(String day, int horas){    
+  //DBProvider.db.getHorasDias();
   return  Container(    
     child: FutureBuilder(
       future: DBProvider.db.getDia(day) ,            
@@ -121,7 +130,7 @@ Widget _day(String day){
         final dia = snapshot.data;
         
         return ListView.builder(
-          itemCount: dia.length,
+          itemCount: horas,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) {            
           return Container(          
