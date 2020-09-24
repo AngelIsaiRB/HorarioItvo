@@ -225,7 +225,7 @@ Widget addButtonHora(String day, int horas){
           child: Icon(Icons.delete_forever,color:Colors.white),
         ),
        ):Container(),
-        (horas!=11)?Container(        
+        (horas!=12)?Container(        
         decoration: BoxDecoration(
           color: Color.fromRGBO(0, 38, 77, 0.8),
           borderRadius: BorderRadius.circular(70)

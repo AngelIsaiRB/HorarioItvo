@@ -76,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
              color: Theme.of(context).cardColor,
             margin: EdgeInsets.all(10.0),
-            child: Text("Version 1.4.1   ⛔"
+            child: Text("Version 1.5.1   ⛔"
                  "Esta version no guarda tu horario en la nube "
                  "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
                  ),

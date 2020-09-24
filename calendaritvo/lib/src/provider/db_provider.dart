@@ -56,8 +56,8 @@ class DBProvider{
           List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
          for(int i=0;i<_nombredias.length;i++){
            await db.execute("ALTER tABLE ${_nombredias[i]} ADD  range varchar(15)");
-           for(int y=0;y<12;y++){
-            await db.execute("update ${_nombredias[i]} set range='${7+y}:00-${8+y}:00' where id=$y");
+           for(int y=0;y<=12;y++){
+            await db.execute("update ${_nombredias[i]} set range='${6+y}:00-${7+y}:00' where id=$y");
            }
            print("actualizar tabla ${_nombredias[i]}");
          }
@@ -69,7 +69,7 @@ class DBProvider{
   }
 
   _rellenarDiasHoras(db) async{    
-    print("Crea Tabla DiasHoras-*****************");
+   
     List<String> _nombredias =["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];    
     for (var i = 0; i < _nombredias.length; i++) {
       await db.execute("insert into DiasHoras (name,horas) values('${_nombredias[i]}',1)");
@@ -142,7 +142,7 @@ class DBProvider{
   agregarNumeroDeHoras(String day, int number)async {
     final db = await database;
     number++;
-    if(number!=12)
+    if(number!=13)
     final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
     
   }
