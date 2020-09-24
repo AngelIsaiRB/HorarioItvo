@@ -180,7 +180,7 @@ seleccionarHora(context,String day, DiaModel dia)async {
     confirmText: "OK",    
     cancelText: "Cancelar",    
     context: context,
-    initialTime: TimeOfDay(hour: time!=null?time.hour:00, minute:time!=null?time.minute:00),    
+    initialTime: TimeOfDay(hour: time!=null?time.hour+1:00, minute:time!=null?time.minute:00),    
     builder: (BuildContext context, Widget child) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
@@ -205,7 +205,7 @@ Widget addButtonHora(String day, int horas){
         Container(
         
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Color.fromRGBO(153, 0, 0, 0.6),
           borderRadius: BorderRadius.circular(50)
         ),
         child: FlatButton(
@@ -214,13 +214,13 @@ Widget addButtonHora(String day, int horas){
               DBProvider.db.restarNumeroDeHoras(day, horas);            
               });
           },
-          child: Text("Eliminar"),
+          child: Icon(Icons.delete_forever),
         ),
        ),
-        (horas!=12)?Container(        
+        (horas!=11)?Container(        
         decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.circular(50)
+          color: Color.fromRGBO(0, 38, 77, 0.6),
+          borderRadius: BorderRadius.circular(70)
         ),
         child: FlatButton(
           onPressed: (){
@@ -228,7 +228,7 @@ Widget addButtonHora(String day, int horas){
               DBProvider.db.agregarNumeroDeHoras(day, horas);            
               });
           },
-          child: Text("Agregar"),
+          child: Icon(Icons.add),
         ),
        ):Container(),
        
