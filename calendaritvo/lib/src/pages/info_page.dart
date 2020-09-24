@@ -32,7 +32,7 @@ class _InfoPageState extends State<InfoPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [              
-              Text("Noticias",  style: Theme.of(context).textTheme.headline3, ),                            
+              Text("I T V O",  style: Theme.of(context).textTheme.headline3, ),                            
             ],
 
           ),

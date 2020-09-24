@@ -64,18 +64,15 @@ class _SettingsPageState extends State<SettingsPage> {
             _temaSelector(context),                   
             Container( color: Theme.of(context).cardColor,child: switchColor()),                                 
             _iconForm(),                      
-            Container( color: Theme.of(context).cardColor,child: _progressBarSelector()),                                         
-            Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left:15.0 ),
-                color: Color.fromRGBO(48, 48, 48, 1.0),
-                child: Icon(Icons.warning,size: 50.0, color: Colors.yellow,)),
-              Text("Menu",style: Theme.of(context).textTheme.headline2,),
-            ],
-          ),
-          _deleteMenu(),          
-                   
+            Container( color: Theme.of(context).cardColor,child: _progressBarSelector()),   
+             _notificaciones(),                                                  
+          Container( color: Theme.of(context).cardColor,child: _deleteMenu()),   
+             
+         
+          SizedBox(
+            height: 20.0,
+          ),          
+          _restaurar(),     
           Container(
              color: Theme.of(context).cardColor,
             margin: EdgeInsets.all(10.0),
@@ -83,10 +80,6 @@ class _SettingsPageState extends State<SettingsPage> {
                  "Esta version no guarda tu horario en la nube "
                  "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
                  ),
-          ),
-        _restaurar(),
-           SizedBox(
-            height: 20.0,
           ),
           SizedBox(height: 20.0,), 
           datoDeDesarollador(),
@@ -173,20 +166,33 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _deleteMenu(){
-    return Container(
-     
-      child: SwitchListTile(            
-              value: _menu, 
-              title: Text("Quitar Noticias"),
-              subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
-              onChanged: (value){
-                setState(() {
-                    _menu=value;
-                    pref.menu=value;           
-                });
-                Navigator.pushReplacementNamed(context, "homepage");
-              },
-            ),
+    return Column(
+      children: [
+        Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left:15.0 ),
+                color: Color.fromRGBO(48, 48, 48, 1.0),
+                child: Icon(Icons.warning,size: 50.0, color: Colors.yellow,)),
+              Text("Menu",style: Theme.of(context).textTheme.headline2,),
+            ],
+          ),
+        Container(
+         
+          child: SwitchListTile(            
+                  value: _menu, 
+                  title: Text("Quitar Noticias"),
+                  subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
+                  onChanged: (value){
+                    setState(() {
+                        _menu=value;
+                        pref.menu=value;           
+                    });
+                    Navigator.pushReplacementNamed(context, "homepage");
+                  },
+                ),
+        ),
+      ],
     );
   }
 
@@ -403,7 +409,13 @@ Widget _temaSelector(BuildContext context){
                  );
              });
           },
-          child: Text("Restablecer Horario",style: TextStyle(fontSize: 20),),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.warning),
+              Text("Restablecer Horario",style: TextStyle(fontSize: 20),),
+            ],
+          ),
         ),
       );
     }
@@ -411,6 +423,7 @@ Widget _temaSelector(BuildContext context){
   Widget datoDeDesarollador() {
     return Container(
       margin: EdgeInsets.only(left: 50,right: 50),
+      height: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.blueAccent
@@ -434,5 +447,36 @@ abrirLink(String link)async{
   } else {
     throw 'Could not launch $link';
   }
+  }
+
+  Widget _notificaciones() {
+    return Container(
+      margin: EdgeInsets.only(left: 5,right: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Desactivar notificaciones"),
+          FlatButton(
+            color: Colors.blueAccent,
+            child: Icon(Icons.alarm_off),
+            onPressed: (){
+              showDialog(
+      context: context,
+      builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Descativar notificaciones"),
+            content: Text("""Desafortunadamente en esta versión tendrás que hacerlo manualmente:
+
+1- Entra en ajustes de la aplicación (puedes hacerlo presionando por unos segundos el icono de la app).
+
+2- En el apartado notificaciones selecciona 'Desactivar'."""),
+          );
+      }
+  );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

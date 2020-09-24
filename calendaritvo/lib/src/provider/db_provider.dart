@@ -91,7 +91,7 @@ class DBProvider{
       final res= await db.query("DiasHoras");
       List<int> horas=[];
       res.forEach((element) => horas.add(element["horas"]));
-      print("gethorasdias");
+      //print(horas);
       return horas;
 
   }
@@ -108,7 +108,6 @@ class DBProvider{
                               res.map((item) => MateriaModel.fromJson(item)).
                               toList()
                               : [];
-    print("gettodas las materias");
     return list;
   }
 
@@ -132,34 +131,33 @@ class DBProvider{
                               res.map((item) => DiaModel.fromJson(item)).
                               toList()
                               : [];
-    print("getdia");
     return list;
   }
   
   actualizarHora(int id,String materia,String day)async {
     final db = await database;
     final res = await db.rawUpdate("Update $day SET materia='$materia' WHERE id=$id");
-    print("actualizarHoras");
     return res;
-
   }
   agregarNumeroDeHoras(String day, int number)async {
     final db = await database;
     number++;
-     await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
-    print("agregarnumerodehoras");
+    if(number!=12)
+    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
+    
   }
   restarNumeroDeHoras(String day, int number)async {
     final db = await database;
     number--;
-     await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
-    print("restarnumerodehoras");
+    if(number!=0)
+    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");      
+    
+    
   }
 
   actualizarRangedeHoras(String dia,String hora,int id)async{
     final db =await database;
     await db.execute("update ${dia} set range='${hora}' where id=$id");
-    print("actualizarrangedehoras");
   }
 
   eliminarDB()async{

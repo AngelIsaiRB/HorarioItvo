@@ -4,6 +4,7 @@ import 'package:calendaritvo/src/bloc/dias_bloc.dart';
 import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 
@@ -34,69 +35,76 @@ class _HorarioPageState extends State<HorarioPage> {
   _selectorProgress=pref.progressBar;
    // materiasBloc.obtenerMaterias();
     //diabloc.obtenerDia("Lunes");
-    return  Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
-        centerTitle: true,
-        actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
-              onPressed: (){
-                Navigator.pushNamed(context, "addMateria");
-              },
-              ),
-          )
-        ],
-        
-      ), 
-        body: Stack(
-        children: [          
-          _imagenFondo(),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-            child: FutureBuilder(
-                  future: DBProvider.db.getHorasDias(),                  
-                  builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
-                    if(snapshot.hasData){
-                       return  PageView(              
-              scrollDirection: Axis.horizontal,             
-              controller: PageController(
-                initialPage: DateTime.now().weekday-1,
-              ),
-              children: [    
-                _day("Lunes", snapshot.data[0]),
-                _day("Martes", snapshot.data[1]),
-                _day("Miercoles", snapshot.data[2]),
-                _day("Jueves", snapshot.data[3]),
-                _day("Viernes", snapshot.data[4]),
-                _day("Sabado", snapshot.data[5]),
-                 Container(
-                  color: Colors.black26,
-                  child: Center(
-                    child: Text("¡  Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
-                  ),
-                ),              
-              ],
-              onPageChanged:(index){
-               
-                  setState(() { 
-
-                    day=_dayNames[index];
-                   // image=_images[index+1];
-                  });
-              },              
-            );
-                    }
-                    return Container();
+    return  Stack(
+      children: [        
+        Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColorLight,
+            title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
+            centerTitle: true,
+            actions: [
+              Container(
+                margin: EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                  icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
+                  onPressed: (){
+                    Navigator.pushNamed(context, "addMateria");
                   },
-                ),
-                
-          ),
-        ],
-      ),     
+                  ),
+              )
+            ],
+            
+          ), 
+            body: Stack(
+            children: [                   
+              _imagenFondo(),
+             
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                child: FutureBuilder(
+                      future: DBProvider.db.getHorasDias(),                  
+                      builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
+                        if(snapshot.hasData){
+                           return  PageView(              
+                  scrollDirection: Axis.horizontal,             
+                  controller: PageController(
+                    initialPage: DateTime.now().weekday-1,
+                  ),
+                  children: [    
+                    _day("Lunes", snapshot.data[0]),
+                    _day("Martes", snapshot.data[1]),
+                    _day("Miercoles", snapshot.data[2]),
+                    _day("Jueves", snapshot.data[3]),
+                    _day("Viernes", snapshot.data[4]),
+                    _day("Sabado", snapshot.data[5]),
+                     Container(
+                      color: Colors.black26,
+                      child: Center(
+                        child: Text("¡  Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
+                      ),
+                    ),              
+                  ],
+                  onPageChanged:(index){
+                   
+                      setState(() { 
+
+                        day=_dayNames[index];
+                       // image=_images[index+1];
+                      });
+                  },              
+                );
+                        }
+                        return Container();
+                      },
+                    ),
+                    
+              ),
+               
+            ],
+          ),     
+        ),
+         (pref.welcomePage)?_ayudaCambiarHora():Container(),
+      ],
     );
 
 
@@ -202,10 +210,10 @@ Widget addButtonHora(String day, int horas){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Container(
+        (horas!=1)?Container(
         
         decoration: BoxDecoration(
-          color: Color.fromRGBO(153, 0, 0, 0.6),
+          color: Color.fromRGBO(153, 0, 0, 0.8),
           borderRadius: BorderRadius.circular(50)
         ),
         child: FlatButton(
@@ -214,12 +222,12 @@ Widget addButtonHora(String day, int horas){
               DBProvider.db.restarNumeroDeHoras(day, horas);            
               });
           },
-          child: Icon(Icons.delete_forever),
+          child: Icon(Icons.delete_forever,color:Colors.white),
         ),
-       ),
+       ):Container(),
         (horas!=11)?Container(        
         decoration: BoxDecoration(
-          color: Color.fromRGBO(0, 38, 77, 0.6),
+          color: Color.fromRGBO(0, 38, 77, 0.8),
           borderRadius: BorderRadius.circular(70)
         ),
         child: FlatButton(
@@ -228,7 +236,7 @@ Widget addButtonHora(String day, int horas){
               DBProvider.db.agregarNumeroDeHoras(day, horas);            
               });
           },
-          child: Icon(Icons.add),
+          child: Icon(Icons.add,color:Colors.white,),
         ),
        ):Container(),
        
@@ -422,5 +430,39 @@ Widget _listViewMaterias(DiaModel dia,String day) {
       },
     );
   }
+
+ Widget _ayudaCambiarHora() {
+   return GestureDetector(
+        onTap: (){
+          setState(() {
+          pref.welcomePage=false;
+            
+          });
+        },
+        child: Container(  
+        color:Color.fromRGBO(0, 0, 0, 0.9),   
+       child: Column(       
+         mainAxisAlignment: MainAxisAlignment.spaceAround,
+         children: [
+           Container(
+             
+           ),
+           Container(                     
+             margin: EdgeInsets.all(10),
+             child: Text("Manten presionada una materia para cambiar la hora", style: TextStyle(fontSize: 30,color: Colors.white),),           
+           ),
+          Container(
+            padding: EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(50)
+            ),
+            child: Text("OK"),
+          )
+         ],
+       ),
+     ),
+   );
+ }
 
 }

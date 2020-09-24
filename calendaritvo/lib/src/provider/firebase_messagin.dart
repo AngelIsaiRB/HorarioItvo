@@ -24,24 +24,23 @@ class ProviderMessages {
   initNotifications() async {
     await _firebaseMessaging.requestNotificationPermissions();
     final id= await _firebaseMessaging.getToken();
-    //print("----------------------------------------------------------------------------------------------------- $id");
+    //print("----------------- $id");
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-      //  print("----------");
+       // print("----------");
       },
       onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-       // print("----------------");
+       //print("----------------");
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-       //  print("--------------");
+       // print("--------------");
       },
     );  
     
   }
-  
 
 }

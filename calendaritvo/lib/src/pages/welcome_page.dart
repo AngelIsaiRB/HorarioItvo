@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                   FlatButton(
                     color: Colors.blue,
                     onPressed: (){
-                       pref.welcomePage=false;
+                       
                       Navigator.pushReplacementNamed(context,"homepage" );
                     },
                     child: Text("SI", style: TextStyle(fontSize:40.0, color: Colors.white ),),
@@ -39,7 +39,7 @@ class WelcomePage extends StatelessWidget {
                     color: Colors.red,
                     onPressed: (){
                       pref.menu=true;
-                      pref.welcomePage=false;
+                      
                        Navigator.pushReplacementNamed(context,"homepage" );
                     },
                     child: Text("NO", style: TextStyle(fontSize:40.0, color: Colors.white ),),
