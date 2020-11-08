@@ -68,7 +68,7 @@ class WelcomePage extends StatelessWidget {
         gradient: LinearGradient(
           begin: FractionalOffset(0.0,0.0) ,
           end:   FractionalOffset(0.0,1.0), 
-         List: [
+          colors: [
            Color.fromRGBO(15, 12, 41,1.0),
            
            Color.fromRGBO(31, 28, 24,1.0),
@@ -85,7 +85,7 @@ class WelcomePage extends StatelessWidget {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(90.0),
       gradient: LinearGradient(          
-         List: [
+         colors: [
            Color.fromRGBO(18, 194, 233,0.2),
            Color.fromRGBO(196, 113, 237,0.2),
           

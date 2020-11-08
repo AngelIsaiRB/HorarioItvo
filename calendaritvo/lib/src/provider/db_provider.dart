@@ -157,7 +157,7 @@ class DBProvider{
 
   actualizarRangedeHoras(String dia,String hora,int id)async{
     final db =await database;
-    await db.execute("update ${dia} set range='${hora}' where id=$id");
+    await db.execute("update $dia set range='$hora' where id=$id");
   }
 
   eliminarDB()async{

@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
-import 'package:calendaritvo/src/bloc/dias_bloc.dart';
+import 'package:calendaritvo/src/helpers/helpers.dart';
+
 import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 
@@ -57,8 +60,7 @@ class _HorarioPageState extends State<HorarioPage> {
           ), 
             body: Stack(
             children: [                   
-              _imagenFondo(),
-             
+              imagenFondo(),             
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                 child: FutureBuilder(
@@ -111,18 +113,7 @@ class _HorarioPageState extends State<HorarioPage> {
   }
 
 
-  Widget _imagenFondo(){    
-  return Container(
-    width: double.infinity,
-    height: double.infinity,
-    
-   child: Image(
-      image:AssetImage(pref.imageFond),
-      fit: BoxFit.cover,
-   ),
-    
-  );
-}
+
 
 Widget _day(String day, int horas){    
   //DBProvider.db.getHorasDias();

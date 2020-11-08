@@ -81,6 +81,13 @@ class PreferenciasUsuario{
   }
 
 
+  get ispathImage{
+    return _prefs.getBool("ispathImage")??false;
+  }
+
+  set ispathImage(bool value){
+     _prefs.setBool("ispathImage", value);
+  }
 
 
 

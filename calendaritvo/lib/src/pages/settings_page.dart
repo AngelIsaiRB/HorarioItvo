@@ -1,8 +1,12 @@
 
+import 'dart:io';
+
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -290,7 +294,24 @@ Widget _temaSelector(BuildContext context){
           children: [
             Container(            
               alignment: AlignmentDirectional.topStart,
-              child: Text("Fondo",style: Theme.of(context).textTheme.headline2,)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Fondo",style: Theme.of(context).textTheme.headline2,),
+                  Container(                    
+                    child: GestureDetector(
+                      child: Row(
+                        children: [
+                          Text("Agregar"),
+                          Icon(Icons.photo, size: 30,)
+                        ],
+                      ),
+                      onTap:_seleccionarFoto,
+                    ),
+                  )
+                ],
+              )
+              ),
             Container(        
               child: Swiper(
                 itemCount: images.length,
@@ -326,8 +347,9 @@ Widget _temaSelector(BuildContext context){
                      FlatButton(
                        child: Text("Si"),
                        onPressed: (){
-                       pref.imageFond=images[index];
-                      Navigator.pushReplacementNamed(context, "restart");
+                         pref.ispathImage=false;
+                         pref.imageFond=images[index];
+                         Navigator.pushReplacementNamed(context, "restart");
                        },
                      ),
                      FlatButton(
@@ -359,10 +381,9 @@ Widget _temaSelector(BuildContext context){
               gradient:  LinearGradient(
                  begin: FractionalOffset(0.6,0.0) ,
                  end:   FractionalOffset(0.0,0.2),                  
-                 List:[
-                  color1,
-                  color2,
-                ]
+                 colors: [
+                   color1,color2
+                 ]
                 ),
 
               ),
@@ -478,5 +499,17 @@ abrirLink(String link)async{
         ],
       ),
     );
+  }
+
+  _seleccionarFoto()async {
+    final piker = ImagePicker();
+    final file = await piker.getImage(source: ImageSource.gallery);
+    if(file!=null){
+      final foto = File(file.path);
+    pref.ispathImage=true;
+    pref.imageFond=foto.path;
+    Navigator.pushReplacementNamed(context, "restart");
+    }
+
   }
 }
