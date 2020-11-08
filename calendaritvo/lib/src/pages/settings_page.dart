@@ -358,8 +358,8 @@ Widget _temaSelector(BuildContext context){
               borderRadius: BorderRadius.circular(100.0),
               gradient:  LinearGradient(
                  begin: FractionalOffset(0.6,0.0) ,
-                 end:   FractionalOffset(0.0,0.2), 
-                 colors: [
+                 end:   FractionalOffset(0.0,0.2),                  
+                 List:[
                   color1,
                   color2,
                 ]
