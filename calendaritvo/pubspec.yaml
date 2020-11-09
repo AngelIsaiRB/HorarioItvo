@@ -36,6 +36,9 @@ dependencies:
   url_launcher: ^3.0.3
   flutter_speed_dial: ^1.2.5
   firebase_messaging: 
+  image_picker: ^0.6.7+12
+  font_awesome_flutter: ^8.10.0
+  
 
 dev_dependencies:
   flutter_test:

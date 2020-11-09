@@ -25,25 +25,25 @@ class _HomePageState extends State<HomePage> {
     if( ! pref.menu){
       _menu=[BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today),
-          title: Text("Horario "),
+          label: "Horario",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.local_library),
-          title: Text("ITVO"),
+          label: "ITVO",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          title: Text("Ajustes"),
+          label:"Ajustes",
         )];
     }
     else{
         _menu=[BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today),
-          title: Text("Horario"),
+          label: "Horario",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),
-          title: Text("Ajustes"),
+            label:"Ajustes",
         )];
     }
         

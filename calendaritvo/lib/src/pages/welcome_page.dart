@@ -68,7 +68,7 @@ class WelcomePage extends StatelessWidget {
         gradient: LinearGradient(
           begin: FractionalOffset(0.0,0.0) ,
           end:   FractionalOffset(0.0,1.0), 
-         colors: [
+          colors: [
            Color.fromRGBO(15, 12, 41,1.0),
            
            Color.fromRGBO(31, 28, 24,1.0),

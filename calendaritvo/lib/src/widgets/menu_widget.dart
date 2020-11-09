@@ -4,7 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 class MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(                  
+    return Drawer(    
+                    
       child: Container(        
         child: ListView(        
           padding: EdgeInsets.zero,
@@ -37,7 +38,13 @@ class MenuWidget extends StatelessWidget {
             title: Text("Calendario", style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){
               Navigator.pushNamed(context, "calendario");
-              
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person, color: Theme.of(context).primaryColor,),
+            title: Text("Contacto", style: Theme.of(context).textTheme.bodyText1,),
+            onTap: (){
+              Navigator.pushNamed(context, "contact");
             },
           ),
           /*
@@ -53,7 +60,7 @@ class MenuWidget extends StatelessWidget {
             leading: Icon(Icons.subject, color: Theme.of(context).primaryColor,),
             title: Text("SII", style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){
-              abrirLink("https://www.voaxaca.tecnm.mx/sistema-integral-de-informacion/");            
+              abrirLink("http://sii.voaxaca.tecnm.mx");            
             },
           ), 
            ListTile(

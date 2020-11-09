@@ -4,7 +4,7 @@ import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/models/noticias_model.dart';
 import 'package:calendaritvo/src/provider/noticias_firebase_provider.dart';
 import 'package:calendaritvo/src/widgets/menu_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:flutter/material.dart';
 class InfoPage extends StatefulWidget {
   InfoPage({Key key}) : super(key: key);
@@ -14,6 +14,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final noticiasProvider = NoticiasFirebaseProvider();
   final pref= PreferenciasUsuario();
   int vista=0;
@@ -24,9 +25,10 @@ class _InfoPageState extends State<InfoPage> {
   }
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(        
-      appBar: AppBar(                       
+       key: _scaffoldKey,
+      appBar: AppBar(  
+        leading: Container(),                     
         title: Container(
           padding: EdgeInsets.only(top: 10.0),          
           child: Column(
@@ -48,10 +50,11 @@ class _InfoPageState extends State<InfoPage> {
                 pref.formaNoticias=_modoVista;
               });
             },
-          )
+          ),
+          _changeImport(),
         ],
       ),
-      drawer: MenuWidget(),            
+       drawer: MenuWidget(),            
       body: Stack(
         children: [
           _imagenFondo(),
@@ -200,24 +203,14 @@ class _InfoPageState extends State<InfoPage> {
     );
   }
 
-  abrirLink(String link)async{
-    if (await canLaunch(link)) {
-    await launch(link);
-  } else {
-    throw 'Could not launch $link';
-  }
-  }
+ 
   
-  Widget _floatingB() {
-    Color estado;
-    vista==0?estado=Colors.red:estado=Colors.green;
+  Widget _floatingB() {    
     return FloatingActionButton(      
-      child:  Icon(Icons.cached, size: 30.0,),
-      backgroundColor: estado,
+      child:  Icon(Icons.menu, size: 30.0,),
+      backgroundColor: Colors.red,
       onPressed: (){  
-        setState(() {
-        vista==0?vista=1:vista=0;          
-        });
+       _scaffoldKey.currentState.openDrawer();
       },
     );
   }
@@ -289,4 +282,21 @@ class _InfoPageState extends State<InfoPage> {
     );
 
   }
+
+  Widget _changeImport() {
+  
+    Color estado;
+    vista==0?estado=Colors.red:estado=Colors.green;
+    return MaterialButton(      
+      child:  Icon(Icons.cached, size: 30.0, color: estado,),
+      
+      onPressed: (){  
+        setState(() {
+        vista==0?vista=1:vista=0;          
+        });
+      },
+    );
+ 
 }
+}
+ 
