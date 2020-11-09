@@ -37,7 +37,13 @@ class MenuWidget extends StatelessWidget {
             title: Text("Calendario", style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){
               Navigator.pushNamed(context, "calendario");
-              
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person, color: Theme.of(context).primaryColor,),
+            title: Text("Contacto", style: Theme.of(context).textTheme.bodyText1,),
+            onTap: (){
+              Navigator.pushNamed(context, "contact");
             },
           ),
           /*

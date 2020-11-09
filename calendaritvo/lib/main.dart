@@ -1,6 +1,7 @@
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/pages/add_materia.dart';
 import 'package:calendaritvo/src/pages/calendario_page.dart';
+import 'package:calendaritvo/src/pages/contact.dart';
 import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         "calendario" : (BuildContext context)=>CalendarioPage(),
         "restart"    : (BuildContext context)=>MyApp(),
         "welcomePage": (BuildContext context)=>WelcomePage(),
+        "contact": (BuildContext context)=>ContactPage(),
       },
       
        theme: them,
