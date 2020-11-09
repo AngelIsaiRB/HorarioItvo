@@ -25,7 +25,6 @@ class _InfoPageState extends State<InfoPage> {
   }
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(        
        key: _scaffoldKey,
       appBar: AppBar(  
