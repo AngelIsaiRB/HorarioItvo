@@ -6,6 +6,7 @@ import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -480,20 +481,8 @@ abrirLink(String link)async{
           FlatButton(
             color: Colors.blueAccent,
             child: Icon(Icons.alarm_off),
-            onPressed: (){
-              showDialog(
-      context: context,
-      builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Descativar notificaciones"),
-            content: Text("""Desafortunadamente en esta versión tendrás que hacerlo manualmente:
-
-1- Entra en ajustes de la aplicación (puedes hacerlo presionando por unos segundos el icono de la app).
-
-2- En el apartado notificaciones selecciona 'Desactivar'."""),
-          );
-      }
-  );
+            onPressed: ()async{              
+              await openAppSettings();
             },
           ),
         ],
@@ -501,7 +490,7 @@ abrirLink(String link)async{
     );
   }
 
-  _seleccionarFoto()async {
+  _seleccionarFoto()async {    
     final piker = ImagePicker();
     final file = await piker.getImage(source: ImageSource.gallery);
     if(file!=null){
