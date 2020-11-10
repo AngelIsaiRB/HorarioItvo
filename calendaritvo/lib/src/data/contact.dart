@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:calendaritvo/src/models/contact_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -34,6 +34,18 @@ final List<ContactModel> contactos = <ContactModel>[
     ContactModel(
     nombre:"Email",
     link:"mailto:itvalleoaxaca@hotmail.com", 
+    icon: FontAwesomeIcons.envelope,
+    isLink: true
+    ),
+    ContactModel(
+    nombre:"Email Servicio Social",
+    link:"mailto:servicio.social@voaxaca.tecnm.mx", 
+    icon: FontAwesomeIcons.envelope,
+    isLink: true
+    ),
+    ContactModel(
+    nombre:"Email TICS",
+    link:"mailto:coordinacion.tics@voaxaca.tecnm.mx", 
     icon: FontAwesomeIcons.envelope,
     isLink: true
     ),

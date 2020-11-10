@@ -143,14 +143,14 @@ class DBProvider{
     final db = await database;
     number++;
     if(number!=13)
-    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
+     await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");
     
   }
   restarNumeroDeHoras(String day, int number)async {
     final db = await database;
     number--;
     if(number!=0)
-    final res= await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");      
+     await db.rawUpdate("Update DiasHoras set horas=$number where name='$day' ");      
     
     
   }

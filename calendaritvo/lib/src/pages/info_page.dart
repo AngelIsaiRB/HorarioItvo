@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
+import 'package:calendaritvo/src/helpers/helpers.dart' as helper;
 import 'package:calendaritvo/src/models/noticias_model.dart';
 import 'package:calendaritvo/src/provider/noticias_firebase_provider.dart';
 import 'package:calendaritvo/src/widgets/menu_widget.dart';
@@ -57,7 +58,7 @@ class _InfoPageState extends State<InfoPage> {
        drawer: MenuWidget(),            
       body: Stack(
         children: [
-          _imagenFondo(),
+          helper.imagenFondo(),
           AnimatedContainer(
             child: _noticias(),
            duration: Duration(milliseconds: 500),
@@ -176,7 +177,7 @@ class _InfoPageState extends State<InfoPage> {
     return GestureDetector(
       child: wid,
       onTap: (){
-        abrirLink(noti.link);
+        helper.abrirLink(noti.link);
       },
     );
   }
@@ -215,17 +216,7 @@ class _InfoPageState extends State<InfoPage> {
     );
   }
 
-  Widget _imagenFondo() {
-   return  Container(
-    width: double.infinity,
-    height: double.infinity,    
-   child: Image(
-      image:AssetImage(pref.imageFond),
-      fit: BoxFit.cover,
-   ),
-    
-  );
-  }
+
 
   Widget _crearTarjeta2(Noticia noti){
     Color colorImp = Colors.green;
@@ -277,7 +268,7 @@ class _InfoPageState extends State<InfoPage> {
       return GestureDetector(
       child: tarjeta,
       onTap: (){
-        abrirLink(noti.link);
+        helper.abrirLink(noti.link);
       },
     );
 

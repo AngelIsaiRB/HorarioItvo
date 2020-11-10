@@ -31,9 +31,10 @@ class ContactPage extends StatelessWidget {
   }
 
   ListTile _contact(ContactModel contact){
+    final links = contact.link.split(":"); 
     return ListTile(
       title: Text("${contact.nombre}"),
-      subtitle: Text("${contact.link}"),
+      subtitle: Text("${links[1]}"),
       leading: Icon(contact.icon),
       
       onTap: (){
