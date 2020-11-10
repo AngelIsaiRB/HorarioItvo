@@ -1,9 +1,10 @@
-
+import 'package:calendaritvo/src/pages/ratings_page.dart';
+import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/pages/horario_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
-import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -28,8 +29,12 @@ class _HomePageState extends State<HomePage> {
           label: "Horario",
         ),
         BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.star),
+          label: "Calificaciones",
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.local_library),
-          label: "ITVO",
+          label: "ITVO",          
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
@@ -41,6 +46,10 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(Icons.calendar_today),
           label: "Horario",
         ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.star),
+          label: "Calificaciones"
+          ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),
             label:"Ajustes",
@@ -55,7 +64,9 @@ class _HomePageState extends State<HomePage> {
 ///////////////////////////////////////////////////////////////////////////
   Widget _buttonnavigationBar(BuildContext context){
   return  BottomNavigationBar(
-    backgroundColor: Theme.of(context).primaryColorLight,
+    backgroundColor: Theme.of(context).primaryColorLight,   
+    unselectedItemColor: Colors.black45,
+    selectedItemColor: Theme.of(context).primaryColor,
     currentIndex: currentIndex,
       onTap: (index){
           setState(() {
@@ -75,12 +86,15 @@ class _HomePageState extends State<HomePage> {
         return HorarioPage();
         break;
       case 1:
+        return RatingPage();
+        break;
+      case 2:
       if(! pref.menu)
         return InfoPage();
         else
         return SettingsPage();
         break;
-      case 2:
+      case 3:
         return SettingsPage();
         break;
       default:

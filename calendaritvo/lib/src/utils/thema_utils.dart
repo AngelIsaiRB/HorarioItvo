@@ -10,7 +10,8 @@ ThemeData thema(int value){
           brightness: Brightness.dark,
           primarySwatch: Colors.orange, 
           primaryColorDark: Colors.white,
-          backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),           
+          backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
+                 
           textTheme: TextTheme(
           headline3: TextStyle(color:Colors.white,fontSize:35.0, fontStyle: FontStyle.italic  ),
           headline2: TextStyle(color: Colors.white, fontSize: 30.0),
@@ -47,13 +48,13 @@ ThemeData thema(int value){
      colores.add(Color.fromRGBO( 31, 78, 90, 1));
   }
   else if (value==6){        
-     colores.add(Color.fromRGBO( 230, 242, 238, 1));
     colores.add(Color.fromRGBO( 20, 102, 75, 1));  
+     colores.add(Color.fromRGBO( 230, 242, 238, 1));
        
   }
   else if (value==7){        
-     colores.add(Color.fromRGBO( 231, 211, 238, 1));
     colores.add(Color.fromRGBO( 118, 96, 146, 1));  
+     colores.add(Color.fromRGBO( 231, 211, 238, 1));
        
   }else if (value==8){        
      colores.add(Colors.blue);  
@@ -62,7 +63,7 @@ ThemeData thema(int value){
     return ThemeData(
         primaryColor: colores[0],
         primaryColorLight: colores[1],
-        cardColor: Colors.grey[200],
+        cardColor: Colors.grey[200],        
         primaryIconTheme: IconThemeData(color: Colors.black), //menu noticias
         textTheme: TextTheme(
           headline3: TextStyle(color : Colors.black,fontSize:35.0, fontStyle: FontStyle.italic  ),
