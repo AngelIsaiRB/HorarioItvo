@@ -1,4 +1,5 @@
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
@@ -35,7 +36,12 @@ class _RatingPageState extends State<RatingPage> {
               )
             ],            
           ),
-          body: _listViewMaterias(),
+          body: Stack(
+            children: [
+              imagenFondo(),
+              _listViewMaterias(),
+            ],
+          ),
     );
   }
     Widget _listViewMaterias() {
@@ -62,23 +68,27 @@ class _RatingPageState extends State<RatingPage> {
               return Card(
                  child: Stack(
                    children: [
+                     
+                     Container(
+                       color: Theme.of(context).backgroundColor,//Colors.black12,
+                       child: ListTile(                                                                         
+                          title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
+                          subtitle: Row(
+                            children: [
+                              Container(
+                                width: 10,
+                              ),
+                              Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0),),
+                            ],
+                          ),
+                          trailing: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,),
+                        ),
+                     ),
                      Container(
                        width: double.infinity,
                        height: 10,
                        color: utils.stringToColor(materia[index].color),
                      ),
-                     ListTile(                                                
-                        title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
-                        subtitle: Row(
-                          children: [
-                            Container(
-                              width: 10,
-                            ),
-                            Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0),),
-                          ],
-                        ),
-                        trailing: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,),
-                      ),
                    ],
                  ),                                 
               );
