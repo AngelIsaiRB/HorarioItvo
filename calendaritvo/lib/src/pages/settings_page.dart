@@ -61,8 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text("Ajustes", style: Theme.of(context).textTheme.headline2,),
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
-      body: Container(   
-       
+      body: Container(          
        child: ListView(
          children: [ 
             Container(color: Theme.of(context).cardColor, child: _imageF(context)),                        

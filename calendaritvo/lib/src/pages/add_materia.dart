@@ -1,6 +1,7 @@
-import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
-import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/material.dart';
+import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/data/data_list.dart' as data;
+import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,18 +15,7 @@ class AddMateri extends StatefulWidget {
 class _AddMateriState extends State<AddMateri> {
   String _name = "";
   Color _opcionSeleccionada = Colors.red;
-  List<Color> _colores = [
-    Colors.blue,
-    Colors.red,
-    Colors.yellow,
-    Colors.black,    
-    Colors.brown,
-    Colors.purple,
-    Colors.orange,
-    Colors.green,
-    Colors.indigo,
-    Colors.blueGrey,
-  ];
+  
 
   final materiasBloc = MateriasBlock();
 
@@ -148,16 +138,21 @@ class _AddMateriState extends State<AddMateri> {
 
   List<DropdownMenuItem<Color>> getOpcionesDropDown() {
     List<DropdownMenuItem<Color>> lista = new List();
-    _colores.forEach((item) {
+    for (var i = 0; i < data.colores.length; i++) {          
       lista.add(DropdownMenuItem(
-        child: Icon(
-          Icons.fiber_manual_record,
-          color: item,
-          size: 40.0,
+        child: Row(
+          children: [
+            Icon(
+              Icons.fiber_manual_record,
+              color: data.colores[i],
+              size: 40.0,
+            ),
+            Text(data.nombresColores[i],)
+          ],
         ),
-        value: item,
+        value: data.colores[i],
       ));
-    });
+    }
     return lista;
   }
 
