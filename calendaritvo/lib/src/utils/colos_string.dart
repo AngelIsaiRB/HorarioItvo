@@ -36,6 +36,9 @@ String coloToString(Color color){
  if(color==Colors.blueGrey){
    return "blueGrey";
  }
+ if(color==Colors.lime){
+   return "lime";
+ }
  return "blue";
   
 }
@@ -74,6 +77,9 @@ Color stringToColor(String color){
  }
   if(color=="blueGrey"){
    return Colors.blueGrey;
+ }
+  if(color=="lime"){
+   return Colors.lime;
  }
  return Colors.blue;
   

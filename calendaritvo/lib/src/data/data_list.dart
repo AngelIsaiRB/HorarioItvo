@@ -10,6 +10,7 @@ List<Color> colores = [
     Colors.green,
     Colors.indigo,
     Colors.blueGrey,
+    Colors.lime,
   ];
   List<String> nombresColores = [
     "Blue",
@@ -22,4 +23,5 @@ List<Color> colores = [
     "Green",
     "Indigo",
     "BlueGrey",
+    "lime",
   ];
