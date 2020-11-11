@@ -2,6 +2,7 @@ import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddMateri extends StatefulWidget {
   AddMateri({Key key}) : super(key: key);
@@ -105,7 +106,7 @@ class _AddMateriState extends State<AddMateri> {
                         ),
                         title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
                         subtitle: Text("Desliza para eliminar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
-                        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white,),
+                        trailing: Icon(FontAwesomeIcons.arrowsAltH, color: Colors.white,),
                       ),
                     ),
                   ),
