@@ -1,4 +1,5 @@
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
+import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ class RatingPage extends StatefulWidget {
 
 class _RatingPageState extends State<RatingPage> {
   final materiasBloc = MateriasBlock();
+  final calificacionesBlock = CalificacionesBlock();
  int dropM=0;
 
 
