@@ -38,9 +38,9 @@ class DbCProvider{
          final  materias =   await DBProvider.db.getTodasMaterias();
          if( materias.length != 0 ){
              print("----------------------------materias--------------------");
-           materias.forEach((element) {
+           materias.forEach((element) async {
              print(element.name);
-             //TODO: realizar el llenado de materias ya existentes             
+             await db.execute("insert into Materia(name) values('${element.name}')");
            });
              print("----------------------------materias--------------------");
          }
