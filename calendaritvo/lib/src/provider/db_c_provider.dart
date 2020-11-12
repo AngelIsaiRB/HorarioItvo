@@ -54,11 +54,15 @@ class DbCProvider{
                               res.map((item) => MateriaModel.fromJson(item)).
                               toList()
                               : [];
- print("----------------------------materias--------------------");
+ print("============================gettodaslascalificaciones--------------------");
     list.forEach((element) {
       print(element.name);
     });
     return list;
   }
-  // TODO: realizar el agregado de materias cuando user agrege materia 
+  nuevaMateria(MateriaModel nuevaM) async{
+    final db = await database;
+    final res = await db.rawQuery("insert into Materia(name) values('${nuevaM.name}')");
+    return res;
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/data/data_list.dart' as data;
@@ -18,6 +19,7 @@ class _AddMateriState extends State<AddMateri> {
   
 
   final materiasBloc = MateriasBlock();
+  final calificacionesBlock = CalificacionesBlock();
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +213,7 @@ class _AddMateriState extends State<AddMateri> {
               ),
               onPressed: () {
                 final materia = MateriaModel(name: _name,color: utils.coloToString(_opcionSeleccionada));
+                calificacionesBlock.agregarCalificacion(materia);
                 materiasBloc.agregarMateria(materia);
                 _name = "";
                 Navigator.pop(context);

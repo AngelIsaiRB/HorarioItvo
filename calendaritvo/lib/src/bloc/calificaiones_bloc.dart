@@ -30,7 +30,7 @@ class CalificacionesBlock{
   }
 
   agregarCalificacion(MateriaModel materia) async{
-    // await DBProvider.db.nuevaMateria(materia);
+     await DbCProvider.db.nuevaMateria(materia);
     obtenerCalificaciones();
   }
 
