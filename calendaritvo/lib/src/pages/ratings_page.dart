@@ -65,32 +65,36 @@ class _RatingPageState extends State<RatingPage> {
             
             itemBuilder: (BuildContext context, int i){
               final index=i+1;
-              return Card(
-                 child: Stack(
-                   children: [
-                     
-                     Container(
-                       color: Theme.of(context).backgroundColor,//Colors.black12,
-                       child: ListTile(                                                                         
-                          title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
-                          subtitle: Row(
-                            children: [
-                              Container(
-                                width: 10,
-                              ),
-                              Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0),),
-                            ],
+              return GestureDetector(
+                onTap: (){
+                  print(materia[index].name);
+                },
+                child: Card(
+                   child: Stack(
+                     children: [                     
+                       Container(
+                         color: Theme.of(context).backgroundColor,//Colors.black12,
+                         child: ListTile(                                                                         
+                            title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
+                            subtitle: Row(
+                              children: [
+                                Container(
+                                  width: 10,
+                                ),
+                                Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0),),
+                              ],
+                            ),
+                            trailing: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,),
                           ),
-                          trailing: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,),
-                        ),
-                     ),
-                     Container(
-                       width: double.infinity,
-                       height: 10,
-                       color: utils.stringToColor(materia[index].color),
-                     ),
-                   ],
-                 ),                                 
+                       ),
+                       Container(
+                         width: double.infinity,
+                         height: 10,
+                         color: utils.stringToColor(materia[index].color),
+                       ),
+                     ],
+                   ),                                 
+                ),
               );
             }
                   );
