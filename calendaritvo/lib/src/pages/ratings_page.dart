@@ -101,7 +101,7 @@ class _RatingPageState extends State<RatingPage> {
                            ),
                            Container(
                              width: double.infinity,
-                             height: 10,
+                             height: 5,
                              color: utils.stringToColor(materia[index].color),
                            ),
                          ],
@@ -138,12 +138,7 @@ class _ListC extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
             return 
                 Stack(
-                  children: [
-                    Container(                                                         
-                     width: 10,
-                     height: 60,
-                     color: utils.stringToColor(materia.color)                            
-                ),
+                  children: [                    
                 ListTile(
                        leading: Icon(FontAwesomeIcons.edit),
                       title: Text("primer parcial"),
