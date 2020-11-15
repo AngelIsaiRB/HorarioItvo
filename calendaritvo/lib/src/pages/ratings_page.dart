@@ -161,7 +161,7 @@ class _ListC extends StatelessWidget {
                   children: [                    
                 GestureDetector(
 
-                  onLongPress: (){
+                  onTap: (){
                     alertYesNo(
                       context: context,
                       mensaje: "Desea Eliminar",
@@ -176,9 +176,17 @@ class _ListC extends StatelessWidget {
                      
                   },
                   child: ListTile(
-                         leading: Icon(FontAwesomeIcons.edit),
+                         leading: Container(
+                           color: Colors.black12,
+                           child: IconButton(                                                     
+                             icon: Icon(FontAwesomeIcons.edit ),
+                             onPressed: (){
+                               // TODO: editar campo de calificacion
+                             },
+                             ),
+                         ),
                         title: Text("${ordinalNumber[index]}:"),
-                        subtitle: Text("mantén presionado para borrar",style: TextStyle(fontSize: 15),),
+                        subtitle: Text("Tap para borrar",style: TextStyle(fontSize: 15),),
                         trailing: Container(
                           margin: EdgeInsets.only(right: 20),
                           child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
