@@ -27,3 +27,27 @@ abrirLink(String link)async{
     throw 'Could not launch $link';
   }
 }
+
+
+ alertYesNo({BuildContext context, String mensaje, Function onYes, Function onNo}){
+  return showDialog(
+             context: context,
+             barrierDismissible: true,
+             builder: (context){
+                 return  AlertDialog(
+                   title: Text(mensaje),
+                   actions: [
+                     FlatButton(
+                       child: Container(                         
+                         padding: EdgeInsets.all(15),
+                         child: Text("No")),
+                       onPressed:onNo
+                     ),
+                     FlatButton(
+                       child: Text("Si"),
+                       onPressed:onYes,
+                     ),
+                   ],
+                 );
+             });
+}

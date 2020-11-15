@@ -131,6 +131,7 @@ class _ListC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final calificacionesBlock = CalificacionesBlock();
+   
     calificacionesBlock.obtenerCalificacionesDeMateria(materia.id);    
     return StreamBuilder(
       stream: calificacionesBlock.calificacionMateria,      
@@ -139,11 +140,13 @@ class _ListC extends StatelessWidget {
            return Container();
          }
         final mate = snapshot.data;
-        double promedio=0;
-         mate.forEach((element) {
+         double promedio=0;        
+         if(mate.length>=1){
+           mate.forEach((element) {
            promedio = promedio + element.calificacion;
         });
         promedio=promedio/mate.length;
+         }
         return Container(
           color: Colors.white70,
           child: Column(
@@ -157,11 +160,20 @@ class _ListC extends StatelessWidget {
                 Stack(
                   children: [                    
                 GestureDetector(
-                  
+
                   onLongPress: (){
-                    //TODO: borrar de db
-                     final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
-                    calificacionesBlock.eliminarCalificacion(model);
+                    alertYesNo(
+                      context: context,
+                      mensaje: "Desea Eliminar",
+                      onYes: (){
+                        final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
+                        calificacionesBlock.eliminarCalificacion(model);
+                        Navigator.of(context).pop();
+                      },
+                      onNo: () => Navigator.of(context).pop()
+
+                    );
+                     
                   },
                   child: ListTile(
                          leading: Icon(FontAwesomeIcons.edit),
@@ -179,15 +191,14 @@ class _ListC extends StatelessWidget {
           Hero(
             tag: materia.id,
             child: Container(
-              child: Text("Promedio final: $promedio",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
+              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
             ),
           ),
-          Divider(),
           MaterialButton(
             child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
             color: Colors.black38,
             onPressed: (){
-                 final calificacion = CalificacionModel(calificacion: 5.5, idMateria: materia.id,semestre: "primer" );                 
+                 final calificacion = CalificacionModel(calificacion:80, idMateria: materia.id,semestre: "primer" );                 
                  calificacionesBlock.agregarCalificacion(calificacion);
             },
             )
