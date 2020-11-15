@@ -197,9 +197,21 @@ class _ListC extends StatelessWidget {
           MaterialButton(
             child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
             color: Colors.black38,
-            onPressed: (){
-                 final calificacion = CalificacionModel(calificacion:80, idMateria: materia.id,semestre: "primer" );                 
+            onPressed: ()async{
+              mostrarAlertaAgregarCalificacion(context: context, 
+              title: "Agregar Calificacion",
+              onOk: (String value){
+                try {
+                  final valuebol = double.parse(value);
+                  final calificacion = CalificacionModel(calificacion:valuebol, idMateria: materia.id,semestre: "" );                 
                  calificacionesBlock.agregarCalificacion(calificacion);
+                 Navigator.of(context).pop();
+                }
+                catch(e){ }
+              }
+              );
+              
+                
             },
             )
         ],

@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -51,3 +53,66 @@ abrirLink(String link)async{
                  );
              });
 }
+
+mostrarAlertaAgregarCalificacion({BuildContext context,String title, Function onOk}) {
+  String text;
+    showDialog(
+      context: context,
+      barrierDismissible: true,      
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState){
+            return AlertDialog(
+          
+          title: Text(title),
+          content: Container(
+            height: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Column(
+              children: [
+                TextField(   
+                  keyboardType: TextInputType.number,   
+                  inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                    ],
+                   decoration: InputDecoration(                     
+                     hintText: "Calificacion",
+                     labelText: "Calificacion",                                          
+                     helperText: "Calificacion de tu parcial",
+                     icon: Icon(
+                       FontAwesomeIcons.clipboardCheck,
+                       size: 40.0,
+                     ),
+                   ),
+                   onChanged: (valor) {
+                     text = valor;
+                    
+                   },
+                ),
+              ],
+            ),
+          ),      
+          actions: [
+            FlatButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Agregar",
+                style: TextStyle(fontSize: 25.0),
+              ),
+              onPressed: ()=> onOk(text),
+            )
+          ],
+        );
+          },
+        );
+      },
+    );
+  }
