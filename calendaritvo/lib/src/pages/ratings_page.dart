@@ -1,5 +1,6 @@
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
+import 'package:calendaritvo/src/data/data_list.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/foundation.dart';
@@ -143,10 +144,10 @@ class _ListC extends StatelessWidget {
                   children: [                    
                 ListTile(
                        leading: Icon(FontAwesomeIcons.edit),
-                      title: Text("primer parcial"),
+                      title: Text("${ordinalNumber[index]}:"),
                       trailing: Container(
                         margin: EdgeInsets.only(right: 20),
-                        child: Text("5",style: TextStyle(fontSize: 40, fontWeight:FontWeight.bold ),)),                              
+                        child: Text("5",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
             ),
                   ],
                 );
@@ -155,9 +156,17 @@ class _ListC extends StatelessWidget {
           Hero(
             tag: materia.id,
             child: Container(
-              child: Text("Promedio final: ",style: TextStyle(fontSize: 30, fontWeight:FontWeight.bold ),),
+              child: Text("Promedio final: ",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
             ),
-          )
+          ),
+          Divider(),
+          MaterialButton(
+            child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
+            color: Colors.black38,
+            onPressed: (){
+                //TODO: agregar calificacion 
+            },
+            )
         ],
       ),
     );
