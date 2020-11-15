@@ -85,4 +85,9 @@ class DbCProvider{
     final res= await db.insert("Calificacion", nuev.toJson());   
     return res;
   }
+  eliminarCalificacion(int id) async{
+    final db= await database;
+    final res = await db.delete("Calificacion", where: "id=?", whereArgs: [id] );  
+    return res;
+  }
 }

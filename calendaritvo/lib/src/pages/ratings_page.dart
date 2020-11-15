@@ -156,13 +156,22 @@ class _ListC extends StatelessWidget {
             return 
                 Stack(
                   children: [                    
-                ListTile(
-                       leading: Icon(FontAwesomeIcons.edit),
-                      title: Text("${ordinalNumber[index]}:"),
-                      trailing: Container(
-                        margin: EdgeInsets.only(right: 20),
-                        child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
+                GestureDetector(
+                  
+                  onLongPress: (){
+                    //TODO: borrar de db
+                     final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
+                    calificacionesBlock.eliminarCalificacion(model);
+                  },
+                  child: ListTile(
+                         leading: Icon(FontAwesomeIcons.edit),
+                        title: Text("${ordinalNumber[index]}:"),
+                        subtitle: Text("mantén presionado para borrar",style: TextStyle(fontSize: 15),),
+                        trailing: Container(
+                          margin: EdgeInsets.only(right: 20),
+                          child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
             ),
+                ),
                   ],
                 );
            },
@@ -178,8 +187,7 @@ class _ListC extends StatelessWidget {
             child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
             color: Colors.black38,
             onPressed: (){
-                 final calificacion = CalificacionModel(calificacion: 5.5, idMateria: materia.id,semestre: "primer" );
-                 final calificacionesBlock = CalificacionesBlock();
+                 final calificacion = CalificacionModel(calificacion: 5.5, idMateria: materia.id,semestre: "primer" );                 
                  calificacionesBlock.agregarCalificacion(calificacion);
             },
             )
