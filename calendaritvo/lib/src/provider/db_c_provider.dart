@@ -1,4 +1,5 @@
 
+import 'package:calendaritvo/src/models/calificacion_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -32,8 +33,8 @@ class DbCProvider{
       version: 1,
       onOpen: (db){},
       onCreate: (db, version) async{
-         await db.execute("Create table Materia (id INTEGER PRIMARY KEY, name TEXT)");
-         await db.execute("Create table Calificacion (id INTEGER PRIMARY KEY,idMateria INTEGER, semestre TEXT, calificacion float)");
+         await db.execute("Create table Materia (id INTEGER PRIMARY KEY AUTOINCREMENT , name TEXT)");
+         await db.execute("Create table Calificacion (id INTEGER PRIMARY KEY AUTOINCREMENT ,idMateria INTEGER, semestre TEXT, calificacion float)");
          
          final  materias =   await DBProvider.db.getTodasMaterias();
          if( materias.length != 0 ){
@@ -47,7 +48,7 @@ class DbCProvider{
       },
     );
   }
-  Future<List<MateriaModel>> getTodasCalificaciones()async {
+  Future<List<MateriaModel>> getTodasCalificacionesMaterias()async {
     final db = await database;
     final res = await db.query("Materia");
     List<MateriaModel> list = res.isNotEmpty ? 
@@ -60,9 +61,28 @@ class DbCProvider{
     });
     return list;
   }
+
+  Future<List<CalificacionModel>> getTodasCalificacionDeMateria(int idMateria)async{
+
+    final db= await database;
+    final res = await db.rawQuery("SELECT * FROM Calificacion WHERE idMateria=$idMateria");
+    List<CalificacionModel> list = res.isNotEmpty ? 
+                              res.map((item) => CalificacionModel.fromJson(item)).
+                              toList()
+                              : [];
+    return list;                              
+
+  }
+  
   nuevaMateria(MateriaModel nuevaM) async{
     final db = await database;
     final res = await db.rawQuery("insert into Materia(name) values('${nuevaM.name}')");
+    return res;
+  }
+
+  nuevaCalificacion(CalificacionModel nuev) async{
+    final db= await database;
+    final res= await db.insert("Calificacion", nuev.toJson());   
     return res;
   }
 }

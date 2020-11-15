@@ -213,7 +213,7 @@ class _AddMateriState extends State<AddMateri> {
               ),
               onPressed: () {
                 final materia = MateriaModel(name: _name,color: utils.coloToString(_opcionSeleccionada));
-                calificacionesBlock.agregarCalificacion(materia);
+                calificacionesBlock.agregarMateria(materia);
                 materiasBloc.agregarMateria(materia);
                 _name = "";
                 Navigator.pop(context);

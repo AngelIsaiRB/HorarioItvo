@@ -2,6 +2,7 @@ import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
 import 'package:calendaritvo/src/data/data_list.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
+import 'package:calendaritvo/src/models/calificacion_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -129,15 +130,28 @@ class _ListC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(     
-       color: Colors.white70,
-      //  margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
+    final calificacionesBlock = CalificacionesBlock();
+    calificacionesBlock.obtenerCalificacionesDeMateria(materia.id);    
+    return StreamBuilder(
+      stream: calificacionesBlock.calificacionMateria,      
+      builder: (BuildContext context, AsyncSnapshot<List<CalificacionModel>> snapshot) {
+         if (!snapshot.hasData){
+           return Container();
+         }
+        final mate = snapshot.data;
+        double promedio=0;
+         mate.forEach((element) {
+           promedio = promedio + element.calificacion;
+        });
+        promedio=promedio/mate.length;
+        return Container(
+          color: Colors.white70,
+          child: Column(
         children: [
           ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: 5,
+            itemCount: mate.length,
             itemBuilder: (BuildContext context, int index) {
             return 
                 Stack(
@@ -147,7 +161,7 @@ class _ListC extends StatelessWidget {
                       title: Text("${ordinalNumber[index]}:"),
                       trailing: Container(
                         margin: EdgeInsets.only(right: 20),
-                        child: Text("5",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
+                        child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
             ),
                   ],
                 );
@@ -156,7 +170,7 @@ class _ListC extends StatelessWidget {
           Hero(
             tag: materia.id,
             child: Container(
-              child: Text("Promedio final: ",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
+              child: Text("Promedio final: $promedio",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
             ),
           ),
           Divider(),
@@ -164,11 +178,16 @@ class _ListC extends StatelessWidget {
             child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
             color: Colors.black38,
             onPressed: (){
-                //TODO: agregar calificacion 
+                 final calificacion = CalificacionModel(calificacion: 5.5, idMateria: materia.id,semestre: "primer" );
+                 final calificacionesBlock = CalificacionesBlock();
+                 calificacionesBlock.agregarCalificacion(calificacion);
             },
             )
         ],
       ),
+        );
+      },
     );
+   
   }
 }
