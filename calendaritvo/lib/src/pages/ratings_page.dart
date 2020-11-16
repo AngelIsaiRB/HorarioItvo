@@ -154,7 +154,7 @@ class _ListC extends StatelessWidget {
           _buildListViewCalific(mate, calificacionesBlock),
           ////////////////////////////////////////////////////
            Container(
-              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(fontSize: 30, fontWeight:FontWeight.bold ),),
+              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 30, fontWeight:FontWeight.bold ),),
             ),          
             ////////////////////////////////////////////////////
           _buildMaterialButtonAgregarCalif(context, calificacionesBlock)
@@ -218,7 +218,7 @@ class _ListC extends StatelessWidget {
                        leading: Container(
                          color: Colors.black12,
                          child: IconButton(                                                     
-                           icon: Icon(FontAwesomeIcons.edit ),
+                           icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
                            onPressed: (){
                              mostrarAlertaAgregarCalificacion(
                                context: context,
@@ -237,11 +237,11 @@ class _ListC extends StatelessWidget {
                            },
                            ),
                        ),
-                      title: Text("${ordinalNumber[index]}:",style: TextStyle(fontSize: 20, fontWeight:FontWeight.bold ),),
-                      subtitle: Text("Tap para borrar",style: TextStyle(fontSize: 15),),
+                      title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 20, fontWeight:FontWeight.bold ),),
+                      subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 15),),
                       trailing: Container(
                         margin: EdgeInsets.only(right: 20),
-                        child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),)),                              
+                        child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 25, fontWeight:FontWeight.bold ),)),                              
           ),
               ),
                 ],

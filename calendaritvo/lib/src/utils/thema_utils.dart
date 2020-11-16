@@ -6,12 +6,13 @@ ThemeData thema(int value){
   if (value ==888 ){
     return ThemeData(
          primaryColor: Colors.pink,
+        accentColor: Colors.pink,
           primaryColorLight:Color.fromRGBO(38, 38, 38,1),         
           brightness: Brightness.dark,
           primarySwatch: Colors.orange, 
           primaryColorDark: Colors.white,
           backgroundColor: Color.fromRGBO(48, 48, 48, 1.0),  
-                 
+          shadowColor: Colors.black,       
           textTheme: TextTheme(
           headline3: TextStyle(color:Colors.white,fontSize:35.0, fontStyle: FontStyle.italic  ),
           headline2: TextStyle(color: Colors.white, fontSize: 30.0),
