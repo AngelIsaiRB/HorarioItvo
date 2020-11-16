@@ -121,6 +121,7 @@ class _AddMateriState extends State<AddMateri> {
 
   Widget _crearInput() {
     return TextField(
+      autofocus: true,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         //border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),

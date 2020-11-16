@@ -50,6 +50,7 @@ class _RatingPageState extends State<RatingPage> {
           ),
     );
   }
+
     Widget _listViewMaterias() {
     return StreamBuilder(
       stream: materiasBloc.materiasStream,
@@ -95,9 +96,7 @@ class _RatingPageState extends State<RatingPage> {
                                     Container(
                                       width: 10,
                                     ),
-                                    Hero(
-                                      tag: materia[index].id,
-                                      child: Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0),)),
+                                    Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0)),
                                   ],
                                 ),
                                 trailing: Icon(FontAwesomeIcons.sortAmountDown, color: Colors.white,),
@@ -136,7 +135,7 @@ class _ListC extends StatelessWidget {
     return StreamBuilder(
       stream: calificacionesBlock.calificacionMateria,      
       builder: (BuildContext context, AsyncSnapshot<List<CalificacionModel>> snapshot) {
-         if (!snapshot.hasData){
+         if (!snapshot.hasData ){
            return Container();
          }
         final mate = snapshot.data;
@@ -151,82 +150,103 @@ class _ListC extends StatelessWidget {
           color: Colors.white70,
           child: Column(
         children: [
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: mate.length,
-            itemBuilder: (BuildContext context, int index) {
-            return 
-                Stack(
-                  children: [                    
-                GestureDetector(
-
-                  onTap: (){
-                    alertYesNo(
-                      context: context,
-                      mensaje: "Desea Eliminar",
-                      onYes: (){
-                        final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
-                        calificacionesBlock.eliminarCalificacion(model);
-                        Navigator.of(context).pop();
-                      },
-                      onNo: () => Navigator.of(context).pop()
-
-                    );
-                     
-                  },
-                  child: ListTile(
-                         leading: Container(
-                           color: Colors.black12,
-                           child: IconButton(                                                     
-                             icon: Icon(FontAwesomeIcons.edit ),
-                             onPressed: (){
-                               // TODO: editar campo de calificacion
-                             },
-                             ),
-                         ),
-                        title: Text("${ordinalNumber[index]}:"),
-                        subtitle: Text("Tap para borrar",style: TextStyle(fontSize: 15),),
-                        trailing: Container(
-                          margin: EdgeInsets.only(right: 20),
-                          child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 35, fontWeight:FontWeight.bold ),)),                              
-            ),
-                ),
-                  ],
-                );
-           },
-          ),
-          Hero(
-            tag: materia.id,
-            child: Container(
-              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),),
-            ),
-          ),
-          MaterialButton(
-            child: Text("Agregar",style:TextStyle(color: Colors.white, fontSize: 15.0),),
-            color: Colors.black38,
-            onPressed: ()async{
-              mostrarAlertaAgregarCalificacion(context: context, 
-              title: "Agregar Calificacion",
-              onOk: (String value){
-                try {
-                  final valuebol = double.parse(value);
-                  final calificacion = CalificacionModel(calificacion:valuebol, idMateria: materia.id,semestre: "" );                 
-                 calificacionesBlock.agregarCalificacion(calificacion);
-                 Navigator.of(context).pop();
-                }
-                catch(e){ }
-              }
-              );
-              
-                
-            },
-            )
+          ////////////////////////////////////////////////////
+          _buildListViewCalific(mate, calificacionesBlock),
+          ////////////////////////////////////////////////////
+           Container(
+              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(fontSize: 30, fontWeight:FontWeight.bold ),),
+            ),          
+            ////////////////////////////////////////////////////
+          _buildMaterialButtonAgregarCalif(context, calificacionesBlock)
+            ////////////////////////////////////////////////////
         ],
       ),
         );
       },
     );
    
+  }
+
+  MaterialButton _buildMaterialButtonAgregarCalif(BuildContext context, CalificacionesBlock calificacionesBlock) {
+    return MaterialButton(
+          child: Text("Agregar Calificacion",style:TextStyle(color: Colors.white, fontSize: 15.0),),
+          color: Colors.black38,
+          onPressed: ()async{
+            mostrarAlertaAgregarCalificacion(context: context, 
+            title: "Agregar Calificacion",
+            textAceptar: "Aceptar",
+            onOk: (String value){
+              try {
+                final valuebol = double.parse(value);
+                final calificacion = CalificacionModel(calificacion:valuebol, idMateria: materia.id,semestre: "" );                 
+               calificacionesBlock.agregarCalificacion(calificacion);
+               Navigator.of(context).pop();
+              }
+              catch(e){ }
+            }
+            ); 
+          },
+          );
+  }
+
+  ListView _buildListViewCalific(List<CalificacionModel> mate, CalificacionesBlock calificacionesBlock) {
+    return ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: mate.length,
+          itemBuilder: (BuildContext context, int index) {
+          return 
+              Stack(
+                children: [                    
+              GestureDetector(
+
+                onTap: (){
+                  alertYesNo(
+                    context: context,
+                    mensaje: "Desea Eliminar",
+                    onYes: (){
+                      final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
+                      calificacionesBlock.eliminarCalificacion(model);
+                      Navigator.of(context).pop();
+                    },
+                    onNo: () => Navigator.of(context).pop()
+
+                  );
+                   
+                },
+                child: ListTile(
+                       leading: Container(
+                         color: Colors.black12,
+                         child: IconButton(                                                     
+                           icon: Icon(FontAwesomeIcons.edit ),
+                           onPressed: (){
+                             mostrarAlertaAgregarCalificacion(
+                               context: context,
+                               title: "Editar calificacion",
+                               textAceptar: "Cambiar",
+                               onOk: (value){
+                                 try {
+                                 final cal=double.parse(value);
+                                final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
+                                calificacionesBlock.actualizarCalificacion(model);
+                                Navigator.of(context).pop();                                     
+                                 } catch (e) {
+                                 }
+                               }
+                             );
+                           },
+                           ),
+                       ),
+                      title: Text("${ordinalNumber[index]}:",style: TextStyle(fontSize: 20, fontWeight:FontWeight.bold ),),
+                      subtitle: Text("Tap para borrar",style: TextStyle(fontSize: 15),),
+                      trailing: Container(
+                        margin: EdgeInsets.only(right: 20),
+                        child: Text("${mate[index].calificacion}",style: TextStyle(fontSize: 25, fontWeight:FontWeight.bold ),)),                              
+          ),
+              ),
+                ],
+              );
+         },
+        );
   }
 }

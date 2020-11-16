@@ -49,6 +49,12 @@ class CalificacionesBlock{
     await DbCProvider.db.nuevaCalificacion(nuev);
     obtenerCalificacionesDeMateria(nuev.idMateria);
   }
+
+  actualizarCalificacion(CalificacionModel model) async{
+    await DbCProvider.db.actualizarCalificacion(model);
+    obtenerCalificacionesDeMateria(model.idMateria);
+  }
+
   eliminarCalificacion(CalificacionModel model)async{
     await DbCProvider.db.eliminarCalificacion(model.id);
     obtenerCalificacionesDeMateria(model.idMateria);

@@ -54,9 +54,10 @@ abrirLink(String link)async{
              });
 }
 
-mostrarAlertaAgregarCalificacion({BuildContext context,String title, Function onOk}) {
+mostrarAlertaAgregarCalificacion({BuildContext context,String title, String textAceptar, Function onOk}) {
   String text;
     showDialog(
+      useSafeArea: true,
       context: context,
       barrierDismissible: true,      
       builder: (context) {
@@ -66,11 +67,12 @@ mostrarAlertaAgregarCalificacion({BuildContext context,String title, Function on
           
           title: Text(title),
           content: Container(
-            height: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.2,
             width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: [
                 TextField(   
+                  autofocus: true,
                   keyboardType: TextInputType.number,   
                   inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -104,8 +106,8 @@ mostrarAlertaAgregarCalificacion({BuildContext context,String title, Function on
             ),
             FlatButton(
               child: Text(
-                "Agregar",
-                style: TextStyle(fontSize: 25.0),
+                textAceptar,
+                style: TextStyle(fontSize: 20.0),
               ),
               onPressed: ()=> onOk(text),
             )
