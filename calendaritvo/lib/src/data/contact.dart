@@ -44,12 +44,23 @@ final List<ContactModel> contactos = <ContactModel>[
     isLink: true
     ),
     ContactModel(
-    nombre:"Email TICS",
+    nombre:"Email Recursos Financieros",
+    link:"mailto:rf_voaxaca@tecnm.mx", 
+    icon: FontAwesomeIcons.envelope,
+    isLink: true
+    ),
+    ContactModel(
+    nombre:"Email servicios escolares TICS",
     link:"mailto:coordinacion.tics@voaxaca.tecnm.mx", 
     icon: FontAwesomeIcons.envelope,
     isLink: true
     ),
-
+    ContactModel(
+    nombre:"Email servicios escolares Informatica",
+    link:"mailto:informatica.se@voaxaca.tecnm.mx", 
+    icon: FontAwesomeIcons.envelope,
+    isLink: true
+    ),
 
 ];
 
