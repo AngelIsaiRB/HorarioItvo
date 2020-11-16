@@ -154,7 +154,7 @@ class _ListC extends StatelessWidget {
           _buildListViewCalific(mate, calificacionesBlock),
           ////////////////////////////////////////////////////
            Container(
-              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 30, fontWeight:FontWeight.bold ),),
+              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 25, fontWeight:FontWeight.bold ),),
             ),          
             ////////////////////////////////////////////////////
           _buildMaterialButtonAgregarCalif(context, calificacionesBlock)
@@ -190,63 +190,67 @@ class _ListC extends StatelessWidget {
   }
 
   ListView _buildListViewCalific(List<CalificacionModel> mate, CalificacionesBlock calificacionesBlock) {
-    return ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: mate.length,
-          itemBuilder: (BuildContext context, int index) {
-          return 
-              Stack(
-                children: [                    
-              GestureDetector(
-
-                onTap: (){
-                  alertYesNo(
-                    context: context,
-                    mensaje: "Desea Eliminar",
-                    onYes: (){
-                      final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
-                      calificacionesBlock.eliminarCalificacion(model);
-                      Navigator.of(context).pop();
-                    },
-                    onNo: () => Navigator.of(context).pop()
-
-                  );
-                   
-                },
-                child: ListTile(
-                       leading: Container(
-                         color: Colors.black12,
-                         child: IconButton(                                                     
-                           icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
-                           onPressed: (){
-                             mostrarAlertaAgregarCalificacion(
-                               context: context,
-                               title: "Editar calificacion",
-                               textAceptar: "Cambiar",
-                               onOk: (value){
-                                 try {
-                                 final cal=double.parse(value);
-                                final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
-                                calificacionesBlock.actualizarCalificacion(model);
-                                Navigator.of(context).pop();                                     
-                                 } catch (e) {
-                                 }
+    return ListView.separated(    
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: mate.length,
+        itemBuilder: (BuildContext context, int index) {
+        return 
+            Stack(
+              children: [                    
+            GestureDetector(
+              onTap: (){
+                alertYesNo(
+                  context: context,
+                  mensaje: "Desea Eliminar",
+                  onYes: (){
+                    final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
+                    calificacionesBlock.eliminarCalificacion(model);
+                    Navigator.of(context).pop();
+                  },
+                  onNo: () => Navigator.of(context).pop()
+                );
+                 
+              },
+              child: ListTile(
+                     leading: Container(
+                       color: Colors.black12,
+                       child: IconButton(                                                     
+                         icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
+                         onPressed: (){
+                           mostrarAlertaAgregarCalificacion(
+                             context: context,
+                             title: "Editar calificacion",
+                             textAceptar: "Cambiar",
+                             onOk: (value){
+                               try {
+                               final cal=double.parse(value);
+                              final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
+                              calificacionesBlock.actualizarCalificacion(model);
+                              Navigator.of(context).pop();                                     
+                               } catch (e) {
                                }
-                             );
-                           },
-                           ),
-                       ),
-                      title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 20, fontWeight:FontWeight.bold ),),
-                      subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 15),),
-                      trailing: Container(
-                        margin: EdgeInsets.only(right: 20),
-                        child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 25, fontWeight:FontWeight.bold ),)),                              
-          ),
-              ),
-                ],
-              );
-         },
+                             }
+                           );
+                         },
+                         ),
+                     ),
+                    title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 18, fontWeight:FontWeight.bold ),),
+                    subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
+                    trailing: Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
+        ),
+            ),
+              ],
+            );
+       },
+       separatorBuilder: (context, i){
+         return Divider(
+           height: 20,
+           color: Colors.black,
+         );
+       },
         );
   }
 }
