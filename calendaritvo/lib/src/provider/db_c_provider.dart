@@ -96,6 +96,13 @@ class DbCProvider{
     final res = await db.delete("Calificacion", where: "id=?", whereArgs: [id] );  
     return res;
   }
+  eliminarTodasCalificacionesDeMateria(MateriaModel model)async{
+    final db= await database;
+    final res = await db.delete("Calificacion", where: "idMateria=?", whereArgs: [model.id]);  
+    return res;
+  }
+
+
   Future<double>promedioCalificacion( int id)async{
     final mate = await getTodasCalificacionDeMateria(id);
     double promedio=0;        

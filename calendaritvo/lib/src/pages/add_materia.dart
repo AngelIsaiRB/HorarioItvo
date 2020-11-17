@@ -1,4 +1,5 @@
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
+import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/data/data_list.dart' as data;
@@ -86,6 +87,7 @@ class _AddMateriState extends State<AddMateri> {
                   onDismissed: (direcion) {
                    if (materia[index].name != "Libre"){
                        materiasBloc.deleteMateria(materia[index]);
+                       DbCProvider.db.eliminarTodasCalificacionesDeMateria(materia[index]);
                    }
                   },
                   child: Card(
