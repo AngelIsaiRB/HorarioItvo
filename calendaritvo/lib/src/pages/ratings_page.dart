@@ -1,3 +1,4 @@
+import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
 import 'package:calendaritvo/src/data/data_list.dart';
@@ -19,7 +20,7 @@ class _RatingPageState extends State<RatingPage> {
   final materiasBloc = MateriasBlock();
   final calificacionesBlock = CalificacionesBlock();
  int dropM=0;
-
+  final pref= PreferenciasUsuario();
 
 
   @override
@@ -53,6 +54,9 @@ class _RatingPageState extends State<RatingPage> {
   }
 
     Widget _listViewMaterias() {
+      final _thema = pref.tema;
+      Color themeData;
+      Color iconthemeData;
     return StreamBuilder(
       stream: materiasBloc.materiasStream,
       builder:
@@ -72,11 +76,17 @@ class _RatingPageState extends State<RatingPage> {
             itemCount: materia.length-1,
             physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int i){
-              final index=i+1;
-              
+              final index=i+1;              
+              if(_thema==1){
+                 themeData= utils.stringToColor(materia[index].color);
+                 iconthemeData = Colors.white;
+              }
+              else{
+                themeData=Theme.of(context).backgroundColor;
+                iconthemeData = utils.stringToColor(materia[index].color);
+              }
               return Column(                
-                children: [
-                  
+                children: [                  
                   GestureDetector(
                     onTap: (){                      
                       setState(() {
@@ -86,35 +96,39 @@ class _RatingPageState extends State<RatingPage> {
                       this.dropM=materia[index].id;                        
                       });
                     },
-                    child: Card(
-                       child: Stack(
-                         children: [                     
-                           Container(
-                             color: Theme.of(context).backgroundColor,//Colors.black12,
-                             child: ListTile(                                                                         
-                                title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
-                                leading: FutureBuilder(
-                                  future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
-                                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                    if(!snapshot.hasData){
-                                      return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                    }
-                                    return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                  },
+                    child: ClipRRect(
+                      borderRadius: _selecFormCard(pref.formIcon),
+                      child: Card(
+                         child: Stack(
+                           children: [                     
+                             Container(
+                               color: themeData,//Colors.black12,
+                               child: ListTile(                                                                         
+                                  title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
+                                  leading: FutureBuilder(
+                                    future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
+                                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                      if(!snapshot.hasData){
+                                        return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                      }
+                                      return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                    },
+                                  ),
+                                  trailing: Icon(FontAwesomeIcons.sortAmountDown, color: iconthemeData,),
                                 ),
-                                trailing: Icon(FontAwesomeIcons.sortAmountDown, color: utils.stringToColor(materia[index].color),),
-                              ),
-                           ),
-                           Container(
-                             width: double.infinity,
-                             height: 5,
-                             color: utils.stringToColor(materia[index].color),
-                           ),
-                         ],
-                       ),                                 
+                             ),
+                             Container(
+                               width: double.infinity,
+                               height: 5,
+                               color: utils.stringToColor(materia[index].color),
+                             ),
+                           ],
+                         ),                                 
+                      ),
                     ),
                   ),
                   (dropM==materia[index].id)?_ListC(materia: materia[index],):Container(),
+                 
                 ],
               );
             }
@@ -123,7 +137,15 @@ class _RatingPageState extends State<RatingPage> {
     );
   }
 }
-
+BorderRadius _selecFormCard(int valor){
+   if(valor==1){
+   return   BorderRadius.circular(0.0);
+   }
+   else{
+     return BorderRadius.circular(50.0);
+   }
+   
+ }
 class _ListC extends StatelessWidget {
   final MateriaModel materia;
 
@@ -135,38 +157,44 @@ class _ListC extends StatelessWidget {
     final calificacionesBlock = CalificacionesBlock();
    
     calificacionesBlock.obtenerCalificacionesDeMateria(materia.id);    
-    return StreamBuilder(
-      stream: calificacionesBlock.calificacionMateria,      
-      builder: (BuildContext context, AsyncSnapshot<List<CalificacionModel>> snapshot) {
-         if (!snapshot.hasData ){
-           return Container();
-         }
-        final mate = snapshot.data;
-        
-         double promedio=0;        
-         if(mate.length>=1){
-           mate.forEach((element) {
-           promedio = promedio + element.calificacion;
-        });
-        promedio=promedio/mate.length;
-         }
-        return Container(
-          color: Colors.white70,
-          child: Column(
-        children: [
-          ////////////////////////////////////////////////////
-          _buildListViewCalific(mate, calificacionesBlock),
-          ////////////////////////////////////////////////////
-           Container(
-              child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 25, fontWeight:FontWeight.bold ),),
-            ),          
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),      
+      child: StreamBuilder(
+        stream: calificacionesBlock.calificacionMateria,      
+        builder: (BuildContext context, AsyncSnapshot<List<CalificacionModel>> snapshot) {
+           if (!snapshot.hasData ){
+             return Container();
+           }
+          final mate = snapshot.data;
+          
+           double promedio=0;        
+           if(mate.length>=1){
+             mate.forEach((element) {
+             promedio = promedio + element.calificacion;
+          });
+          promedio=promedio/mate.length;
+           }
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomRight:Radius.circular(20) )
+            ),
+            child: Column(
+          children: [
             ////////////////////////////////////////////////////
-          _buildMaterialButtonAgregarCalif(context, calificacionesBlock)
+            _buildListViewCalific(mate, calificacionesBlock),
             ////////////////////////////////////////////////////
-        ],
+             Container(
+                child: Text("Promedio final: ${promedio.toStringAsFixed(1)}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 25, fontWeight:FontWeight.bold ),),
+              ),          
+              ////////////////////////////////////////////////////
+            _buildMaterialButtonAgregarCalif(context, calificacionesBlock)
+              ////////////////////////////////////////////////////
+          ],
+        ),
+          );
+        },
       ),
-        );
-      },
     );
    
   }
