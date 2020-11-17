@@ -4,6 +4,12 @@ import 'package:calendaritvo/src/pages/calendario_page.dart';
 import 'package:calendaritvo/src/pages/contact.dart';
 import 'package:calendaritvo/src/pages/home_page.dart';
 import 'package:calendaritvo/src/pages/info_page.dart';
+import 'package:calendaritvo/src/pages/settingsPages/dangerZone.dart';
+import 'package:calendaritvo/src/pages/settingsPages/developer.dart';
+import 'package:calendaritvo/src/pages/settingsPages/extraSetings.dart';
+import 'package:calendaritvo/src/pages/settingsPages/imagefond.dart';
+import 'package:calendaritvo/src/pages/settingsPages/switchColor.dart';
+import 'package:calendaritvo/src/pages/settingsPages/themaSelector.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
 import 'package:calendaritvo/src/pages/welcome_page.dart';
 import 'package:calendaritvo/src/provider/firebase_messagin.dart';
@@ -57,7 +63,13 @@ class _MyAppState extends State<MyApp> {
         "calendario" : (BuildContext context)=>CalendarioPage(),
         "restart"    : (BuildContext context)=>MyApp(),
         "welcomePage": (BuildContext context)=>WelcomePage(),
-        "contact": (BuildContext context)=>ContactPage(),
+        "contact": (BuildContext context)=>ContactPage(),        
+        "imagefond" :(BuildContext context)=>ImageFonda(),
+        "themaSelector" :(BuildContext context)=>TemaSelector(),
+        "switchcolor" :(BuildContext context)=>SwitchColor(),
+        "extraSettings" :(BuildContext context)=>ExtraSettings(),
+        "dangerZona" :(BuildContext context)=>DangerZone(),
+        "developer" :(BuildContext context)=>Developer(),
       },
       
        theme: them,
