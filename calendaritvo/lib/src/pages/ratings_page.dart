@@ -4,6 +4,7 @@ import 'package:calendaritvo/src/data/data_list.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/calificacion_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
+import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
@@ -92,7 +93,15 @@ class _RatingPageState extends State<RatingPage> {
                              color: Theme.of(context).backgroundColor,//Colors.black12,
                              child: ListTile(                                                                         
                                 title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
-                                leading: Text("90",style:TextStyle(color: Colors.white, fontSize: 25.0)),
+                                leading: FutureBuilder(
+                                  future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
+                                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                    if(!snapshot.hasData){
+                                      return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                    }
+                                    return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                  },
+                                ),
                                 trailing: Icon(FontAwesomeIcons.sortAmountDown, color: Colors.white,),
                               ),
                            ),

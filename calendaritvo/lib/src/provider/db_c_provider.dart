@@ -96,4 +96,16 @@ class DbCProvider{
     final res = await db.delete("Calificacion", where: "id=?", whereArgs: [id] );  
     return res;
   }
+  Future<double>promedioCalificacion( int id)async{
+    final mate = await getTodasCalificacionDeMateria(id);
+    double promedio=0;        
+         if(mate.length>=1){
+           mate.forEach((element) {
+           promedio = promedio + element.calificacion;
+        });
+        promedio=promedio/mate.length;
+         }
+    return promedio;     
+  }
+
 }
