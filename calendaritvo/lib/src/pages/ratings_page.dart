@@ -72,6 +72,7 @@ class _RatingPageState extends State<RatingPage> {
             physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int i){
               final index=i+1;
+              
               return Column(                
                 children: [
                   
@@ -139,6 +140,7 @@ class _ListC extends StatelessWidget {
            return Container();
          }
         final mate = snapshot.data;
+        
          double promedio=0;        
          if(mate.length>=1){
            mate.forEach((element) {
@@ -197,6 +199,9 @@ class _ListC extends StatelessWidget {
         shrinkWrap: true,
         itemCount: mate.length,
         itemBuilder: (BuildContext context, int index) {
+          if(index>=49){
+          return Container();
+        }
         return 
             Stack(
               children: [                    
