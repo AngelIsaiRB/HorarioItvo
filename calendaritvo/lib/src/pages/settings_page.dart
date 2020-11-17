@@ -41,22 +41,18 @@ class _SettingsPageState extends State<SettingsPage> {
       
       appBar: AppBar(
         title: Text("Ajustes", style: Theme.of(context).textTheme.headline2,),
+        centerTitle: true,
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
       body: Container(          
        child: ListView(
          physics: BouncingScrollPhysics(),
          children: [ 
-              listItem(FontAwesomeIcons.image,Colors.blueAccent,"Fondo"                    ,ImageFonda() ),
-              Divider(),
-              listItem(FontAwesomeIcons.paintRoller,Colors.purple,"Tema"               ,TemaSelector() ),
-              Divider(),
-              listItem(FontAwesomeIcons.palette,Colors.green,    "Colores"            ,SwitchColor() ),
-              Divider(),
-              listItem(FontAwesomeIcons.cube,Colors.red[300],       "Formas"             ,ExtraSettings() ),
-              Divider(),
-              listItem(FontAwesomeIcons.exclamationTriangle,Colors.red,"Danger Zone",DangerZone() ),
-              Divider(),
+              listItem(FontAwesomeIcons.image,Colors.blueAccent,"Imagen"                    ,ImageFonda() ),              
+              listItem(FontAwesomeIcons.paintRoller,Colors.purple,"Tema"               ,TemaSelector() ),              
+              listItem(FontAwesomeIcons.palette,Colors.green,    "Colores"            ,SwitchColor() ),              
+              listItem(FontAwesomeIcons.shapes,Colors.red[300],       "Formas"             ,ExtraSettings() ),              
+              listItem(FontAwesomeIcons.exclamationTriangle,Colors.red,"Danger Zone",DangerZone() ),              
               listItem(FontAwesomeIcons.userAstronaut,Colors.cyan,"Developer"        ,Developer() ),
          ],
        )

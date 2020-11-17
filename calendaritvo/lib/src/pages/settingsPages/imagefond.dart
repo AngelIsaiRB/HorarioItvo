@@ -12,11 +12,12 @@ class ImageFonda extends StatefulWidget {
 
 class _ImageFondaState extends State<ImageFonda> {
   final pref = PreferenciasUsuario();
-      List<String> images=["assets/fondo7.jpg","assets/fondo9.jpg","assets/fondo10.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
+  final controller =SwiperController();  
+      List<String> images=["assets/fondo19.jpg","assets/fondo7.jpg","assets/fondo12.jpg","assets/fondo2.jpg","assets/fondo3.jpg",
                           "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo1.jpg"
-                          ,"assets/fondo8.jpg","assets/fondo11.jpg","assets/fondo12.jpg","assets/fondo13.jpg"
+                          ,"assets/fondo8.jpg","assets/fondo11.jpg","assets/fondo10.jpg","assets/fondo13.jpg"
                           ,"assets/fondo14.jpg","assets/fondo15.jpg","assets/fondo16.jpg","assets/fondo17.jpg"
-                          ,"assets/fondo18.jpg","assets/fondo19.jpg"];
+                          ,"assets/fondo18.jpg","assets/fondo9.jpg"];
     
   @override
   Widget build(BuildContext context) {
@@ -31,32 +32,46 @@ class _ImageFondaState extends State<ImageFonda> {
          margin: EdgeInsets.all(5),
         child: Column(        
           children: [
-            Container(            
-              alignment: AlignmentDirectional.topStart,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Fondo",style: Theme.of(context).textTheme.headline2,),
-                  Container(                    
-                    child: GestureDetector(
-                      child: Row(
-                        children: [
-                          Text("Agregar"),
-                          Icon(Icons.photo, size: 30,)
-                        ],
-                      ),
-                      onTap:_seleccionarFoto,
-                    ),
+            Container(
+              color: Colors.black12,
+              child: GestureDetector(
+                onTap:_seleccionarFoto,
+                child: Container( 
+                  padding: EdgeInsets.only(top:10,bottom: 10),           
+                  alignment: AlignmentDirectional.topStart,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Desde galeria:",style: Theme.of(context).textTheme.headline2,),
+                      Container(                    
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("+",style: TextStyle(fontSize: 30),),
+                              Icon(Icons.photo, size: 30,)
+                            ],
+                          ),                      
+                        ),
+                      )
+                    ],
                   )
-                ],
-              )
+                  ),
               ),
+            ),
             Container(        
               child: Swiper(
+                autoplay: true,                
+                autoplayDelay: 200,
+                autoplayDisableOnInteraction: true,
+                controller: controller,           
                 itemCount: images.length,
-                itemWidth: _screenSize.width *0.5,
-                itemHeight: _screenSize.height * 0.5,
+                itemWidth: _screenSize.width *0.7,
+                itemHeight: _screenSize.height * 0.8,
                 layout: SwiperLayout.STACK,
+                onIndexChanged: (e){
+                  if(e>1)controller.stopAutoplay();
+                },
                 itemBuilder: (BuildContext context, int index){
                   return Container(
                     height: double.maxFinite,
@@ -75,6 +90,7 @@ class _ImageFondaState extends State<ImageFonda> {
         
         child: GestureDetector(
           child: Image(image: AssetImage(images[index])),
+                   
           onTap: (){
             showDialog(
              context: context,
