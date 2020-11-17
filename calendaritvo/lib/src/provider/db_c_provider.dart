@@ -96,6 +96,11 @@ class DbCProvider{
     final res = await db.delete("Calificacion", where: "id=?", whereArgs: [id] );  
     return res;
   }
+  eliminarMateria(String name)async{
+    final db= await database;
+    final res = await db.delete("Materia", where: "name=?", whereArgs: [name] );  
+    return res;
+  }
   eliminarTodasCalificacionesDeMateria(MateriaModel model)async{
     final db= await database;
     final res = await db.delete("Calificacion", where: "idMateria=?", whereArgs: [model.id]);  

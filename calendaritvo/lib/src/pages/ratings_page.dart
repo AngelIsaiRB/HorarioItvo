@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
 import 'package:calendaritvo/src/data/data_list.dart';
@@ -5,10 +9,7 @@ import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/calificacion_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_c_provider.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RatingPage extends StatefulWidget {
   @override
@@ -62,28 +63,27 @@ class _RatingPageState extends State<RatingPage> {
             child: CircularProgressIndicator(),
           );
         }
-        final materia = snapshot.data;
-        if (materia.length == 0) {
+        final materias = snapshot.data;
+        if (materias.length == 0) {
           return Center(
             child: Text("No hay materias"),
           );
         }
         return ListView.builder(
-            itemCount: materia.length-1,
+            itemCount: materias.length-1,
             physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int i){
               final index=i+1;
-              
+              final materia= materias[index];
               return Column(                
-                children: [
-                  
+                children: [                  
                   GestureDetector(
                     onTap: (){                      
                       setState(() {
-                      if(dropM==materia[index].id)
+                      if(dropM==materia.id)
                       this.dropM=0;
                       else
-                      this.dropM=materia[index].id;                        
+                      this.dropM=materia.id;                        
                       });
                     },
                     child: Card(
@@ -92,9 +92,9 @@ class _RatingPageState extends State<RatingPage> {
                            Container(
                              color: Theme.of(context).backgroundColor,//Colors.black12,
                              child: ListTile(                                                                         
-                                title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
+                                title: Text("${materia.name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
                                 leading: FutureBuilder(
-                                  future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
+                                  future: DbCProvider.db.promedioCalificacion(materia.id),                                  
                                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                                     if(!snapshot.hasData){
                                       return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
@@ -102,19 +102,19 @@ class _RatingPageState extends State<RatingPage> {
                                     return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
                                   },
                                 ),
-                                trailing: Icon(FontAwesomeIcons.sortAmountDown, color: Colors.white,),
+                                trailing: Icon(FontAwesomeIcons.sortAmountDown, color: utils.stringToColor(materia.color),),
                               ),
                            ),
                            Container(
                              width: double.infinity,
                              height: 5,
-                             color: utils.stringToColor(materia[index].color),
+                             color: utils.stringToColor(materia.color),
                            ),
                          ],
                        ),                                 
                     ),
                   ),
-                  (dropM==materia[index].id)?_ListC(materia: materia[index],):Container(),
+                  (dropM==materia.id)?_ListC(materia: materia,):Container(),
                 ],
               );
             }
@@ -193,14 +193,15 @@ class _ListC extends StatelessWidget {
           );
   }
 
-  ListView _buildListViewCalific(List<CalificacionModel> mate, CalificacionesBlock calificacionesBlock) {
+  ListView _buildListViewCalific(List<CalificacionModel> materias, CalificacionesBlock calificacionesBlock) {
     
     return ListView.separated(    
         scrollDirection: Axis.vertical,
         physics: ScrollPhysics(),
         shrinkWrap: true,
-        itemCount: mate.length,
+        itemCount: materias.length,
         itemBuilder: (BuildContext context, int index) {
+          final materia=materias[index];
           if(index>=49){
           return Container();
         }
@@ -213,7 +214,7 @@ class _ListC extends StatelessWidget {
                   context: context,
                   mensaje: "Desea Eliminar",
                   onYes: (){
-                    final model = CalificacionModel(id:mate[index].id ,idMateria: materia.id);
+                    final model = CalificacionModel(id:materia.id ,idMateria: materia.id);
                     calificacionesBlock.eliminarCalificacion(model);
                     Navigator.of(context).pop();
                   },
@@ -234,7 +235,7 @@ class _ListC extends StatelessWidget {
                                onOk: (value){
                                  try {
                                  final cal=double.parse(value);
-                                final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
+                                final model = CalificacionModel(id:materia.id, idMateria:materia.idMateria,calificacion: cal );
                                 calificacionesBlock.actualizarCalificacion(model);
                                 Navigator.of(context).pop();                                     
                                  } catch (e) {
@@ -248,7 +249,7 @@ class _ListC extends StatelessWidget {
                       subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
                       trailing: Container(
                         margin: EdgeInsets.only(right: 20),
-                        child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
+                        child: Text("${materia.calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
         ),
               ),
            

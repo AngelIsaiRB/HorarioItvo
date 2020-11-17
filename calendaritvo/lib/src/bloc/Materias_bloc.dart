@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:calendaritvo/src/models/materia_model.dart';
+import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 
 class MateriasBlock{
@@ -36,6 +37,7 @@ class MateriasBlock{
 
   deleteMateria(MateriaModel materia) async{
     await DBProvider.db.deleteMateria(materia);
+    await DbCProvider.db.eliminarMateria(materia.name);
     obtenerMaterias();
   }
 
