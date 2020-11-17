@@ -102,7 +102,7 @@ class _RatingPageState extends State<RatingPage> {
                                     return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
                                   },
                                 ),
-                                trailing: Icon(FontAwesomeIcons.sortAmountDown, color: Colors.white,),
+                                trailing: Icon(FontAwesomeIcons.sortAmountDown, color: utils.stringToColor(materia[index].color),),
                               ),
                            ),
                            Container(
