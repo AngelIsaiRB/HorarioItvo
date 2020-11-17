@@ -91,15 +91,8 @@ class _RatingPageState extends State<RatingPage> {
                            Container(
                              color: Theme.of(context).backgroundColor,//Colors.black12,
                              child: ListTile(                                                                         
-                                title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 22.0) ),
-                                subtitle: Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                    ),
-                                    Text("Promedio actual : 90",style:TextStyle(color: Colors.white, fontSize: 15.0)),
-                                  ],
-                                ),
+                                title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
+                                leading: Text("90",style:TextStyle(color: Colors.white, fontSize: 25.0)),
                                 trailing: Icon(FontAwesomeIcons.sortAmountDown, color: Colors.white,),
                               ),
                            ),
