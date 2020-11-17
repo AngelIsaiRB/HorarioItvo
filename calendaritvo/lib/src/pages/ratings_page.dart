@@ -69,7 +69,7 @@ class _RatingPageState extends State<RatingPage> {
         }
         return ListView.builder(
             itemCount: materia.length-1,
-            
+            physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int i){
               final index=i+1;
               return Column(                
@@ -190,8 +190,10 @@ class _ListC extends StatelessWidget {
   }
 
   ListView _buildListViewCalific(List<CalificacionModel> mate, CalificacionesBlock calificacionesBlock) {
+    
     return ListView.separated(    
         scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: mate.length,
         itemBuilder: (BuildContext context, int index) {
@@ -212,36 +214,37 @@ class _ListC extends StatelessWidget {
                 );
                  
               },
-              child: ListTile(
-                     leading: Container(
-                       color: Colors.black12,
-                       child: IconButton(                                                     
-                         icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
-                         onPressed: (){
-                           mostrarAlertaAgregarCalificacion(
-                             context: context,
-                             title: "Editar calificacion",
-                             textAceptar: "Cambiar",
-                             onOk: (value){
-                               try {
-                               final cal=double.parse(value);
-                              final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
-                              calificacionesBlock.actualizarCalificacion(model);
-                              Navigator.of(context).pop();                                     
-                               } catch (e) {
+                child: ListTile(
+                       leading: Container(
+                         color: Colors.black12,
+                         child: IconButton(                                                     
+                           icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
+                           onPressed: (){
+                             mostrarAlertaAgregarCalificacion(
+                               context: context,
+                               title: "Editar calificacion",
+                               textAceptar: "Cambiar",
+                               onOk: (value){
+                                 try {
+                                 final cal=double.parse(value);
+                                final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
+                                calificacionesBlock.actualizarCalificacion(model);
+                                Navigator.of(context).pop();                                     
+                                 } catch (e) {
+                                 }
                                }
-                             }
-                           );
-                         },
-                         ),
-                     ),
-                    title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 18, fontWeight:FontWeight.bold ),),
-                    subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
-                    trailing: Container(
-                      margin: EdgeInsets.only(right: 20),
-                      child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
+                             );
+                           },
+                           ),
+                       ),
+                      title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 18, fontWeight:FontWeight.bold ),),
+                      subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
+                      trailing: Container(
+                        margin: EdgeInsets.only(right: 20),
+                        child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
         ),
-            ),
+              ),
+           
               ],
             );
        },

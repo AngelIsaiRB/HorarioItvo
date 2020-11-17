@@ -129,6 +129,7 @@ Widget _day(String day, int horas){
         final dia = snapshot.data;
         
         return ListView.builder(
+          physics: BouncingScrollPhysics(),
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) {            
