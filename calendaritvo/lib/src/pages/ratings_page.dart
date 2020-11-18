@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/bloc/calificaiones_bloc.dart';
@@ -96,34 +97,37 @@ class _RatingPageState extends State<RatingPage> {
                       this.dropM=materia[index].id;                        
                       });
                     },
-                    child: ClipRRect(
-                      borderRadius: _selecFormCard(pref.formIcon),
-                      child: Card(
-                         child: Stack(
-                           children: [                     
-                             Container(
-                               color: themeData,//Colors.black12,
-                               child: ListTile(                                                                         
-                                  title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
-                                  leading: FutureBuilder(
-                                    future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
-                                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                      if(!snapshot.hasData){
-                                        return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                      }
-                                      return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                    },
+                    child: FadeInUp(
+                      duration: Duration(milliseconds: 150),
+                      child: ClipRRect(
+                        borderRadius: _selecFormCard(pref.formIcon),
+                        child: Card(
+                           child: Stack(
+                             children: [                     
+                               Container(
+                                 color: themeData,//Colors.black12,
+                                 child: ListTile(                                                                         
+                                    title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
+                                    leading: FutureBuilder(
+                                      future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
+                                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                        if(!snapshot.hasData){
+                                          return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                        }
+                                        return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                      },
+                                    ),
+                                    trailing: Icon(FontAwesomeIcons.sortAmountDown, color: iconthemeData,),
                                   ),
-                                  trailing: Icon(FontAwesomeIcons.sortAmountDown, color: iconthemeData,),
-                                ),
-                             ),
-                             Container(
-                               width: double.infinity,
-                               height: 5,
-                               color: utils.stringToColor(materia[index].color),
-                             ),
-                           ],
-                         ),                                 
+                               ),
+                               Container(
+                                 width: double.infinity,
+                                 height: 5,
+                                 color: utils.stringToColor(materia[index].color),
+                               ),
+                             ],
+                           ),                                 
+                        ),
                       ),
                     ),
                   ),
@@ -249,35 +253,38 @@ class _ListC extends StatelessWidget {
                 );
                  
               },
-                child: ListTile(
-                       leading: Container(
-                         color: Colors.black12,
-                         child: IconButton(                                                     
-                           icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
-                           onPressed: (){
-                             mostrarAlertaAgregarCalificacion(
-                               context: context,
-                               title: "Editar calificacion",
-                               textAceptar: "Cambiar",
-                               onOk: (value){
-                                 try {
-                                 final cal=double.parse(value);
-                                final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
-                                calificacionesBlock.actualizarCalificacion(model);
-                                Navigator.of(context).pop();                                     
-                                 } catch (e) {
+                child: FadeInDown(
+                  duration: Duration(milliseconds: 100),
+                        child: ListTile(
+                         leading: Container(
+                           color: Colors.black12,
+                           child: IconButton(                                                     
+                             icon: Icon(FontAwesomeIcons.edit, color: Theme.of(context).shadowColor,),
+                             onPressed: (){
+                               mostrarAlertaAgregarCalificacion(
+                                 context: context,
+                                 title: "Editar calificacion",
+                                 textAceptar: "Cambiar",
+                                 onOk: (value){
+                                   try {
+                                   final cal=double.parse(value);
+                                  final model = CalificacionModel(id:mate[index].id, idMateria: mate[index].idMateria,calificacion: cal );
+                                  calificacionesBlock.actualizarCalificacion(model);
+                                  Navigator.of(context).pop();                                     
+                                   } catch (e) {
+                                   }
                                  }
-                               }
-                             );
-                           },
-                           ),
-                       ),
-                      title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 18, fontWeight:FontWeight.bold ),),
-                      subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
-                      trailing: Container(
-                        margin: EdgeInsets.only(right: 20),
-                        child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
+                               );
+                             },
+                             ),
+                         ),
+                        title: Text("${ordinalNumber[index]}:",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 18, fontWeight:FontWeight.bold ),),
+                        subtitle: Text("Tap para borrar",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 13),),
+                        trailing: Container(
+                          margin: EdgeInsets.only(right: 20),
+                          child: Text("${mate[index].calificacion}",style: TextStyle(color: Theme.of(context).shadowColor,fontSize: 23, fontWeight:FontWeight.bold ),)),                              
         ),
+                ),
               ),
            
               ],
