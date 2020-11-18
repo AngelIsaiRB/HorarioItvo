@@ -40,7 +40,7 @@ class _ExtraSettingsState extends State<ExtraSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: Text("Extra", style: Theme.of(context).textTheme.headline2,),
+         title: Text("Formas", style: Theme.of(context).textTheme.headline2,),
          backgroundColor: Theme.of(context).primaryColorLight,
          centerTitle: true,
       ),

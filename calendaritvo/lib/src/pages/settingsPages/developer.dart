@@ -1,5 +1,6 @@
 import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Developer extends StatefulWidget {
   @override
@@ -11,11 +12,18 @@ class _DeveloperState extends State<Developer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajustes", style: Theme.of(context).textTheme.headline2,),
+        title: Text("Developer", style: Theme.of(context).textTheme.headline2,),        
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: true,
       ),
-      body: datoDeDesarollador(),
+      body:Stack(
+        children: [
+          CircularProgressIndicator(),
+          WebView(
+            initialUrl: "https://angelisairamirezbazan.netlify.app",        
+          ),
+        ],
+      ),
 
     );
   }

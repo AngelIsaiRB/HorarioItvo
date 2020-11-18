@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
@@ -29,17 +30,17 @@ class _DangerZoneState extends State<DangerZone> {
          backgroundColor: Theme.of(context).primaryColorLight,
          centerTitle: true,
       ),
-      bottomSheet: _info() ,
+      bottomSheet: FadeInUp(child: _info()) ,
       body: Builder(
         builder: (context)=>Container(
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            _notificaciones(),
+            FadeInRight(child: _notificaciones()),
             Divider(),
-            _deleteMenu(),
+            FadeInRight(child: _deleteMenu()),
             Divider(),
-              _restaurar(context),
+            FadeInRight( child:_restaurar(context)),
             
           ],
         ),
