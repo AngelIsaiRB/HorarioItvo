@@ -24,7 +24,7 @@ class _TemaSelectorState extends State<TemaSelector> {
           
   }
   Widget _temaSelector(BuildContext context){
-  List<String> temas=["assets/tema3.jpg","assets/tema2.jpg","assets/tema1.jpg"];
+  List<String> temas=["assets/tema1.jpg","assets/tema2.jpg","assets/tema3.jpg"];
   List<String> temanames=["Rigel","Betelgeuse","Antares"];
   final _screenSize= MediaQuery.of(context).size;
   return Column(

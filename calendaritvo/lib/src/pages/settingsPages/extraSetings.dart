@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExtraSettings extends StatefulWidget {
   @override
@@ -7,7 +11,10 @@ class ExtraSettings extends StatefulWidget {
 }
 
 class _ExtraSettingsState extends State<ExtraSettings> {
-   int _formIcon;
+   int _formIcon=1;
+   double _width =40.0;
+  double _height =40.0;  
+  BorderRadiusGeometry _borderradius = BorderRadius.circular(0);
    bool _progressBar;
    final pref=PreferenciasUsuario();
   @override
@@ -20,7 +27,7 @@ class _ExtraSettingsState extends State<ExtraSettings> {
    _selectFormIcon(int value){
     pref.formIcon=value;
     setState(() {
-      _formIcon=value;
+      
     });
   }
     _selectProgressBar(bool value){
@@ -40,78 +47,68 @@ class _ExtraSettingsState extends State<ExtraSettings> {
       body: Container(
         child: ListView(
           children: [
-            _iconForm(),
-            _progressBarSelector(),
+            FadeInUp(child: _iconForm()),
+            Divider(),
+            FadeInUp(child: _progressBarSelector()),
+            Divider(),
+            FadeInUp(child: _example()),
           ],
         ),
       ),
     );
   }
   Widget _iconForm(){
-    return Column(
-      children: [
-        Container(            
-            alignment: AlignmentDirectional.topStart,
-            child: Text("Icono / tarjeta",style: Theme.of(context).textTheme.headline2,)),
-        Container(
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  Container(
-                      color: Colors.pink,//utils.stringToColor(dia.color),
-                      child: SizedBox(width: 45.0,height: 45.0,),
-                    ),
-                    Container(                 
-                     width: MediaQuery.of(context).size.width *0.5,
-                     child: RadioListTile(  
-                       activeColor: Theme.of(context).primaryColor,                         
-                            value: 1,
-                            title: Text("Cuadrado"),
-                            groupValue: _formIcon,
-                             onChanged: (value){
-                               _selectFormIcon(value);
-                             },
-                         ),
-                        ),
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                      //utils.stringToColor(dia.color),
-                      child: Icon(Icons.fiber_manual_record, color: Colors.pink,size: 45.0, ),
-                    ),
-                    Container(                 
-                     width: MediaQuery.of(context).size.width *0.5,
-                     child: RadioListTile(    
-                            activeColor: Theme.of(context).primaryColor,  
-                            value: 2,
-                            title: Text("Circular"),
-                            groupValue: _formIcon,
-                             onChanged: (value){
-                               _selectFormIcon(value);
-                             },
-                         ),
-                        ),
-                ],
-              ),
-            ],
-          ),
+    return GestureDetector(
+        onTap:  _cambiarForma,        
+      child: Container(
+        color: Colors.transparent,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top:10),
+              child:Text("Forma",style: Theme.of(context).textTheme.headline2,)
+            ),
+            AnimatedContainer(
+           duration: Duration(milliseconds: 100),
+           curve: Curves.bounceIn,
+           width: _width,
+           height: _height,
+           decoration: BoxDecoration(
+             borderRadius: _borderradius,
+             color: Colors.redAccent
+           ),                   
+         ) ,       
+        Icon(FontAwesomeIcons.random,color: Theme.of(context).primaryColor,),
+          ],
         ),
-      ],
+      ),
     );
+  }
+  void _cambiarForma(){  
+    if(_formIcon==1){
+      setState(() {           
+      _borderradius = BorderRadius.circular(100);
+      _selectFormIcon(2);
+      _formIcon=2;
+      });
+    }    
+    else{      
+       setState(() {           
+      _borderradius = BorderRadius.circular(0);
+      _selectFormIcon(1);
+      _formIcon=1;
+      });
+    }      
   }
    Widget _progressBarSelector(){
     return Column(
-      children: [
-        Container(            
-            alignment: AlignmentDirectional.topStart,
-            child: Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2,)),
+      children: [        
         SwitchListTile(     
                 activeColor: Theme.of(context).primaryColor,       
                 value: _progressBar, 
-                title: Text("Activar medidor"),            
+                title:Text("Medidor de tiempo",style: Theme.of(context).textTheme.headline2,),
                 onChanged: (value){
                   _selectProgressBar(value);
                 },
@@ -119,4 +116,96 @@ class _ExtraSettingsState extends State<ExtraSettings> {
       ],
     );
   }
+
+  //////////////////////////////////////////////
+  Widget _example() {
+    final pref=PreferenciasUsuario();
+    final _colorThema = pref.tema;
+    Color thema;
+    if (_colorThema==1){
+     thema=Colors.green;
+  }
+  else if(_colorThema==2){
+     thema =Theme.of(context).backgroundColor;
+  }
+  else{
+    thema=Colors.black38;
+  }
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Text("Ejemplo",style: Theme.of(context).textTheme.headline2,)),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 30,),
+          // color: Colors.white60,
+          child: Container(
+          margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+          child: ClipRRect(
+            borderRadius: _selecFormCard(_formIcon),    //////    
+              child: Container(        
+                 color: thema,
+              child: Column(          
+                children: [
+                  SizedBox(height: 4.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                       _selectForm(_formIcon,Colors.green),                  
+                      Column(                  
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("8:00-9:00 Hrs", style:Theme.of(context).textTheme.subtitle2),                      
+                          Container(
+                            width: MediaQuery.of(context).size.width*0.5,
+                            child: Text("Programacion",style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
+                        ],
+                      ),
+                       Column(
+                         children: [                     
+                           Container(                      
+                             child: Icon(Icons.keyboard_arrow_down,size: 40.0, color: Theme.of(context).primaryColor,)),
+                         ],
+                       ),
+                    ],
+                  ),
+                  SizedBox(height: 15.0,),
+                  (_progressBar)?LinearProgressIndicator(                 
+                    value:0.5,
+                    minHeight: 12.0,
+                    backgroundColor: Colors.red[100],
+                    valueColor:new AlwaysStoppedAnimation<Color>(Colors.greenAccent),                                
+                  ):Container(),
+                ],
+              )
+            ),
+          ),
+  ),
+        ),
+      ],
+    );
+  }
+  BorderRadius _selecFormCard(int valor){
+   if(valor==1){
+   return   BorderRadius.circular(0.0);
+   }
+   else{
+     return BorderRadius.circular(20.0);
+   }
+   
+ }
+ Widget _selectForm(int valor, Color color){
+  if   (valor ==1){
+    return  Container(
+                  color: color,//utils.stringToColor(dia.color),
+                  child: SizedBox(width: 45.0,height: 45.0,),
+                );
+  }
+  else{
+    return Container(
+      child: Icon(Icons.fiber_manual_record, color: color,size: 45.0, ),
+    );
+  }
+}
+  
 }
