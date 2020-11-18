@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart' as helper;
 import 'package:calendaritvo/src/models/noticias_model.dart';
@@ -174,11 +175,13 @@ class _InfoPageState extends State<InfoPage> {
       ),
     );
 
-    return GestureDetector(
-      child: wid,
-      onTap: (){
-        helper.abrirLink(noti.link);
-      },
+    return FadeIn(
+      child: GestureDetector(
+        child: wid,
+        onTap: (){
+          helper.abrirLink(noti.link);
+        },
+      ),
     );
   }
 
@@ -265,12 +268,15 @@ class _InfoPageState extends State<InfoPage> {
         ),
       );
 
-      return GestureDetector(
-      child: tarjeta,
-      onTap: (){
-        helper.abrirLink(noti.link);
-      },
-    );
+      return FadeInUp(
+        duration: Duration(milliseconds: 150),
+        child: GestureDetector(
+        child: tarjeta,
+        onTap: (){
+          helper.abrirLink(noti.link);
+        },
+    ),
+      );
 
   }
 
