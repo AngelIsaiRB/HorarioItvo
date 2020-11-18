@@ -138,7 +138,7 @@ class _ExtraSettingsState extends State<ExtraSettings> {
           child: Text("Ejemplo",style: Theme.of(context).textTheme.headline2,)),
         Container(
           padding: EdgeInsets.symmetric(vertical: 30,),
-          // color: Colors.white60,
+          color: Colors.white60,
           child: Container(
           margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
           child: ClipRRect(

@@ -1,9 +1,11 @@
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DangerZone extends StatefulWidget {
+   DangerZone({Key key}) : super(key: key);
   @override
   _DangerZoneState createState() => _DangerZoneState();
 }
@@ -26,52 +28,52 @@ class _DangerZoneState extends State<DangerZone> {
          backgroundColor: Theme.of(context).primaryColorLight,
          centerTitle: true,
       ),
-      body: Container(
+      bottomSheet: _info() ,
+      body: Builder(
+        builder: (context)=>Container(
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             _notificaciones(),
+            Divider(),
             _deleteMenu(),
-              _restaurar(),
-              _info()
+            Divider(),
+              _restaurar(context),
+            
           ],
         ),
-      ),
+      )
+      )
     );
   }
   Widget _notificaciones() {
-    return Container(
-      margin: EdgeInsets.only(left: 5,right: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Desactivar notificaciones"),
-          FlatButton(
-            color: Colors.blueAccent,
-            child: Icon(Icons.alarm_off),
-            onPressed: ()async{              
-              await openAppSettings();
-            },
-          ),
-        ],
+    return GestureDetector(
+      onTap: ()async{
+        await openAppSettings();
+      },    
+     child: ListTile(
+       leading: Icon(FontAwesomeIcons.bellSlash),
+       title:  Text("Desactivar notificaciones"),
+       trailing:  FlatButton(
+           color: Colors.blueAccent,
+           child: Icon(FontAwesomeIcons.timesCircle),
+           onPressed: ()async{              
+             await openAppSettings();
+           },
+         ),
+
+
       ),
     );
+    
   }
    Widget _deleteMenu(){
     return Column(
-      children: [
-        Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left:15.0 ),
-                color: Color.fromRGBO(48, 48, 48, 1.0),
-                child: Icon(Icons.warning,size: 50.0, color: Colors.yellow,)),
-              Text("Menu",style: Theme.of(context).textTheme.headline2,),
-            ],
-          ),
-        Container(
-         
+      children: [        
+        Container(         
           child: SwitchListTile(            
-                  value: _menu, 
+                  value: _menu,             
+                  secondary: Icon(FontAwesomeIcons.exclamation),      
                   title: Text("Quitar Noticias"),
                   subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
                   onChanged: (value){
@@ -86,14 +88,19 @@ class _DangerZoneState extends State<DangerZone> {
       ],
     );
   }
-  _restaurar(){
-      return Container(
+  _restaurar(BuildContext context){
+      return ListTile(
+        title: Text("Restablecer Todo"),
+        leading: Icon(FontAwesomeIcons.exclamationTriangle,color: Colors.red),
+        trailing: Container(
         margin: EdgeInsets.only(left: 50,right:50 ),
         color: Colors.red,
         child: FlatButton(
           onPressed: (){
-            final snackBar = SnackBar(content: Text('Manten presionado'),
-            duration: Duration(milliseconds: 1000),);
+            final snackBar = SnackBar(content: Text('Manten presionado el botón',style: TextStyle(fontSize: 25),),
+            duration: Duration(milliseconds: 1000),
+           padding: EdgeInsets.only(bottom: 100),
+            );
            Scaffold.of(context).showSnackBar(snackBar);
 
           },
@@ -115,35 +122,34 @@ class _DangerZoneState extends State<DangerZone> {
                        Navigator.pop(context);
                        },
                      ),
-                     FlatButton(
-                       child: Text("No"),
-                       onPressed: (){
-                         Navigator.pop(context);
-                       },
+                     Container(
+                       color: Colors.green,
+                       child: FlatButton(
+                         child: Text("No"),
+                         onPressed: (){
+                           Navigator.pop(context);
+                         },
+                       ),
                      ),
                    ],
                  );
              });
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Icon(Icons.warning),
-              Text("Restablecer Horario",style: TextStyle(fontSize: 20),),
-            ],
-          ),
+          child:
+               Icon(Icons.warning),
         ),
+      ),
       );
     }
 
-    Widget _info(){
+     Widget _info(){
       return Container(
              color: Theme.of(context).cardColor,
             margin: EdgeInsets.all(10.0),
-            child: Text("Version 1.5.1   ⛔"
+            child: Text("Version 1.6.0   ⛔"
                  "Esta version no guarda tu horario en la nube "
-                 "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1 
+                 "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1                  
                  ),
           );
-    }
+    } 
 }

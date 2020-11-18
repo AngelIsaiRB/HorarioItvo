@@ -44,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColorLight,
       ),
+      
       body: Container(          
        child: ListView(
          physics: BouncingScrollPhysics(),
@@ -54,7 +55,9 @@ class _SettingsPageState extends State<SettingsPage> {
               listItem(FontAwesomeIcons.shapes,Colors.red[300],       "Formas"             ,ExtraSettings() ),              
               listItem(FontAwesomeIcons.exclamationTriangle,Colors.red,"Danger Zone",DangerZone() ),              
               listItem(FontAwesomeIcons.userAstronaut,Colors.cyan,"Developer"        ,Developer() ),
+              
          ],
+         
        )
     ),
     ); 
@@ -83,7 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
      ),
    );
  }
-  
+
 
 
 }
