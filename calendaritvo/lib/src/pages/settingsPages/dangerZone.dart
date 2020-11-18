@@ -1,4 +1,5 @@
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
+import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -118,7 +119,8 @@ class _DangerZoneState extends State<DangerZone> {
                          padding: EdgeInsets.all(15),
                          child: Text("Si")),
                        onPressed: (){
-                       DBProvider.db.eliminarDB();                       
+                       DBProvider.db.eliminarDB();
+                       DbCProvider.db.eliminarDB();                     
                        Navigator.pop(context);
                        },
                      ),

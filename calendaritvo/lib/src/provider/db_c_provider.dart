@@ -119,5 +119,11 @@ class DbCProvider{
          }
     return promedio;     
   }
-
+  ///!! are you sure????
+eliminarDB()async{
+    final db= await database;    
+    
+    await deleteDatabase(db.path);
+    _databse=await initDB();
+  }
 }
