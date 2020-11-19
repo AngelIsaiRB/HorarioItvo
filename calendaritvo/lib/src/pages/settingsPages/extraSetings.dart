@@ -47,11 +47,11 @@ class _ExtraSettingsState extends State<ExtraSettings> {
       body: Container(
         child: ListView(
           children: [
-            FadeInUp(child: _iconForm()),
+            FadeInUp(duration: Duration(milliseconds: 290),child: _iconForm()),
             Divider(),
-            FadeInUp(child: _progressBarSelector()),
+            FadeInUp(duration: Duration(milliseconds: 320),child: _progressBarSelector()),
             Divider(),
-            FadeInUp(child: _example()),
+            FadeInUp(duration: Duration(milliseconds: 350),child: _example()),
           ],
         ),
       ),

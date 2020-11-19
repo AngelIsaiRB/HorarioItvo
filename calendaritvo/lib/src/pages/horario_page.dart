@@ -1,5 +1,5 @@
 
-
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
@@ -10,6 +10,7 @@ import 'package:calendaritvo/src/provider/db_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HorarioPage extends StatefulWidget {
   @override
@@ -46,18 +47,32 @@ class _HorarioPageState extends State<HorarioPage> {
             title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
             centerTitle: true,
             actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
-                  onPressed: (){
-                    Navigator.pushNamed(context, "addMateria");
-                  },
-                  ),
-              )
+              // Container(
+              //   margin: EdgeInsets.only(right: 10.0),
+              //   child: IconButton(
+              //     icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
+              //     onPressed: (){
+              //       Navigator.pushNamed(context, "addMateria");
+              //     },
+              //     ),
+              // )
             ],
             
           ), 
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: BounceInDown(            
+            child: FloatingActionButton.extended(     
+              backgroundColor: Theme.of(context).primaryColor,
+              heroTag: "s",       
+              label: Text("Nueva materia"),
+               icon:Container(                
+                 child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
+               ),
+               onPressed: (){
+                     Navigator.pushNamed(context, "addMateria");
+               },
+            ),
+          ),
             body: Stack(
             children: [                   
               imagenFondo(),             
@@ -199,40 +214,43 @@ seleccionarHora(context,String day, DiaModel dia)async {
 
 Widget addButtonHora(String day, int horas){
  
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        (horas!=1)?Container(
-        
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(153, 0, 0, 0.8),
-          borderRadius: BorderRadius.circular(50)
-        ),
-        child: FlatButton(
-          onPressed: (){
-              setState(() {
-              DBProvider.db.restarNumeroDeHoras(day, horas);            
-              });
-          },
-          child: Icon(Icons.delete_forever,color:Colors.white),
-        ),
-       ):Container(),
-        (horas!=12)?Container(        
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(0, 38, 77, 0.8),
-          borderRadius: BorderRadius.circular(70)
-        ),
-        child: FlatButton(
-          onPressed: (){
-              setState(() {
-              DBProvider.db.agregarNumeroDeHoras(day, horas);            
-              });
-          },
-          child: Icon(Icons.add,color:Colors.white,),
-        ),
-       ):Container(),
-       
-      ],
+    return Container(
+      padding: EdgeInsets.only(bottom: 80),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          (horas!=1)?Container(
+          
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(153, 0, 0, 0.8),
+            borderRadius: BorderRadius.circular(50)
+          ),
+          child: FlatButton(
+            onPressed: (){
+                setState(() {
+                DBProvider.db.restarNumeroDeHoras(day, horas);            
+                });
+            },
+            child: Icon(Icons.delete_forever,color:Colors.white),
+          ),
+         ):Container(),
+          (horas!=12)?Container(        
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(0, 38, 77, 0.8),
+            borderRadius: BorderRadius.circular(70)
+          ),
+          child: FlatButton(
+            onPressed: (){
+                setState(() {
+                DBProvider.db.agregarNumeroDeHoras(day, horas);            
+                });
+            },
+            child: Icon(Icons.add,color:Colors.white,),
+          ),
+         ):Container(),
+         
+        ],
+      ),
     );
   
   
@@ -326,7 +344,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
                  Column(
                    children: [                     
                      Container(                      
-                       child: Icon(Icons.keyboard_arrow_down,size: 40.0, color: Theme.of(context).primaryColor,)),
+                       child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
                    ],
                  ),
               ],
@@ -441,7 +459,7 @@ Widget _listViewMaterias(DiaModel dia,String day) {
            ),
            Container(                     
              margin: EdgeInsets.all(10),
-             child: Text("Manten presionada una materia para cambiar la hora", style: TextStyle(fontSize: 30,color: Colors.white),),           
+             child: Text("Manten presionado un modulo para cambiar la hora", style: TextStyle(fontSize: 30,color: Colors.white),),           
            ),
           Container(
             padding: EdgeInsets.all(30),

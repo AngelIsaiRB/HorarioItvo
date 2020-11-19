@@ -32,18 +32,22 @@ class _RatingPageState extends State<RatingPage> {
       appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColorLight,
             title: Text("Calificaciones",style: Theme.of(context).textTheme.headline3 ,),
-            centerTitle: true,
-            actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
-                  onPressed: (){
-                    Navigator.pushNamed(context, "addMateria");
-                  },
-                  ),
-              )
-            ],            
+            centerTitle: true,                       
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: Bounce(
+            duration: Duration(milliseconds: 900),
+            child: FloatingActionButton.extended(    
+               backgroundColor: Theme.of(context).primaryColor,
+              heroTag: "s",        
+               label: Text("Nueva materia"),
+               icon:Container(                
+                 child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
+               ),
+               onPressed: (){
+                     Navigator.pushNamed(context, "addMateria");
+               },
+            ),
           ),
           body: Stack(
             children: [
@@ -73,70 +77,73 @@ class _RatingPageState extends State<RatingPage> {
             child: Text("No hay materias"),
           );
         }
-        return ListView.builder(
-            itemCount: materia.length-1,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (BuildContext context, int i){
-              final index=i+1;              
-              if(_thema==1){
-                 themeData= utils.stringToColor(materia[index].color);
-                 iconthemeData = Colors.white;
-              }
-              else{
-                themeData=Theme.of(context).backgroundColor;
-                iconthemeData = utils.stringToColor(materia[index].color);
-              }
-              return Column(                
-                children: [                  
-                  GestureDetector(
-                    onTap: (){                      
-                      setState(() {
-                      if(dropM==materia[index].id)
-                      this.dropM=0;
-                      else
-                      this.dropM=materia[index].id;                        
-                      });
-                    },
-                    child: FadeInUp(
-                      duration: Duration(milliseconds: 150),
-                      child: ClipRRect(
-                        borderRadius: _selecFormCard(pref.formIcon),
-                        child: Card(
-                           child: Stack(
-                             children: [                     
-                               Container(
-                                 color: themeData,//Colors.black12,
-                                 child: ListTile(                                                                         
-                                    title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
-                                    leading: FutureBuilder(
-                                      future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
-                                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                        if(!snapshot.hasData){
-                                          return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                        }
-                                        return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
-                                      },
+        return Container(
+          padding: EdgeInsets.only(bottom: 60),
+          child: ListView.builder(
+              itemCount: materia.length-1,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (BuildContext context, int i){
+                final index=i+1;              
+                if(_thema==1){
+                   themeData= utils.stringToColor(materia[index].color);
+                   iconthemeData = Colors.white;
+                }
+                else{
+                  themeData=Theme.of(context).backgroundColor;
+                  iconthemeData = utils.stringToColor(materia[index].color);
+                }
+                return Column(                
+                  children: [                  
+                    GestureDetector(
+                      onTap: (){                      
+                        setState(() {
+                        if(dropM==materia[index].id)
+                        this.dropM=0;
+                        else
+                        this.dropM=materia[index].id;                        
+                        });
+                      },
+                      child: FadeInUp(
+                        duration: Duration(milliseconds: 150),
+                        child: ClipRRect(
+                          borderRadius: _selecFormCard(pref.formIcon),
+                          child: Card(
+                             child: Stack(
+                               children: [                     
+                                 Container(
+                                   color: themeData,//Colors.black12,
+                                   child: ListTile(                                                                         
+                                      title: Text("${materia[index].name}",style:TextStyle(color: Colors.white, fontSize: 25.0) ),
+                                      leading: FutureBuilder(
+                                        future: DbCProvider.db.promedioCalificacion(materia[index].id),                                  
+                                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                          if(!snapshot.hasData){
+                                            return Text("...",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                          }
+                                          return Text("${snapshot.data.toStringAsFixed(1)}",style:TextStyle(color: Colors.white, fontSize: 25.0)) ;
+                                        },
+                                      ),
+                                      trailing: Icon(FontAwesomeIcons.sortAmountDown, color: iconthemeData,),
                                     ),
-                                    trailing: Icon(FontAwesomeIcons.sortAmountDown, color: iconthemeData,),
-                                  ),
-                               ),
-                               Container(
-                                 width: double.infinity,
-                                 height: 5,
-                                 color: utils.stringToColor(materia[index].color),
-                               ),
-                             ],
-                           ),                                 
+                                 ),
+                                 Container(
+                                   width: double.infinity,
+                                   height: 5,
+                                   color: utils.stringToColor(materia[index].color),
+                                 ),
+                               ],
+                             ),                                 
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  (dropM==materia[index].id)?_ListC(materia: materia[index],):Container(),
-                 
-                ],
-              );
-            }
-                  );
+                    (dropM==materia[index].id)?_ListC(materia: materia[index],):Container(),
+                   
+                  ],
+                );
+              }
+                    ),
+        );
       },
     );
   }
