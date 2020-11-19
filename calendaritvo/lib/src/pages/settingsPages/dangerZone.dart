@@ -36,12 +36,11 @@ class _DangerZoneState extends State<DangerZone> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            FadeInRight(child: _notificaciones()),
+            FadeInRight(duration: Duration(milliseconds: 290),child: _notificaciones()),
             Divider(),
-            FadeInRight(child: _deleteMenu()),
+            FadeInRight(duration: Duration(milliseconds: 290),child: _deleteMenu()),
             Divider(),
-            FadeInRight( child:_restaurar(context)),
-            
+            FadeInRight(duration: Duration(milliseconds: 290),child:_restaurar(context)),            
           ],
         ),
       )

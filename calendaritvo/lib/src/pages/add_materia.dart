@@ -40,6 +40,7 @@ class _AddMateriState extends State<AddMateri> {
       body: _listViewMaterias(),
 
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: "s",
         onPressed: () {
           _mostrarAlerta(context);
         },

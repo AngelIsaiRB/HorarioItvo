@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {   
     if( ! pref.menu){
       _menu=[BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(FontAwesomeIcons.calendarDay),
           label: "Horario",
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.star),
+          icon: Icon(FontAwesomeIcons.award),
           label: "Calificaciones",
         ),
         BottomNavigationBarItem(
@@ -37,21 +37,21 @@ class _HomePageState extends State<HomePage> {
           label: "ITVO",          
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
+          icon: Icon(FontAwesomeIcons.cogs),
           label:"Ajustes",
         )];
     }
     else{
         _menu=[BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(FontAwesomeIcons.calendarDay),
           label: "Horario",
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.star),
+          icon: Icon(FontAwesomeIcons.award),
           label: "Calificaciones"
           ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.info),
+          icon: Icon(FontAwesomeIcons.cogs),
             label:"Ajustes",
         )];
     }

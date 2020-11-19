@@ -35,15 +35,19 @@ class _RatingPageState extends State<RatingPage> {
             centerTitle: true,                       
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton(    
-             backgroundColor: Theme.of(context).primaryColor,
-            heroTag: "s",        
-             child:Container(                
-               child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
-             ),
-             onPressed: (){
-                   Navigator.pushNamed(context, "addMateria");
-             },
+          floatingActionButton: Bounce(
+            duration: Duration(milliseconds: 900),
+            child: FloatingActionButton.extended(    
+               backgroundColor: Theme.of(context).primaryColor,
+              heroTag: "s",        
+               label: Text("Nueva materia"),
+               icon:Container(                
+                 child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
+               ),
+               onPressed: (){
+                     Navigator.pushNamed(context, "addMateria");
+               },
+            ),
           ),
           body: Stack(
             children: [
