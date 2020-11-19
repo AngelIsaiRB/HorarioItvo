@@ -214,40 +214,43 @@ seleccionarHora(context,String day, DiaModel dia)async {
 
 Widget addButtonHora(String day, int horas){
  
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        (horas!=1)?Container(
-        
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(153, 0, 0, 0.8),
-          borderRadius: BorderRadius.circular(50)
-        ),
-        child: FlatButton(
-          onPressed: (){
-              setState(() {
-              DBProvider.db.restarNumeroDeHoras(day, horas);            
-              });
-          },
-          child: Icon(Icons.delete_forever,color:Colors.white),
-        ),
-       ):Container(),
-        (horas!=12)?Container(        
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(0, 38, 77, 0.8),
-          borderRadius: BorderRadius.circular(70)
-        ),
-        child: FlatButton(
-          onPressed: (){
-              setState(() {
-              DBProvider.db.agregarNumeroDeHoras(day, horas);            
-              });
-          },
-          child: Icon(Icons.add,color:Colors.white,),
-        ),
-       ):Container(),
-       
-      ],
+    return Container(
+      padding: EdgeInsets.only(bottom: 80),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          (horas!=1)?Container(
+          
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(153, 0, 0, 0.8),
+            borderRadius: BorderRadius.circular(50)
+          ),
+          child: FlatButton(
+            onPressed: (){
+                setState(() {
+                DBProvider.db.restarNumeroDeHoras(day, horas);            
+                });
+            },
+            child: Icon(Icons.delete_forever,color:Colors.white),
+          ),
+         ):Container(),
+          (horas!=12)?Container(        
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(0, 38, 77, 0.8),
+            borderRadius: BorderRadius.circular(70)
+          ),
+          child: FlatButton(
+            onPressed: (){
+                setState(() {
+                DBProvider.db.agregarNumeroDeHoras(day, horas);            
+                });
+            },
+            child: Icon(Icons.add,color:Colors.white,),
+          ),
+         ):Container(),
+         
+        ],
+      ),
     );
   
   
