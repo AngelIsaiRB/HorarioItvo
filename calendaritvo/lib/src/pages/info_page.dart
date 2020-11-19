@@ -44,7 +44,7 @@ class _InfoPageState extends State<InfoPage> {
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: false,
         actions: [
-          FlatButton(
+          FlatButton(            
             child:  _modoVista?Icon(Icons.view_list):Icon(Icons.call_to_action),
             onPressed: (){
               setState(() {
@@ -210,12 +210,18 @@ class _InfoPageState extends State<InfoPage> {
  
   
   Widget _floatingB() {    
-    return FloatingActionButton(      
-      child:  Icon(Icons.menu, size: 30.0,),
-      backgroundColor: Colors.red,
-      onPressed: (){  
-       _scaffoldKey.currentState.openDrawer();
-      },
+    return Pulse(
+      child: FloatingActionButton.extended(   
+        //  backgroundColor: Theme.of(context).primaryColor,
+        elevation: 10,  
+        heroTag: "s", 
+        label: Text("Menu "),
+        icon:  Icon(Icons.menu, size: 30.0,),
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: (){  
+         _scaffoldKey.currentState.openDrawer();
+        },
+      ),
     );
   }
 

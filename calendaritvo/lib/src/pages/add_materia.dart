@@ -39,14 +39,15 @@ class _AddMateriState extends State<AddMateri> {
 
       body: _listViewMaterias(),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           _mostrarAlerta(context);
         },
-        child: Icon(
-          Icons.add,
-          size: 40,
-        ),
+        label: Text("Agregar materia"),
+        icon: Icon(
+              Icons.add,
+              size: 40,
+            ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

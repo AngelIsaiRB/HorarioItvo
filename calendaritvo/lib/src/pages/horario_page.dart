@@ -1,5 +1,5 @@
 
-
+import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/bloc/Materias_bloc.dart';
 import 'package:calendaritvo/src/helpers/helpers.dart';
@@ -46,18 +46,31 @@ class _HorarioPageState extends State<HorarioPage> {
             title: Text(day,style: Theme.of(context).textTheme.headline3 ,),
             centerTitle: true,
             actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
-                  onPressed: (){
-                    Navigator.pushNamed(context, "addMateria");
-                  },
-                  ),
-              )
+              // Container(
+              //   margin: EdgeInsets.only(right: 10.0),
+              //   child: IconButton(
+              //     icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
+              //     onPressed: (){
+              //       Navigator.pushNamed(context, "addMateria");
+              //     },
+              //     ),
+              // )
             ],
             
           ), 
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: BounceInDown(            
+            child: FloatingActionButton(     
+              backgroundColor: Theme.of(context).primaryColor,
+              heroTag: "s",       
+               child:Container(                
+                 child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
+               ),
+               onPressed: (){
+                     Navigator.pushNamed(context, "addMateria");
+               },
+            ),
+          ),
             body: Stack(
             children: [                   
               imagenFondo(),             

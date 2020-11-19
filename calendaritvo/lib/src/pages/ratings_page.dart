@@ -32,18 +32,18 @@ class _RatingPageState extends State<RatingPage> {
       appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColorLight,
             title: Text("Calificaciones",style: Theme.of(context).textTheme.headline3 ,),
-            centerTitle: true,
-            actions: [
-              Container(
-                margin: EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon (Icons.add_circle,size: 40.0,color: Theme.of(context).primaryColor,),
-                  onPressed: (){
-                    Navigator.pushNamed(context, "addMateria");
-                  },
-                  ),
-              )
-            ],            
+            centerTitle: true,                       
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActionButton(    
+             backgroundColor: Theme.of(context).primaryColor,
+            heroTag: "s",        
+             child:Container(                
+               child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
+             ),
+             onPressed: (){
+                   Navigator.pushNamed(context, "addMateria");
+             },
           ),
           body: Stack(
             children: [
