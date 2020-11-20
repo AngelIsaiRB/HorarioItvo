@@ -23,7 +23,7 @@ class MenuWidget extends StatelessWidget {
             leading: Icon(Icons.home, color: Theme.of(context).primaryColor,),
             title: Text("Horario", style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){
-                Navigator.pushReplacementNamed(context, "homepage");
+                Navigator.pushReplacementNamed(context, "homepage");                
             },
           ),
           ListTile(

@@ -16,7 +16,8 @@ class CalendarioPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorLight,
         title: Text("Calendario",  style: Theme.of(context).textTheme.headline3,),
-      ),
+        centerTitle: true,
+      ),    
       body: _calendario(pantalla),
       drawer: MenuWidget(),
       floatingActionButton: _buttons(context),
