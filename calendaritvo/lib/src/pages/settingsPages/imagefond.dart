@@ -17,7 +17,7 @@ class _ImageFondaState extends State<ImageFonda> {
                           "assets/fondo4.jpg","assets/fondo5.jpg","assets/fondo6.jpg","assets/fondo1.jpg"
                           ,"assets/fondo8.jpg","assets/fondo11.jpg","assets/fondo10.jpg","assets/fondo13.jpg"
                           ,"assets/fondo14.jpg","assets/fondo15.jpg","assets/fondo16.jpg","assets/fondo17.jpg"
-                          ,"assets/fondo18.jpg","assets/fondo9.jpg"];
+                          ,"assets/fondo18.jpg","assets/fondo9.jpg","assets/fondo20.jpg"];
     
   @override
   Widget build(BuildContext context) {
