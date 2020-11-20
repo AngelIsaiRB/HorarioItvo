@@ -7,9 +7,11 @@ import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
+import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
 
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HorarioPage extends StatefulWidget {
@@ -33,6 +35,7 @@ class _HorarioPageState extends State<HorarioPage> {
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {
+    
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   _colorThema = pref.tema;
   _formIcon=pref.formIcon;
@@ -59,7 +62,7 @@ class _HorarioPageState extends State<HorarioPage> {
             ],
             
           ), 
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: BounceInDown(            
             child: FloatingActionButton.extended(     
               backgroundColor: Theme.of(context).primaryColor,
@@ -69,6 +72,7 @@ class _HorarioPageState extends State<HorarioPage> {
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
                onPressed: (){
+                     notificationPlugin.scheduleDailyTenAMNotification();
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -474,5 +478,7 @@ Widget _listViewMaterias(DiaModel dia,String day) {
      ),
    );
  }
+
+  
 
 }

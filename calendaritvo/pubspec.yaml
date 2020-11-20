@@ -42,7 +42,10 @@ dependencies:
   page_transition: ^1.1.7+2
   animate_do: ^1.7.3
   webview_flutter: ^1.0.7
-
+  flutter_local_notifications: ^3.0.1+4
+  rxdart: ^0.24.1
+  timezone: ^0.5.9
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
