@@ -176,50 +176,6 @@ final InitializationSettings initializationSettings = InitializationSettings(
   }
  
 
-  // Future<void> showWeeklyAtDayTime() async {
-  //   var time = Time(21, 5, 0);
-  //   var androidChannelSpecifics = AndroidNotificationDetails(
-  //     'CHANNEL_ID 5',
-  //     'CHANNEL_NAME 5',
-  //     "CHANNEL_DESCRIPTION 5",
-  //     importance: Importance.Max,
-  //     priority: Priority.High,
-  //   );
-  //   var iosChannelSpecifics = IOSNotificationDetails();
-  //   var platformChannelSpecifics =
-  //       NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
-  //   await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-  //     0,
-  //     'Test Title at ${time.hour}:${time.minute}.${time.second}',
-  //     'Test Body', //null
-  //     Day.Saturday,
-  //     time,
-  //     platformChannelSpecifics,
-  //     payload: 'Test Payload',
-  //   );
-  // }
-
-  // Future<void> repeatNotification() async {
-  //   var androidChannelSpecifics = AndroidNotificationDetails(
-  //     'CHANNEL_ID 3',
-  //     'CHANNEL_NAME 3',
-  //     "CHANNEL_DESCRIPTION 3",
-  //     importance: Importance.Max,
-  //     priority: Priority.High,
-  //     styleInformation: DefaultStyleInformation(true, true),
-  //   );
-  //   var iosChannelSpecifics = IOSNotificationDetails();
-  //   var platformChannelSpecifics =
-  //       NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
-  //   await flutterLocalNotificationsPlugin.periodicallyShow(
-  //     0,
-  //     'Repeating Test Title',
-  //     'Repeating Test Body',
-  //     RepeatInterval.EveryMinute,
-  //     platformChannelSpecifics,
-  //     payload: 'Test Payload',
-  //   );
-  // }
 
   Future<void> scheduleNotification() async {
     var scheduleNotificationDateTime = DateTime.now().add(Duration(seconds: 5));
