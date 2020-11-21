@@ -322,9 +322,9 @@ if((a.compareTo(horaActual)==-1)&&(b.compareTo(horaActual)==1)){
 
 Widget _selectForm(int valor, Color color){
   if   (valor ==1){
-    return  Container(
+    return  Container(                
                   color: color,//utils.stringToColor(dia.color),
-                  child: SizedBox(width: 45.0,height: 45.0,),
+                  child: SizedBox(width: 45.0,height: 50,),
                 );
   }
   else{
