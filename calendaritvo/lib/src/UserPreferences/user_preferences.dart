@@ -75,11 +75,9 @@ class PreferenciasUsuario{
    get welcomePage{
     return _prefs.getBool("welcomePage") ?? true;
   }
-
   set welcomePage(bool value){
     _prefs.setBool("welcomePage", value);
   }
-
 
   get ispathImage{
     return _prefs.getBool("ispathImage")??false;
@@ -87,6 +85,13 @@ class PreferenciasUsuario{
 
   set ispathImage(bool value){
      _prefs.setBool("ispathImage", value);
+  }
+
+  get localNotifications{
+    return _prefs.getBool("localNotifications") ?? true;
+  }
+  set localNotifications(bool value){
+    _prefs.setBool("localNotifications", value);
   }
 
 

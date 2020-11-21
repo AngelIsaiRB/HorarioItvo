@@ -5,6 +5,7 @@ import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
 
 class DangerZone extends StatefulWidget {
    DangerZone({Key key}) : super(key: key);
@@ -15,10 +16,11 @@ class DangerZone extends StatefulWidget {
 class _DangerZoneState extends State<DangerZone> {
   final pref = PreferenciasUsuario();
   bool _menu;
+  bool _localNotifications;
    @override
   void initState() { 
     super.initState();
-    
+    _localNotifications = pref.localNotifications;
     _menu=pref.menu;
        
   }
@@ -26,7 +28,7 @@ class _DangerZoneState extends State<DangerZone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: Text("Zona Roja", style: Theme.of(context).textTheme.headline2,),
+         title: Text("Notificaciones y mas", style: Theme.of(context).textTheme.headline2,),
          backgroundColor: Theme.of(context).primaryColorLight,
          centerTitle: true,
       ),
@@ -36,6 +38,8 @@ class _DangerZoneState extends State<DangerZone> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
+            FadeInRight(duration: Duration(milliseconds: 290),child: _localNotificationsSchedule()),
+            Divider(),
             FadeInRight(duration: Duration(milliseconds: 290),child: _notificaciones()),
             Divider(),
             FadeInRight(duration: Duration(milliseconds: 290),child: _deleteMenu()),
@@ -54,7 +58,7 @@ class _DangerZoneState extends State<DangerZone> {
       },    
      child: ListTile(
        leading: Icon(FontAwesomeIcons.bellSlash),
-       title:  Text("Desactivar notificaciones"),
+       title:  Text("Desactivar notificaciones de noticias"),
        trailing:  FlatButton(
            color: Colors.blueAccent,
            child: Icon(FontAwesomeIcons.timesCircle),
@@ -75,7 +79,7 @@ class _DangerZoneState extends State<DangerZone> {
           child: SwitchListTile(            
                   value: _menu,             
                   secondary: Icon(FontAwesomeIcons.exclamation),      
-                  title: Text("Quitar Noticias"),
+                  title: Text("Noticias"),
                   subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
                   onChanged: (value){
                     setState(() {
@@ -98,7 +102,9 @@ class _DangerZoneState extends State<DangerZone> {
         color: Colors.red,
         child: FlatButton(
           onPressed: (){
-            final snackBar = SnackBar(content: Text('Manten presionado el botón',style: TextStyle(fontSize: 25),),
+            final snackBar = SnackBar(content: Container(
+              padding: EdgeInsets.only(left: 10),
+              child: Text('Manten presionado el botón',style: TextStyle(fontSize: 25),)),
             duration: Duration(milliseconds: 1000),
            padding: EdgeInsets.only(bottom: 100),
             );
@@ -153,5 +159,28 @@ class _DangerZoneState extends State<DangerZone> {
                  "¡ten cuidado al limpiar el caché o datos de la App!",style: Theme.of(context).textTheme.subtitle1                  
                  ),
           );
-    } 
+    }
+
+  _localNotificationsSchedule() {
+    return Column(
+      children: [        
+        Container(         
+          child: SwitchListTile(            
+                  value: _localNotifications,             
+                  secondary: Icon(FontAwesomeIcons.bell),      
+                  title: Text("Notificaciones de horario"),
+                  subtitle: Text("Desactiva las notificaciones que te avisan de las materias por venir"),
+                  onChanged: (value){
+                    setState(() {
+                        _localNotifications=value;
+                        pref.localNotifications=value;  
+                        notificationPlugin.cancelAllNotification();      
+                    });
+                   
+                  },
+                ),
+        ),
+      ],
+    );
+  } 
 }

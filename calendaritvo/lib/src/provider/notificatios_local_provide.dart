@@ -29,7 +29,7 @@ class NotificationPlugin {
     initializePlatformSpecifics();
   }
 
-  initializePlatformSpecifics() {
+  initializePlatformSpecifics() async{
    
     var initializationSettingsAndroid =
         AndroidInitializationSettings('launcher_icon');
@@ -43,10 +43,12 @@ class NotificationPlugin {
         didReceivedLocalNotificationSubject.add(receivedNotification);
       },
     );
-
-    initializationSettings = InitializationSettings(
-      android:  initializationSettingsAndroid,
-        iOS: initializationSettingsIOS);
+final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+      );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+        
   }
 
   _requestIOSPermission() {
@@ -113,9 +115,8 @@ class NotificationPlugin {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  
+  ///
+  ///  show notification in day an hour selected  
   Future<void> scheduleWeeklyDayNotification({int id ,String materia, String texto,int dia,int hora, int minuto}) async {
      tz.initializeTimeZones();    
     await flutterLocalNotificationsPlugin.zonedSchedule(

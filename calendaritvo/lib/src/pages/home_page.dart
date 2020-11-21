@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   
   @override
   Widget build(BuildContext context) {   
-    if( ! pref.menu){
+    if( pref.menu){
       _menu=[BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.calendarDay),
           label: "Horario",
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         return RatingPage();
         break;
       case 2:
-      if(! pref.menu)
+      if( pref.menu)
         return InfoPage();
         else
         return SettingsPage();

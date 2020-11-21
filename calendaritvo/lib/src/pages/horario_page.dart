@@ -30,6 +30,7 @@ class _HorarioPageState extends State<HorarioPage> {
    double mitadDePantalla;
    final pref= PreferenciasUsuario();
    int _colorThema;
+   bool _localNotifications;
    int _formIcon;
    bool _selectorProgress;
   // String image=_images[DateTime.now().weekday-1];
@@ -38,6 +39,7 @@ class _HorarioPageState extends State<HorarioPage> {
     
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   _colorThema = pref.tema;
+  _localNotifications= pref.localNotifications;
   _formIcon=pref.formIcon;
   _selectorProgress=pref.progressBar;
    // materiasBloc.obtenerMaterias();
@@ -71,9 +73,8 @@ class _HorarioPageState extends State<HorarioPage> {
                icon:Container(                
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
-               onPressed: (){
-                     
-                     
+               onPressed: (){        
+                //  notificationPlugin.showNotification();                                  
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -153,21 +154,22 @@ Widget _day(String day, int horas, int diaName){
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) { 
-          if(dia[index].materia!="Libre"){
+          if(dia[index].materia!="Libre" && _localNotifications){
+            print("------------***********notifications actived************-----------------------");
             notificationPlugin.cancelNotification(dia[index].id);
             final times = dia[index].range.split("-");
             final horaMinute  = times[0].split(":"); 
             final now=DateTime.now();
             DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
-            final xxx=xx.add(Duration(minutes: -5));                      
+            final dateForNotification=xx.add(Duration(minutes: -5));                      
             try {
             notificationPlugin.scheduleWeeklyDayNotification(
                        materia: dia[index].materia,
                        texto: "proxima materia",
                        id: dia[index].id,                     
                        dia: diaName,
-                       hora: xxx.hour,
-                       minuto: xxx.minute
+                       hora: dateForNotification.hour,
+                       minuto: dateForNotification.minute
                      );              
             } catch (e) {
             }
