@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
               FadeInRight(duration: Duration(milliseconds: 130),child: listItem(FontAwesomeIcons.paintRoller,Colors.purple,"Tema"               ,TemaSelector() )),              
               FadeInRight(duration: Duration(milliseconds: 160),child: listItem(FontAwesomeIcons.palette,Colors.green,    "Colores"            ,SwitchColor() )),         
               FadeInRight(duration: Duration(milliseconds: 190),child: listItem(FontAwesomeIcons.shapes,Colors.red[300],       "Formas"             ,ExtraSettings() ),              ),
-              FadeInRight(duration: Duration(milliseconds: 210),child: listItem(FontAwesomeIcons.exclamationTriangle,Colors.red,"Zona Roja",DangerZone() ),),
+              FadeInRight(duration: Duration(milliseconds: 210),child: listItem(FontAwesomeIcons.exclamationTriangle,Colors.red,"Notificaciones y mas",DangerZone() ),),
               FadeInRight(duration: Duration(milliseconds: 240),child: listItem(FontAwesomeIcons.userAstronaut,Colors.cyan,"Developer"        ,Developer() ),),
               
          ],

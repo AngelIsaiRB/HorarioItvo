@@ -7,9 +7,11 @@ import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:calendaritvo/src/models/dias_model.dart';
 import 'package:calendaritvo/src/models/materia_model.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
+import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
 
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HorarioPage extends StatefulWidget {
@@ -28,13 +30,15 @@ class _HorarioPageState extends State<HorarioPage> {
    double mitadDePantalla;
    final pref= PreferenciasUsuario();
    int _colorThema;
+   bool _localNotifications;
    int _formIcon;
    bool _selectorProgress;
   // String image=_images[DateTime.now().weekday-1];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   _colorThema = pref.tema;
+  _localNotifications= pref.localNotifications;
   _formIcon=pref.formIcon;
   _selectorProgress=pref.progressBar;
    // materiasBloc.obtenerMaterias();
@@ -68,7 +72,8 @@ class _HorarioPageState extends State<HorarioPage> {
                icon:Container(                
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
-               onPressed: (){
+               onPressed: (){        
+                //  notificationPlugin.showNotification();                                  
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -88,12 +93,12 @@ class _HorarioPageState extends State<HorarioPage> {
                     initialPage: DateTime.now().weekday-1,
                   ),
                   children: [    
-                    _day("Lunes", snapshot.data[0]),
-                    _day("Martes", snapshot.data[1]),
-                    _day("Miercoles", snapshot.data[2]),
-                    _day("Jueves", snapshot.data[3]),
-                    _day("Viernes", snapshot.data[4]),
-                    _day("Sabado", snapshot.data[5]),
+                    _day("Lunes", snapshot.data[0],1),
+                    _day("Martes", snapshot.data[1],2),
+                    _day("Miercoles", snapshot.data[2],3),
+                    _day("Jueves", snapshot.data[3],4),
+                    _day("Viernes", snapshot.data[4],5),
+                    _day("Sabado", snapshot.data[5],6),
                      Container(
                       color: Colors.black26,
                       child: Center(
@@ -130,7 +135,7 @@ class _HorarioPageState extends State<HorarioPage> {
 
 
 
-Widget _day(String day, int horas){    
+Widget _day(String day, int horas, int diaName){    
   //DBProvider.db.getHorasDias();
   return Container(    
     child: FutureBuilder(
@@ -147,7 +152,29 @@ Widget _day(String day, int horas){
           physics: BouncingScrollPhysics(),
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
-          itemBuilder: (BuildContext context, int index) {            
+          itemBuilder: (BuildContext context, int index) { 
+          if(dia[index].materia!="Libre" && _localNotifications){
+            print("------------***********notifications actived************-----------------------");
+            notificationPlugin.cancelNotification(dia[index].id);
+            final times = dia[index].range.split("-");
+            final horaMinute  = times[0].split(":"); 
+            final now=DateTime.now();
+            DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
+            final dateForNotification=xx.add(Duration(minutes: -5));                      
+            try {
+            notificationPlugin.scheduleWeeklyDayNotification(
+                       materia: dia[index].materia,
+                       texto: "proxima materia",
+                       id: dia[index].id,                     
+                       dia: diaName,
+                       hora: dateForNotification.hour,
+                       minuto: dateForNotification.minute
+                     );              
+            } catch (e) {
+            }
+          }
+              
+
           return Container(          
           child: Column(
             children: [
@@ -231,7 +258,12 @@ Widget addButtonHora(String day, int horas){
                 DBProvider.db.restarNumeroDeHoras(day, horas);            
                 });
             },
-            child: Icon(Icons.delete_forever,color:Colors.white),
+            child: Row(
+              children: [
+                Icon(Icons.delete_forever,color:Colors.white),
+                Text("Modulo")
+              ],
+            ),
           ),
          ):Container(),
           (horas!=12)?Container(        
@@ -245,7 +277,12 @@ Widget addButtonHora(String day, int horas){
                 DBProvider.db.agregarNumeroDeHoras(day, horas);            
                 });
             },
-            child: Icon(Icons.add,color:Colors.white,),
+            child: Row(
+              children: [
+                Icon(Icons.add,color:Colors.white,),
+                Text("Modulo"),
+              ],
+            ),
           ),
          ):Container(),
          
@@ -285,9 +322,9 @@ if((a.compareTo(horaActual)==-1)&&(b.compareTo(horaActual)==1)){
 
 Widget _selectForm(int valor, Color color){
   if   (valor ==1){
-    return  Container(
+    return  Container(                
                   color: color,//utils.stringToColor(dia.color),
-                  child: SizedBox(width: 45.0,height: 45.0,),
+                  child: SizedBox(width: 45.0,height: 50,),
                 );
   }
   else{
@@ -328,28 +365,34 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
         child: Column(          
           children: [
             SizedBox(height: 4.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                 _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
-                Column(                  
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
-                    Container(
-                      width: mitadDePantalla,
-                      child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
-                  ],
-                ),
-                 Column(
-                   children: [                     
-                     Container(                      
-                       child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
-                   ],
-                 ),
-              ],
+            ListTile(
+              leading: _selectForm(_formIcon,utils.stringToColor(dia.color)),    
+              title: Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2), 
+              subtitle: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,),
+              trailing: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,),
             ),
-            SizedBox(height: 15.0,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //      _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
+            //     Column(                  
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
+            //         Container(
+            //           width: mitadDePantalla,
+            //           child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
+            //       ],
+            //     ),
+            //      Column(
+            //        children: [                     
+            //          Container(                      
+            //            child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
+            //        ],
+            //      ),
+            //   ],
+            // ),
+            
             linearProgressSelector(vaslor,_selectorProgress),
           ],
         )
@@ -474,5 +517,7 @@ Widget _listViewMaterias(DiaModel dia,String day) {
      ),
    );
  }
+
+  
 
 }

@@ -13,8 +13,11 @@ import 'package:calendaritvo/src/pages/settingsPages/themaSelector.dart';
 import 'package:calendaritvo/src/pages/settings_page.dart';
 import 'package:calendaritvo/src/pages/welcome_page.dart';
 import 'package:calendaritvo/src/provider/firebase_messagin.dart';
+import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/thema_utils.dart' as utils;
+
  
 void main() async{ 
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,16 +36,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+ 
+
   @override
   void initState() {
-    
-     
     final ProviderMessages messagesFirebase = new ProviderMessages();
     messagesFirebase.initNotifications();
-    
-   
     super.initState();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -75,4 +79,6 @@ class _MyAppState extends State<MyApp> {
        theme: them,
     );
   }
+   
 }
+

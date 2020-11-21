@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:flutter/material.dart';

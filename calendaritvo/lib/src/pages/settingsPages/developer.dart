@@ -1,5 +1,6 @@
 import 'package:calendaritvo/src/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Developer extends StatefulWidget {
@@ -16,11 +17,20 @@ class _DeveloperState extends State<Developer> {
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: true,
       ),
-      body:Stack(
+      body:Column(
         children: [
-          CircularProgressIndicator(),
-          WebView(
-            initialUrl: "https://angelisairamirezbazan.netlify.app",        
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(FontAwesomeIcons.heart, color: Colors.red,),
+              Text("A mi 'byeba' con amor"),
+            ],
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height*0.85,
+            child: WebView(            
+                  initialUrl: "https://angelisairamirezbazan.netlify.app",        
+                ),
           ),
         ],
       ),

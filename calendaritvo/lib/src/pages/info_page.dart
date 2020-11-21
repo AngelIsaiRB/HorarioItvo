@@ -120,7 +120,7 @@ class _InfoPageState extends State<InfoPage> {
                 Container(                                   
                   child: FadeInImage(
                   image: NetworkImage("${noti.imagen}"),
-                  placeholder: AssetImage("assets/1.gif"),
+                  placeholder: AssetImage("assets/progress.gif"),
                   fadeInDuration: Duration(milliseconds: 200),
                   height: 300,
                   fit: BoxFit.cover,
