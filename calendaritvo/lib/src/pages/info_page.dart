@@ -159,7 +159,7 @@ class _InfoPageState extends State<InfoPage> {
       margin: EdgeInsets.only(top:25.0, bottom:25.0,left:10.0 ,right: 10.0),     
       child: ClipRRect(
         child: crad,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomRight: Radius.circular(30)),        
+        borderRadius: BorderRadius.circular(30.0),        
       ),
       decoration: BoxDecoration(
         color: Colors.white,
