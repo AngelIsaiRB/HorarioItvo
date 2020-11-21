@@ -113,15 +113,16 @@ class NotificationPlugin {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
-  ////////////////////////////////////////////////////////////////222
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///222
   
-  Future<void> scheduleWeeklyMondayTenAMNotification() async {
+  Future<void> scheduleWeeklyDayNotification({int id ,String materia, String texto,int dia,int hora, int minuto}) async {
      tz.initializeTimeZones();
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'weekly scheduled notification title',
-        'weekly scheduled notification body',
-        _nextInstanceOfMondayTenAM(),
+        materia,
+        texto,
+        _nextInstanceOfMondayTenAM(dia, hora, minuto),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'weekly notification channel id',
@@ -133,9 +134,18 @@ class NotificationPlugin {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
   }
-  tz.TZDateTime _nextInstanceOfMondayTenAM() {
-    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
-    while (scheduledDate.weekday != DateTime.friday) {
+  tz.TZDateTime _nextInstanceOfMondayTenAM(int dia, int hora, int minuto) {
+    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM(hora, minuto);
+    while (scheduledDate.weekday != dia) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+   tz.TZDateTime _nextInstanceOfTenAM(int hora, int minuto) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hora,minuto);
+    if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
@@ -148,7 +158,7 @@ class NotificationPlugin {
         0,
         'daily scheduled notification title',
         'daily scheduled notification body',
-        _nextInstanceOfTenAM(),
+        _nextInstanceOfTenAM(10,55),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'daily notification channel id',
@@ -160,15 +170,7 @@ class NotificationPlugin {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
   }
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 8,26);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
+ 
 
   // Future<void> showWeeklyAtDayTime() async {
   //   var time = Time(21, 5, 0);

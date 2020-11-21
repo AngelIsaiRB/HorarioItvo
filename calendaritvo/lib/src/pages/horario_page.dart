@@ -72,7 +72,7 @@ class _HorarioPageState extends State<HorarioPage> {
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
                onPressed: (){
-                     notificationPlugin.scheduleWeeklyMondayTenAMNotification();
+                     
                     //  notificationPlugin.cancelNotification(0);                                        
                      Navigator.pushNamed(context, "addMateria");
                },
@@ -93,12 +93,12 @@ class _HorarioPageState extends State<HorarioPage> {
                     initialPage: DateTime.now().weekday-1,
                   ),
                   children: [    
-                    _day("Lunes", snapshot.data[0]),
-                    _day("Martes", snapshot.data[1]),
-                    _day("Miercoles", snapshot.data[2]),
-                    _day("Jueves", snapshot.data[3]),
-                    _day("Viernes", snapshot.data[4]),
-                    _day("Sabado", snapshot.data[5]),
+                    _day("Lunes", snapshot.data[0],1),
+                    _day("Martes", snapshot.data[1],2),
+                    _day("Miercoles", snapshot.data[2],3),
+                    _day("Jueves", snapshot.data[3],4),
+                    _day("Viernes", snapshot.data[4],5),
+                    _day("Sabado", snapshot.data[5],6),
                      Container(
                       color: Colors.black26,
                       child: Center(
@@ -135,7 +135,7 @@ class _HorarioPageState extends State<HorarioPage> {
 
 
 
-Widget _day(String day, int horas){    
+Widget _day(String day, int horas, int diaName){    
   //DBProvider.db.getHorasDias();
   return Container(    
     child: FutureBuilder(
@@ -152,7 +152,27 @@ Widget _day(String day, int horas){
           physics: BouncingScrollPhysics(),
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
-          itemBuilder: (BuildContext context, int index) {            
+          itemBuilder: (BuildContext context, int index) { 
+          if(dia[index].materia!="Libre"){
+            final times = dia[index].range.split("-");
+            final horaMinute  = times[0].split(":"); 
+            print("-------------------------------");
+            print(int.parse(horaMinute[0]));           
+            print(int.parse(horaMinute[1]));                        
+            try {
+            notificationPlugin.scheduleWeeklyDayNotification(
+                       materia: dia[index].materia,
+                       texto: "proxima materia",
+                       id: dia[index].id,
+                       dia: diaName,
+                       hora: int.parse(horaMinute[0]),
+                       minuto: int.parse(horaMinute[1])
+                     );              
+            } catch (e) {
+            }
+          }
+              
+
           return Container(          
           child: Column(
             children: [
