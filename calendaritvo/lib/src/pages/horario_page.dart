@@ -62,7 +62,7 @@ class _HorarioPageState extends State<HorarioPage> {
             ],
             
           ), 
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: BounceInDown(            
             child: FloatingActionButton.extended(     
               backgroundColor: Theme.of(context).primaryColor,
@@ -73,7 +73,7 @@ class _HorarioPageState extends State<HorarioPage> {
                ),
                onPressed: (){
                      
-                    //  notificationPlugin.cancelNotification(0);                                        
+                     
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -157,17 +157,17 @@ Widget _day(String day, int horas, int diaName){
             notificationPlugin.cancelNotification(dia[index].id);
             final times = dia[index].range.split("-");
             final horaMinute  = times[0].split(":"); 
-            print("-------------------------------");
-            // print(int.parse(horaMinute[0]));           
-            // print(int.parse(horaMinute[1]));                        
+            final now=DateTime.now();
+            DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
+            final xxx=xx.add(Duration(minutes: -5));                      
             try {
             notificationPlugin.scheduleWeeklyDayNotification(
                        materia: dia[index].materia,
                        texto: "proxima materia",
-                       id: dia[index].id,
+                       id: dia[index].id,                     
                        dia: diaName,
-                       hora: int.parse(horaMinute[0]),
-                       minuto: int.parse(horaMinute[1])
+                       hora: xxx.hour,
+                       minuto: xxx.minute
                      );              
             } catch (e) {
             }

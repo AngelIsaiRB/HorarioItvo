@@ -114,20 +114,23 @@ class NotificationPlugin {
             UILocalNotificationDateInterpretation.absoluteTime);
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///222
+  
   
   Future<void> scheduleWeeklyDayNotification({int id ,String materia, String texto,int dia,int hora, int minuto}) async {
-     tz.initializeTimeZones();
+     tz.initializeTimeZones();    
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
+        id,
         materia,
-        texto,
+        texto,        
         _nextInstanceOfMondayTenAM(dia, hora, minuto),
         const NotificationDetails(
-          android: AndroidNotificationDetails(
+          android: AndroidNotificationDetails(              
               'weekly notification channel id',
               'weekly notification channel name',
-              'weekly notificationdescription'),
+              'weekly notificationdescription',
+              importance: Importance.max,
+              priority: Priority.max,                                                     
+              ),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
