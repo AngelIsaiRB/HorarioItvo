@@ -35,8 +35,7 @@ class _HorarioPageState extends State<HorarioPage> {
    bool _selectorProgress;
   // String image=_images[DateTime.now().weekday-1];
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) {    
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   _colorThema = pref.tema;
   _localNotifications= pref.localNotifications;
@@ -259,7 +258,12 @@ Widget addButtonHora(String day, int horas){
                 DBProvider.db.restarNumeroDeHoras(day, horas);            
                 });
             },
-            child: Icon(Icons.delete_forever,color:Colors.white),
+            child: Row(
+              children: [
+                Icon(Icons.delete_forever,color:Colors.white),
+                Text("Modulo")
+              ],
+            ),
           ),
          ):Container(),
           (horas!=12)?Container(        
@@ -273,7 +277,12 @@ Widget addButtonHora(String day, int horas){
                 DBProvider.db.agregarNumeroDeHoras(day, horas);            
                 });
             },
-            child: Icon(Icons.add,color:Colors.white,),
+            child: Row(
+              children: [
+                Icon(Icons.add,color:Colors.white,),
+                Text("Modulo"),
+              ],
+            ),
           ),
          ):Container(),
          
@@ -356,28 +365,34 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
         child: Column(          
           children: [
             SizedBox(height: 4.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                 _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
-                Column(                  
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
-                    Container(
-                      width: mitadDePantalla,
-                      child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
-                  ],
-                ),
-                 Column(
-                   children: [                     
-                     Container(                      
-                       child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
-                   ],
-                 ),
-              ],
+            ListTile(
+              leading: _selectForm(_formIcon,utils.stringToColor(dia.color)),    
+              title: Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2), 
+              subtitle: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,),
+              trailing: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,),
             ),
-            SizedBox(height: 15.0,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //      _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
+            //     Column(                  
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
+            //         Container(
+            //           width: mitadDePantalla,
+            //           child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
+            //       ],
+            //     ),
+            //      Column(
+            //        children: [                     
+            //          Container(                      
+            //            child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
+            //        ],
+            //      ),
+            //   ],
+            // ),
+            
             linearProgressSelector(vaslor,_selectorProgress),
           ],
         )
