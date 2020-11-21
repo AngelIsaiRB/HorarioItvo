@@ -154,11 +154,12 @@ Widget _day(String day, int horas, int diaName){
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) { 
           if(dia[index].materia!="Libre"){
+            notificationPlugin.cancelNotification(dia[index].id);
             final times = dia[index].range.split("-");
             final horaMinute  = times[0].split(":"); 
             print("-------------------------------");
-            print(int.parse(horaMinute[0]));           
-            print(int.parse(horaMinute[1]));                        
+            // print(int.parse(horaMinute[0]));           
+            // print(int.parse(horaMinute[1]));                        
             try {
             notificationPlugin.scheduleWeeklyDayNotification(
                        materia: dia[index].materia,
