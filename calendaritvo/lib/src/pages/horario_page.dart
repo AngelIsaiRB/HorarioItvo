@@ -72,7 +72,8 @@ class _HorarioPageState extends State<HorarioPage> {
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
                onPressed: (){
-                     notificationPlugin.scheduleDailyTenAMNotification();
+                     notificationPlugin.scheduleWeeklyMondayTenAMNotification();
+                    //  notificationPlugin.cancelNotification(0);                                        
                      Navigator.pushNamed(context, "addMateria");
                },
             ),

@@ -113,6 +113,35 @@ class NotificationPlugin {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
+  ////////////////////////////////////////////////////////////////222
+  
+  Future<void> scheduleWeeklyMondayTenAMNotification() async {
+     tz.initializeTimeZones();
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'weekly scheduled notification title',
+        'weekly scheduled notification body',
+        _nextInstanceOfMondayTenAM(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'weekly notification channel id',
+              'weekly notification channel name',
+              'weekly notificationdescription'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+  }
+  tz.TZDateTime _nextInstanceOfMondayTenAM() {
+    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
+    while (scheduledDate.weekday != DateTime.friday) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  ////////////////////////////////////////////////////////////////
   Future<void> scheduleDailyTenAMNotification() async {
      tz.initializeTimeZones();
     await flutterLocalNotificationsPlugin.zonedSchedule(
@@ -132,9 +161,9 @@ class NotificationPlugin {
         matchDateTimeComponents: DateTimeComponents.time);
   }
   tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 7,54);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 8,26);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -271,8 +300,8 @@ class NotificationPlugin {
     return p.length;
   }
 
-  Future<void> cancelNotification() async {
-    await flutterLocalNotificationsPlugin.cancel(0);
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 
   Future<void> cancelAllNotification() async {
