@@ -39,11 +39,15 @@ class _DangerZoneState extends State<DangerZone> {
           physics: BouncingScrollPhysics(),
           children: [
             FadeInRight(duration: Duration(milliseconds: 290),child: _localNotificationsSchedule()),
-            Divider(),
+            Divider(
+              height: 60,
+            ),            
             FadeInRight(duration: Duration(milliseconds: 290),child: _notificaciones()),
             Divider(),
             FadeInRight(duration: Duration(milliseconds: 290),child: _deleteMenu()),
-            Divider(),
+            Divider(
+              height: 60,
+            ),
             FadeInRight(duration: Duration(milliseconds: 290),child:_restaurar(context)),            
           ],
         ),
@@ -58,7 +62,7 @@ class _DangerZoneState extends State<DangerZone> {
       },    
      child: ListTile(
        leading: Icon(FontAwesomeIcons.bellSlash),
-       title:  Text("Desactivar notificaciones de noticias"),
+       title:  Text("Desactivar notificaciones de noticias (ITVO)"),
        trailing:  FlatButton(
            color: Colors.blueAccent,
            child: Icon(FontAwesomeIcons.timesCircle),
@@ -80,7 +84,7 @@ class _DangerZoneState extends State<DangerZone> {
                   value: _menu,             
                   secondary: Icon(FontAwesomeIcons.exclamation),      
                   title: Text("Noticias"),
-                  subtitle: Text("Si no eres parte del ITVO o no te interesan las noticias"),
+                  subtitle: Text("Desactiva si no eres parte del ITVO o no te interesan las noticias"),
                   onChanged: (value){
                     setState(() {
                         _menu=value;
