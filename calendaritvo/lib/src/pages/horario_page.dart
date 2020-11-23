@@ -36,6 +36,8 @@ class _HorarioPageState extends State<HorarioPage> {
   // String image=_images[DateTime.now().weekday-1];
   @override
   Widget build(BuildContext context) {    
+    Notifications not =new Notifications();
+    not.init();
    mitadDePantalla =MediaQuery.of(context).size.width * 0.4;
   _colorThema = pref.tema;
   _localNotifications= pref.localNotifications;
@@ -73,7 +75,7 @@ class _HorarioPageState extends State<HorarioPage> {
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
                onPressed: (){        
-                //  notificationPlugin.showNotification();                                  
+                not.scheduleWeeklyMondayTenAMNotification();                               
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -153,26 +155,26 @@ Widget _day(String day, int horas, int diaName){
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) { 
-          if(dia[index].materia!="Libre" && _localNotifications){
-            print("------------***********notifications actived************-----------------------");
-            notificationPlugin.cancelNotification(dia[index].id);
-            final times = dia[index].range.split("-");
-            final horaMinute  = times[0].split(":"); 
-            final now=DateTime.now();
-            DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
-            final dateForNotification=xx.add(Duration(minutes: -5));                      
-            try {
-            notificationPlugin.scheduleWeeklyDayNotification(
-                       materia: dia[index].materia,
-                       texto: "proxima materia",
-                       id: dia[index].id,                     
-                       dia: diaName,
-                       hora: dateForNotification.hour,
-                       minuto: dateForNotification.minute
-                     );              
-            } catch (e) {
-            }
-          }
+          // if(dia[index].materia!="Libre" && _localNotifications){
+          //   print("------------***********notifications actived************-----------------------");
+          //   notificationPlugin.cancelNotification(dia[index].id);
+          //   final times = dia[index].range.split("-");
+          //   final horaMinute  = times[0].split(":"); 
+          //   final now=DateTime.now();
+          //   DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
+          //   final dateForNotification=xx.add(Duration(minutes: -5));                      
+          //   try {
+          //   notificationPlugin.scheduleWeeklyDayNotification(
+          //              materia: dia[index].materia,
+          //              texto: "proxima materia",
+          //              id: dia[index].id,                     
+          //              dia: diaName,
+          //              hora: dateForNotification.hour,
+          //              minuto: dateForNotification.minute
+          //            );              
+          //   } catch (e) {
+          //   }
+          // }
               
 
           return Container(          

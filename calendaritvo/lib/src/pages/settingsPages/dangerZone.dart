@@ -178,7 +178,7 @@ class _DangerZoneState extends State<DangerZone> {
                     setState(() {
                         _localNotifications=value;
                         pref.localNotifications=value;  
-                        notificationPlugin.cancelAllNotification();      
+                        // notificationPlugin.cancelAllNotification();      
                     });
                    
                   },
