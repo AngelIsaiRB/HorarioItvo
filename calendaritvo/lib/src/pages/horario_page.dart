@@ -95,12 +95,12 @@ class _HorarioPageState extends State<HorarioPage> {
                     initialPage: DateTime.now().weekday-1,
                   ),
                   children: [    
-                    _day("Lunes", snapshot.data[0],1),
-                    _day("Martes", snapshot.data[1],2),
-                    _day("Miercoles", snapshot.data[2],3),
-                    _day("Jueves", snapshot.data[3],4),
-                    _day("Viernes", snapshot.data[4],5),
-                    _day("Sabado", snapshot.data[5],6),
+                    _day("Lunes", snapshot.data[0], DateTime.monday),
+                    _day("Martes", snapshot.data[1],DateTime.tuesday),
+                    _day("Miercoles", snapshot.data[2],DateTime.wednesday),
+                    _day("Jueves", snapshot.data[3],DateTime.thursday),
+                    _day("Viernes", snapshot.data[4],DateTime.friday),
+                    _day("Sabado", snapshot.data[5],DateTime.saturday),
                      Container(
                       color: Colors.black26,
                       child: Center(
@@ -157,37 +157,15 @@ Widget _day(String day, int horas, int diaName){
           itemCount: horas+1,
           controller: ScrollController(initialScrollOffset: (DateTime.now().hour-7)*60.0),
           itemBuilder: (BuildContext context, int index) { 
-          if(dia[index].materia!="Libre" && _localNotifications){
-            print("------------***********notifications actived************-----------------------");
-            // not.cancelNotification(dia[index].id);
-            final times = dia[index].range.split("-");
-            final horaMinute  = times[0].split(":"); 
-            final now=DateTime.now();
-            DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
-            final dateForNotification=xx.add(Duration(minutes: -5));                      
-            try {
-            not.scheduleWeeklyMondayTenAMNotification(
-                       materia: dia[index].materia,
-                       texto: "proxima materia",
-                       id: dia[index].id,                     
-                       dia: diaName,
-                       hora: dateForNotification.hour,
-                       minuto: dateForNotification.minute
-                     );              
-            } catch (e) {
-            }
-          }
-              
-
           return Container(          
           child: Column(
             children: [
               GestureDetector(
                 onTap: (){
-                  _alertMaterias(context,dia[index],day);
+                  _alertMaterias(context,dia[index],day,diaName);
                 },
                 onLongPress: (){
-                  seleccionarHora(context,day, dia[index]);
+                  seleccionarHora(context,day, dia[index],diaName);
                 },
                 child: (index!=horas)?_tarjetas(index,barProgress(index,dia[index]),dia[index],day):addButtonHora(day,horas)
                 ),                
@@ -206,7 +184,7 @@ Widget _day(String day, int horas, int diaName){
   
 } 
 
-seleccionarHora(context,String day, DiaModel dia)async {
+seleccionarHora(context,String day, DiaModel dia,int dayName)async {
   final time = await showTimePicker(
      helpText: "Escoje la hora inicial",
      confirmText: "OK",
@@ -237,7 +215,29 @@ seleccionarHora(context,String day, DiaModel dia)async {
   if(time!=null && time2!=null){
     //"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}"
     setState(() {
-    DBProvider.db.actualizarRangedeHoras(day,"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}",dia.id);      
+    DBProvider.db.actualizarRangedeHoras(day,"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}",dia.id);  
+    Notifications not =new Notifications();
+    not.init();    
+    if(dia.materia!="Libre" && _localNotifications){
+            print("------------***********notifications actived************-----------------------");
+            // not.cancelNotification(dia[index].id);
+            
+            final now=DateTime.now();
+            DateTime xx = DateTime.utc(now.year, now.month, now.day,time.hour,time.minute);
+            final dateForNotification=xx.add(Duration(minutes: -5));        
+            final idN = "${dayName}${dia.id}";             
+            try {
+            not.scheduleWeeklyMondayTenAMNotification(
+                       materia: dia.materia,
+                       texto: "proxima materia",
+                       id: int.parse(idN),                         
+                       dia: dayName,
+                       hora: dateForNotification.hour,
+                       minuto: dateForNotification.minute
+                     );              
+            } catch (e) {
+            }
+          }
     });
   }
   
@@ -417,7 +417,9 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
    return Container();
  }
   
-_alertMaterias(BuildContext context,DiaModel dia,String day){
+_alertMaterias(BuildContext context,DiaModel dia,String day,int dayname){
+  
+   
   showDialog(
     context: context,
     barrierDismissible: true, 
@@ -431,7 +433,7 @@ _alertMaterias(BuildContext context,DiaModel dia,String day){
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: _listViewMaterias(dia,day)
+                child: _listViewMaterias(dia,day,dayname)
                 )
             ],
           )
@@ -451,7 +453,7 @@ _alertMaterias(BuildContext context,DiaModel dia,String day){
     );
 }
 
-Widget _listViewMaterias(DiaModel dia,String day) {
+Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
   materiasBloc.obtenerMaterias();
     return StreamBuilder(
       stream: materiasBloc.materiasStream,
@@ -474,8 +476,32 @@ Widget _listViewMaterias(DiaModel dia,String day) {
           return ListTile(
             leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
             title: Text(materia[index].name, style: Theme.of(context).textTheme.bodyText1,),
-            onTap: (){              
+            onTap: (){   
+              
               DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
+              Notifications not =new Notifications();
+              not.init();
+              if(dia.materia!="Libre" && _localNotifications){
+            print("------------***********notifications actived************-----------------------");
+            // not.cancelNotification(dia[index].id);
+            final times = dia.range.split("-");
+            final horaMinute  = times[0].split(":"); 
+            final now=DateTime.now();
+            DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
+            final dateForNotification=xx.add(Duration(minutes: -5));   
+            final idN = "${dayname}${dia.id}";
+            try {
+            not.scheduleWeeklyMondayTenAMNotification(
+                       materia: dia.materia,
+                       texto: "proxima materia",
+                       id: int.parse(idN),                     
+                       dia: dayname,
+                       hora: dateForNotification.hour,
+                       minuto: dateForNotification.minute
+                     );              
+            } catch (e) {
+            }
+          }
               Navigator.pop(context);
               setState(() {
                 
