@@ -41,12 +41,12 @@ class Notifications {
         0, 'holamundo', 'este es un mensaje', platformChannelSpecifics,
         payload: 'item x');
   }
-  Future<void> scheduleWeeklyMondayTenAMNotification() async {
+  Future<void> scheduleWeeklyMondayTenAMNotification({int id ,String materia, String texto,int dia,int hora, int minuto}) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'weekly scheduled notification title',
-        'weekly scheduled notification body',
-        _nextInstanceOfMondayTenAM(),
+        id,
+        materia,
+        texto,
+        _nextInstanceOfMondayTenAM(dia,hora,minuto),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'weekly notification channel id',
@@ -62,9 +62,9 @@ class Notifications {
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
         print("alarma ajustada------*********");
   }
-  tz.TZDateTime _nextInstanceOfMondayTenAM() {
-    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
-    while (scheduledDate.weekday != DateTime.friday) {
+  tz.TZDateTime _nextInstanceOfMondayTenAM(int dia, int hora, int minuto) {
+    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM(hora, minuto);
+    while (scheduledDate.weekday != dia) {
       print("_:::::::::::::::::${scheduledDate.weekday}");
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -74,12 +74,12 @@ class Notifications {
     print(scheduledDate.minute);
     return scheduledDate;
   }
-  tz.TZDateTime _nextInstanceOfTenAM() {
+  tz.TZDateTime _nextInstanceOfTenAM(int hora, int minuto) {
     
     
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 13,20);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hora, minuto);
         print("///////////////////////////////////////////");
         print(now.weekday);
     print(now.day);
@@ -91,5 +91,12 @@ class Notifications {
     } 
      print("_:==================${scheduledDate.weekday}");   
     return scheduledDate;
+  }
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  Future<void> cancelAllNotification() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 }
