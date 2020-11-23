@@ -21,7 +21,7 @@ class Notifications {
 
     init()async {
       tz.initializeTimeZones();   
-      tz.setLocalLocation(tz.getLocation("America/North_Dakota/Beulah"));
+      tz.setLocalLocation(tz.getLocation("America/Mexico_City"));
       const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('launcher_icon');
       final InitializationSettings initializationSettings = InitializationSettings(
@@ -79,7 +79,7 @@ class Notifications {
     
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 18,30);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 13,20);
         print("///////////////////////////////////////////");
         print(now.weekday);
     print(now.day);
