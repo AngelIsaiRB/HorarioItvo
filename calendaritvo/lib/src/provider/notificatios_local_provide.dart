@@ -64,14 +64,10 @@ class Notifications {
   }
   tz.TZDateTime _nextInstanceOfMondayTenAM(int dia, int hora, int minuto) {
     tz.TZDateTime scheduledDate = _nextInstanceOfTenAM(hora, minuto);
-    while (scheduledDate.weekday != dia) {
-      print("_:::::::::::::::::${scheduledDate.weekday}");
+    while (scheduledDate.weekday != dia) {     
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    print(scheduledDate.weekday);
-    print(scheduledDate.day);
-    print(scheduledDate.hour);
-    print(scheduledDate.minute);
+    print("notification: ${scheduledDate.weekday}-${scheduledDate.day}-${scheduledDate.hour}-${scheduledDate.minute}");             
     return scheduledDate;
   }
   tz.TZDateTime _nextInstanceOfTenAM(int hora, int minuto) {
@@ -79,17 +75,11 @@ class Notifications {
     
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);   
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hora, minuto);
-        print("///////////////////////////////////////////");
-        print(now.weekday);
-    print(now.day);
-    print(now.hour);
-    print(now.minute);
-        print("///////////////////////////////////////////");
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hora, minuto);        
+        print("now: ${now.weekday}-${now.day}-${now.hour}-${now.minute}");             
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
-    } 
-     print("_:==================${scheduledDate.weekday}");   
+    }     
     return scheduledDate;
   }
   Future<void> cancelNotification(int id) async {

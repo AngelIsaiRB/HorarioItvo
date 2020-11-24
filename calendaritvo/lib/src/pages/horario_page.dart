@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HorarioPage extends StatefulWidget {
   @override
@@ -89,10 +90,10 @@ class _HorarioPageState extends State<HorarioPage> {
                       future: DBProvider.db.getHorasDias(),                  
                       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
                         if(snapshot.hasData){
-                           return  PageView(              
+                           return  PageView(                                           
                   scrollDirection: Axis.horizontal,             
                   controller: PageController(
-                    initialPage: DateTime.now().weekday-1,
+                  initialPage: DateTime.now().weekday-1,
                   ),
                   children: [    
                     _day("Lunes", snapshot.data[0], DateTime.monday),
@@ -417,9 +418,8 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
    return Container();
  }
   
-_alertMaterias(BuildContext context,DiaModel dia,String day,int dayname){
-  
-   
+_alertMaterias(BuildContext context,DiaModel dia,String day,int dayname)async{
+
   showDialog(
     context: context,
     barrierDismissible: true, 
