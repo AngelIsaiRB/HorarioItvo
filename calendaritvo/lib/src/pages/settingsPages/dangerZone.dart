@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:calendaritvo/src/UserPreferences/user_preferences.dart';
 import 'package:calendaritvo/src/provider/db_c_provider.dart';
 import 'package:calendaritvo/src/provider/db_provider.dart';
+import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,6 +23,7 @@ class _DangerZoneState extends State<DangerZone> {
     super.initState();
     _localNotifications = pref.localNotifications;
     _menu=pref.menu;
+    
        
   }
   @override
@@ -178,7 +180,12 @@ class _DangerZoneState extends State<DangerZone> {
                     setState(() {
                         _localNotifications=value;
                         pref.localNotifications=value;  
-                        // notificationPlugin.cancelAllNotification();      
+                        if(!value){
+                          print("Todas las notificaciones eliminadas-----");
+                          Notifications not =new Notifications();
+                          not.init(); 
+                          not.cancelAllNotification();
+                        }
                     });
                    
                   },
