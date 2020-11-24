@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:calendaritvo/src/utils/colos_string.dart' as utils;
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 
 class HorarioPage extends StatefulWidget {
   @override
@@ -21,6 +21,7 @@ class HorarioPage extends StatefulWidget {
   
 }
 List<String> _dayNames=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
+
 
 //List<String> _images=["assets/house.jpg","assets/house.jpg","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg","assets/scroll-1.png","assets/glob.jpg"];
 class _HorarioPageState extends State<HorarioPage> {
@@ -90,25 +91,43 @@ class _HorarioPageState extends State<HorarioPage> {
                       future: DBProvider.db.getHorasDias(),                  
                       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
                         if(snapshot.hasData){
-                           return  PageView(                                           
+                           return  PageView.builder(                                           
                   scrollDirection: Axis.horizontal,             
                   controller: PageController(
-                  initialPage: DateTime.now().weekday-1,
+                  initialPage: DateTime.now().weekday-1,                  
                   ),
-                  children: [    
-                    _day("Lunes", snapshot.data[0], DateTime.monday),
-                    _day("Martes", snapshot.data[1],DateTime.tuesday),
-                    _day("Miercoles", snapshot.data[2],DateTime.wednesday),
-                    _day("Jueves", snapshot.data[3],DateTime.thursday),
-                    _day("Viernes", snapshot.data[4],DateTime.friday),
-                    _day("Sabado", snapshot.data[5],DateTime.saturday),
-                     Container(
+                  itemCount: 7,                  
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {                     
+                    switch (index) {
+                      case 0:
+                        return _day("Lunes", snapshot.data[0], DateTime.monday);
+                        break;
+                      case 1:
+                       return _day("Martes", snapshot.data[1],DateTime.tuesday);
+                      break;
+                      case 2:
+                      return _day("Miercoles", snapshot.data[2],DateTime.wednesday);
+                      break;
+                      case 3:
+                      return _day("Jueves", snapshot.data[3],DateTime.thursday);
+                      break;
+                      case 4:
+                      return _day("Viernes", snapshot.data[4],DateTime.friday);
+                      break;
+                      case 5:
+                       return _day("Sabado", snapshot.data[5],DateTime.saturday);
+                      break;
+                      default:
+                      return    Container(
                       color: Colors.black26,
                       child: Center(
                         child: Text("¡  Descansa! te lo mereces", style:TextStyle(fontSize: 40.0)),
                       ),
-                    ),              
-                  ],
+                    );
+                    }
+                   },
+                 
                   onPageChanged:(index){
                    
                       setState(() { 
@@ -116,7 +135,7 @@ class _HorarioPageState extends State<HorarioPage> {
                         day=_dayNames[index];
                        // image=_images[index+1];
                       });
-                  },              
+                  },               
                 );
                         }
                         return Container();
@@ -226,7 +245,7 @@ seleccionarHora(context,String day, DiaModel dia,int dayName)async {
             final now=DateTime.now();
             DateTime xx = DateTime.utc(now.year, now.month, now.day,time.hour,time.minute);
             final dateForNotification=xx.add(Duration(minutes: -5));        
-            final idN = "${dayName}${dia.id}";             
+            final idN = "$dayName${dia.id}";             
             try {
             not.scheduleWeeklyMondayTenAMNotification(
                        materia: dia.materia,
@@ -376,27 +395,7 @@ Widget _tarjetas(int index, double vaslor,DiaModel dia,String day){
               subtitle: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,),
               trailing: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //      _selectForm(_formIcon,utils.stringToColor(dia.color)),                  
-            //     Column(                  
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text("${dia.range} Hrs", style:Theme.of(context).textTheme.subtitle2),                      
-            //         Container(
-            //           width: mitadDePantalla,
-            //           child: Text(dia.materia,style:TextStyle(color: Colors.white, fontSize: 20.0)  ,maxLines: 1 ,)),
-            //       ],
-            //     ),
-            //      Column(
-            //        children: [                     
-            //          Container(                      
-            //            child: Icon(FontAwesomeIcons.angleDown,size: 40.0, color: Theme.of(context).primaryColor,)),
-            //        ],
-            //      ),
-            //   ],
-            // ),
+            
             
             linearProgressSelector(vaslor,_selectorProgress),
           ],
@@ -481,15 +480,17 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
               DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
               Notifications not =new Notifications();
               not.init();
-              if(dia.materia!="Libre" && _localNotifications){
+            final idN = "$dayname${dia.id}";
+            print(idN);
+            not.cancelNotification(dayname);
+            if(materia[index].name!="Libre" && _localNotifications){
             print("------------***********notifications actived************-----------------------");
-            // not.cancelNotification(dia[index].id);
             final times = dia.range.split("-");
             final horaMinute  = times[0].split(":"); 
             final now=DateTime.now();
             DateTime xx = DateTime.utc(now.year, now.month, now.day, int.parse(horaMinute[0]),int.parse(horaMinute[1]));
             final dateForNotification=xx.add(Duration(minutes: -5));   
-            final idN = "${dayname}${dia.id}";
+            
             try {
             not.scheduleWeeklyMondayTenAMNotification(
                        materia: dia.materia,

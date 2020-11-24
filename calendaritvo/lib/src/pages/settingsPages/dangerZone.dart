@@ -5,7 +5,7 @@ import 'package:calendaritvo/src/provider/db_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:calendaritvo/src/provider/notificatios_local_provide.dart';
+
 
 class DangerZone extends StatefulWidget {
    DangerZone({Key key}) : super(key: key);
