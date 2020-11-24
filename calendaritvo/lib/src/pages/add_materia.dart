@@ -89,7 +89,8 @@ class _AddMateriState extends State<AddMateri> {
                   onDismissed: (direcion) {
                    if (materia[index].name != "Libre"){
                        materiasBloc.deleteMateria(materia[index]);
-                       //                       
+                       //
+                           
                        DbCProvider.db.eliminarTodasCalificacionesDeMateria(materia[index]);
                    }
                   },

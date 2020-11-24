@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
@@ -23,7 +24,7 @@ class Notifications {
         AndroidNotificationDetails(
             'your channel id', 'your channel name', 'your channel description',
             importance: Importance.max,
-            priority: Priority.high,
+            priority: Priority.high,            
             ticker: 'ticker');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
@@ -32,6 +33,7 @@ class Notifications {
         payload: 'item x');
   }
   Future<void> scheduleWeeklyMondayTenAMNotification({int id ,String materia, String texto,int dia,int hora, int minuto}) async {
+    
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
         materia,
@@ -41,7 +43,7 @@ class Notifications {
           android: AndroidNotificationDetails(
               'weekly notification channel id',
               'weekly notification channel name',
-              'weekly notificationdescription',
+              'weekly notificationdescription',              
               importance: Importance.max,
               priority: Priority.max ),
         ),

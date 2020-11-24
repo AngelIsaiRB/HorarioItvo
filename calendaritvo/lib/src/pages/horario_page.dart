@@ -77,7 +77,7 @@ class _HorarioPageState extends State<HorarioPage> {
                  child: Icon (Icons.add,size: 40.0,color:Colors.white,),                                   
                ),
                onPressed: (){        
-                // not.scheduleWeeklyMondayTenAMNotification();                               
+                //  not.showNotification();                               
                      Navigator.pushNamed(context, "addMateria");
                },
             ),
@@ -235,13 +235,12 @@ seleccionarHora(context,String day, DiaModel dia,int dayName)async {
   if(time!=null && time2!=null){
     //"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}"
     setState(() {
+    
     DBProvider.db.actualizarRangedeHoras(day,"${time.hour}:${time.minute}-${time2.hour}:${time2.minute}",dia.id);  
     Notifications not =new Notifications();
     not.init();    
     if(dia.materia!="Libre" && _localNotifications){
-            print("------------***********notifications actived************-----------------------");
-            // not.cancelNotification(dia[index].id);
-            
+            print("------------*********** New notifications************-----------------------");                        
             final now=DateTime.now();
             DateTime xx = DateTime.utc(now.year, now.month, now.day,time.hour,time.minute);
             final dateForNotification=xx.add(Duration(minutes: -5));        
@@ -285,7 +284,7 @@ Widget addButtonHora(String day, int horas){
             child: Row(
               children: [
                 Icon(Icons.delete_forever,color:Colors.white),
-                Text("Modulo")
+                Text("Modulo", style: TextStyle(color: Colors.white),)
               ],
             ),
           ),
@@ -304,7 +303,7 @@ Widget addButtonHora(String day, int horas){
             child: Row(
               children: [
                 Icon(Icons.add,color:Colors.white,),
-                Text("Modulo"),
+                Text("Modulo", style: TextStyle(color: Colors.white),),
               ],
             ),
           ),
@@ -476,12 +475,12 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
             leading: Icon(Icons.fiber_manual_record, color: utils.stringToColor(materia[index].color),),
             title: Text(materia[index].name, style: Theme.of(context).textTheme.bodyText1,),
             onTap: (){   
+            
               
               DBProvider.db.actualizarHora(dia.id, materia[index].name, day);
               Notifications not =new Notifications();
               not.init();
             final idN = "$dayname${dia.id}";
-            print(idN);
             not.cancelNotification(dayname);
             if(materia[index].name!="Libre" && _localNotifications){
             print("------------***********notifications actived************-----------------------");
@@ -493,8 +492,8 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
             
             try {
             not.scheduleWeeklyMondayTenAMNotification(
-                       materia: dia.materia,
-                       texto: "proxima materia",
+                       materia: dia.materia,                       
+                       texto: "Próxima materia",
                        id: int.parse(idN),                     
                        dia: dayname,
                        hora: dateForNotification.hour,
