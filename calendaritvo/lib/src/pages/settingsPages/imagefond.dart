@@ -42,7 +42,7 @@ class _ImageFondaState extends State<ImageFonda> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Desde galeria:",style: Theme.of(context).textTheme.headline2,),
+                      Text("Desde galería:",style: Theme.of(context).textTheme.headline2,),
                       Container(                    
                         child: Container(
                           child: Row(

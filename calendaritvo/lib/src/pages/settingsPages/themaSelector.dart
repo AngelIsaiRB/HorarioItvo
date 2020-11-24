@@ -15,7 +15,7 @@ class _TemaSelectorState extends State<TemaSelector> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Themas", style: Theme.of(context).textTheme.headline2,),
+        title: Text("Temas", style: Theme.of(context).textTheme.headline2,),
         backgroundColor: Theme.of(context).primaryColorLight,
         centerTitle: true,
       ),
