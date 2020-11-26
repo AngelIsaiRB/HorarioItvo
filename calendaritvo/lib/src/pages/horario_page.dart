@@ -488,6 +488,7 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
             not.cancelNotification(dayname);
             if(materia[index].name!="Libre" && _localNotifications){
             print("------------***********notifications actived************-----------------------");
+            print(materia[index].name);
             final times = dia.range.split("-");
             final horaMinute  = times[0].split(":"); 
             final now=DateTime.now();
