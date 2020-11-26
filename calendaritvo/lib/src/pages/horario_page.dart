@@ -243,7 +243,8 @@ seleccionarHora(context,String day, DiaModel dia,int dayName)async {
     Notifications not =new Notifications();
     not.init();    
     if(dia.materia!="Libre" && _localNotifications){
-            print("------------*********** New notifications************-----------------------");                        
+            print("------------*********** New notifications************-----------------------");     
+            print(dia.materia);                 
             final now=DateTime.now();
             DateTime xx = DateTime.utc(now.year, now.month, now.day,time.hour,time.minute);
             final dateForNotification=xx.add(Duration(minutes: -5));        
@@ -498,7 +499,7 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
             try {
             not.scheduleWeeklyMondayTenAMNotification(
                        materia: materia[index].name,                       
-                       texto:  "Tu siguiente materia es: ${dia.materia}",
+                       texto:  "Tu siguiente materia es: ${materia[index].name}",
                        id: int.parse(idN),                     
                        dia: dayname,
                        hora: dateForNotification.hour,
