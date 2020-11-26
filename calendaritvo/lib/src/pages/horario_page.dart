@@ -497,7 +497,7 @@ Widget _listViewMaterias(DiaModel dia,String day,int dayname) {
             
             try {
             not.scheduleWeeklyMondayTenAMNotification(
-                       materia: dia.materia,                       
+                       materia: materia[index].name,                       
                        texto:  "Tu siguiente materia es: ${dia.materia}",
                        id: int.parse(idN),                     
                        dia: dayname,
